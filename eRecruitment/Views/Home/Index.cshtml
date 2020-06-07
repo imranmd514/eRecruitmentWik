@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <h4 class="page-title">Dashboard</h4>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="page-title-box">
+            <br />
+            <h3>Windle Information</h3>
+            <div>
+                <p>
+                    At Windle International Kenya, we strive to get the best talent and ability in our staff. We achieve this through
+                    effective and timely recruitment for vacant positions.
+                </p>
+            </div>
+            <div>
+                <p>
+                    We are a holistic agency with dynamic staffing with our manpower coming from all divides of the
+                    country. We are an equal opportunity and an employer of choice delivering quality education to
+                    transform society through a competent and able workforce.
+                </p>
+            </div>
+            <div>
+                <p>WIK is an equal opportunity employer. Please note that only shortlisted candidates will be contacted. Canvassing will lead to automatic disqualification. No telephone calls please.</p>
+            </div>
+            <div>
+                <p>Windle International Kenya selection processes reflect our commitment to equal opportunity regardless of ones gender, disability, religion or ethnic affiliation. We work in schools and are committed to safeguard children from abuse.</p>
+            </div>
+            <div>
+                <ol type="a">
+                    @*<li>The dashboard will have a button point to WIK public site</li>*@
+                    <li><a href="http://windle.org//" target="_blank">Click </a>Here to Visit WIK public site</li>
+                    <li>
+                        <u>@Html.ActionLink("Available jobs", "Index", "ApplyJobs")</u>
+                    </li>
+                    @*<li>Available jobs </li>*@
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CheckApplicantExist();
+    });
+    function CheckApplicantExist() {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: '../Home/CheckApplicantExist',
+            data: {
+            },
+            success: function (data) {
+                if (data != "") {
+                    alert(data);
+                    GO();
+                    //$.NotificationApp.send("Information!", "Check below fields please " + data, 'top-right', '#da8609', 'warning');
+                    //alert(data);
+                }
+            }
+        });
+    }
+    function GO() {
+        var url = '@Url.Action("Index", "UpdateProfile")';
+        window.location.href = url;
+    }
+</script>
+

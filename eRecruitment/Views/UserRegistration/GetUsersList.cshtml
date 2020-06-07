@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Models.UserRegistrationBO>
+
+<table class="table" id="UserGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+            <th style="vertical-align:middle;padding-left:20px;">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                First Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Last Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Email Id
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Mobile Number
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Department
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                City
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Is Active
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyUser">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;text-align:center' id='@item.UserId'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.EmailAddress</td>
+                <td>@item.MobileNumber</td>
+                <td>@item.Department</td>
+                <td>@item.City</td>
+                <td>@item.IsActive</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewUser(@item.UserId);'>&nbsp;</i> </a>
+                    <a href='#custom-modal' data-toggle="modal"><i class="mdi mdi-pencil " onclick='Edit(@item.UserId);'>&nbsp;</i> </a>
+                    <a href='#custom-modal' data-toggle="modal"><i class="mdi mdi-delete" onclick='DeleteUser(@item.UserId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

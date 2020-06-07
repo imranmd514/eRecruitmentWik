@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Models.RolesBO>
+
+<table class="table" id="RolesGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+            
+                <th style="width:50px;vertical-align:middle;padding-left:30px;">
+                    #
+                </th>
+                <th style="vertical-align:middle;">
+                    <b> Role Name</b>
+                </th>
+                <th style="vertical-align:middle;">
+                    <b>Is Active</b>
+                </th>
+                <th style="vertical-align:middle;">
+                    <b> Action</b>
+                </th>
+    </thead>
+     
+    <tbody  id="tbodyRole" style="text-align:center">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+            {
+            <tr id='@item.RoleId'>
+                <td>@(count++)</td>
+                <td style="cursor:pointer" onclick="EditRole(@item.RoleId);"> @item.RoleName</td>
+                <td>@item.IsActive</td>
+                <td style="cursor:pointer" onclick="DeleteRole(@item.RoleId,'Roles');"><i class="mdi mdi-delete"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

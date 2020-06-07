@@ -1,0 +1,196 @@
+﻿@model Models.ApprovedApplicantsBO
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .modal-header {
+        padding: 12px 12px;
+        background-color: #5b6886;
+    }
+
+        .modal-header .close {
+            margin-top: 2px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            line-height: 20px;
+        }
+           .modal-dialog {
+   max-width:80%;
+     }
+</style>
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicants</a></li>
+                <li class="breadcrumb-item active">ShortListed Applicants</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i>ShortListed Applicants</h4>
+        </div>
+    </div>
+    <div class="row">
+        @Html.HiddenFor(m => m.AppliedJobId)
+        <div class="col-lg-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3">Job Type<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(m => m.JobId, new SelectList(Model.JobList, "Id", "Value"), "Select JobType", new { @class = "form-control", id = "JobName", onchange = "GetApprovedApplicants()" })
+                            </div>
+                        </div><br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <div class="table table-bordered table-striped" id="ApprovedApplicantsList">
+
+                        </div>
+                    </div>
+                </div><!-- end row -->
+            </div>
+        </div> <!-- end card-box -->
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <!-- sample modal content -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="color:white;" class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i><b> ShortListed Details</b></h4>
+                            @*<button type="button" style="color:white" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+                        </div>
+                        <div class="modal-body" id="AddApplicantDetails">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-rounded " data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--  Modal content for the above example -->
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HideLoader();
+        // GetApprovedApplicants();
+    });
+
+
+    function GetApprovedApplicants() {
+        debugger;
+        ShowLoader();
+        var JobId = $("#JobName").val();
+        $.ajax({
+            type: "GET",
+            url: '../ApprovedApplicants/getApprovedApplicantsList',
+            data: {
+                A_iJobId: JobId,
+            },
+            success: function (data) {
+                $("#ApprovedApplicantsList").html(data);
+                $('#ApprovedApplicantsGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+    //function ViewApprovedApplicant(iApplicantId) {
+    //    ShowLoader();
+    //    var ApplicantId = iApplicantId;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '../ApprovedApplicants/ViewApprovedApplicant',
+    //        data: {
+    //            A_iApplicantId: ApplicantId,
+    //        },
+    //        success: function (data) {
+    //            $("#AddApplicantDetails").html(data);
+    //            setTimeout(function () {
+    //                HideLoader();
+    //            }, 500);
+    //            $("#myModal").Show('Modal');
+
+    //        }
+    //    });
+    //}
+
+
+    function ViewApprovedApplicant(iAppliedJobId, iApplicantId) {
+        debugger;
+        ShowLoader();
+        var AppliedJobId = iAppliedJobId;
+        var ApplicantId = iApplicantId;
+        $.ajax({
+            type: "GET",
+            url: '../ApprovedApplicants/ViewApprovedApplicant',
+            data: {
+                A_iAppliedJobId: AppliedJobId,
+                A_iApplicantId: ApplicantId,
+            },
+            success: function (data) {
+                $("#AddApplicantDetails").html(data);
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+                $("#myModal").Show('Modal');
+
+            }
+        });
+    }
+
+    function EditShortListed(iAppliedJobId, iApplicantId) {
+        debugger;
+        ShowLoader();
+        var url = '../ApprovedApplicants/EditShortListApplicant?A_iAppliedJobId=' + iAppliedJobId + "&A_iApplicantId=" + iApplicantId;
+        $(location).attr('href', url);
+    }
+
+
+    //function EditShortListed(Id) {
+    //    ShowLoader();
+    //    var url = '../ApprovedApplicants/EditShortListApplicant?iApplicantId=' + Id;
+    //    $(location).attr('href', url);
+    //}
+
+    //function ViewApprovedApplicant(iApplicantId) {
+    //    var Id = iApplicantId;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '../ApprovedApplicants/ViewApprovedApplicant',
+    //        data: {
+    //            iApplicantId: Id,
+    //        },
+    //        success: function (data) {
+    //            $("#ApplicantDetails").html(data);
+
+
+    //        }
+    //    });
+    //}
+
+
+</script>

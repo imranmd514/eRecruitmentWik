@@ -1,0 +1,214 @@
+﻿@model Models.ApplyJobsBO
+
+<div class="vd_content-section clearfix">
+    <div class="custom-modal-text">
+        <div class="row">
+            <div class="top-right" style="margin-left:675px">
+                @Html.HiddenFor(model => model.AppliedStatus)
+                <button type="button" class="btn btn-success btn-rounded" data-dismiss="modal" id="btnApply" onclick="OnSubmitApply();">Apply</button>
+            </div>
+            <br />
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Name :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.HiddenFor(model=>model.JobPostingId)
+                        @Html.DisplayFor(model => model.JobName)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Description :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobDescription)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Description File :</b></label>
+                    <div class="col-sm-6 controls">
+                        @if (Model != null)
+                        {
+                            if (Model.JobDescriptionFileSavedName != null && Model.JobDescriptionFileSavedName != "" && Model.JobDescriptionFile != null && Model.JobDescriptionFile != "")
+                            {
+                                @Html.ActionLink(Model.JobDescriptionFile, "DownloadAttachment", new { fileSavedName = Model.JobDescriptionFileSavedName, fileActualName = Model.JobDescriptionFile })
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>No Of Positions :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.NoOfPositions)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Location :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobLocation)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Timings :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobTimings)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Duration :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobDuration)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Donor Program  :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.DonorProgramName)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Qualification :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Qualification)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Experience :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Experience)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Skills :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Skills)
+                    </div>
+                </div>
+            </div>
+            <br />
+            @*<div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-6"><b>Status :</b></label>
+                        <div class="col-sm-6 controls">
+                            @Html.DisplayFor(model => model.Status)
+                        </div>
+                    </div>
+                </div>
+                <br />*@
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>Comments :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.TextAreaFor(model => model.Comments, new { @placeholder = "Comments", @class = "form-control", id = "Comment" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end wrapper -->
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function OnSubmitApply() {
+        debugger;
+        var JobPostingId = $("#JobPostingId").val();
+        var ApplicantComments = $("#Comment").val();
+
+        var Data = {
+            "JobPostingId": JobPostingId,
+            "ApplicantComments": ApplicantComments
+        }
+        debugger;
+        SaveApplyJob(Data);
+    }
+
+
+    function SaveApplyJob(Data) {
+
+        $.ajax({
+            url: '../ApplyJobs/SaveApplyJob',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "ApplyJobs created successfully !!", 'top-right', '#5ba035', 'success');
+                    GoMenu();
+                }
+                else if (data == "ALREADY_APPLIED") {
+                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    alreadyexists();
+                }
+                else if (data == "FAIL") {
+                    fail();
+                }
+            }
+        });
+    }
+
+    function Hide() {
+        debugger;
+        var Status = $("#AppliedStatus").val();
+        if (Status == "Selected") {
+            $("#btnApply").hide();
+        }
+        else {
+            $("#btnApply").show();
+        }
+    }
+
+    //function Clear() {
+    //    $("#JobPostingId").val("");
+    //    $("#EmployeeId").val("");
+    //    $("#ApplicantId").val("");
+    //    $("#IsActive").val("");
+    //}
+
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "ApplyJobs")';
+        window.location.href = url;
+    }
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "ApplyJobs")';
+        window.location.href = url;
+    }
+
+
+</script>
+

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Models.HRInteractionBO>
+
+<table class="table" id="HRInteractionGrid">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Applicant Name     
+            </th>
+            <th style="text-align:center">
+                Subject
+            </th>
+            <th style="text-align:center">
+                Request Date
+            </th>
+            <th style="text-align:center">
+                Response Date
+            </th>
+            <th style="text-align:center">
+                Status
+            </th>
+            <th style="text-align:center">
+                Comments
+            </th>        
+            <th style="text-align:center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyUser">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="text-align:center" id='@item.RequestId'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center" cursor:pointer" onclick="Edit(@item.RequestId);">@item.ApplicantName</td>
+                <td style="text-align:center">@item.Subject</td>
+                <td style="text-align:center">@item.RequestDate</td>
+                <td style="text-align:center">@item.ResponseDate</td>
+                <td style="text-align:center">@item.Status</td>
+                <td style="text-align:center">@item.Comments</td>
+                <td style='width:110px;text-align:center;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewHRDetails(@item.RequestId);'>&nbsp;&nbsp;</i> </a>
+                    <a href='#custom-modal' data-animation='corner'><i class="mdi mdi-pencil " onclick='Edit(@item.RequestId);'>&nbsp;&nbsp;</i> </a>
+                    <a href='#custom-modal' data-animation='corner'><i class="mdi mdi-delete" onclick='DeleteHR(@item.RequestId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Models.RejectedJobsListBO>
+
+<table class="table" id="RejectedJobsGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+            <th style="vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Job Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Job Description
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Job Location
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                No Of Positions
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Rejected Date
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Comments
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyRejected">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;text-align:center;'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td>@item.JobName</td>
+                <td>@item.JobDescription</td>
+                <td>@item.JobLocation</td>
+                <td>@item.NoOfPositions</td>
+                <td>@item.RejectedDate</td>
+                <td>@item.Status</td>
+                <td>@item.Comments</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

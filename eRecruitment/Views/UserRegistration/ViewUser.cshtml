@@ -1,0 +1,187 @@
+﻿@model Models.UserRegistrationBO
+<div class="vd_content-section clearfix">
+    <div class="custom-modal-text">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="text-center vd_info-parent">
+                    <img src="@ViewBag.ImagePath" id="image" style="width:150px;height:160px" />
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> First Name :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.FirstName)
+                    </div>
+                </div>
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b>Middle Name:</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.MiddleName)
+                    </div>
+                </div>
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Last Name :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.LastName)
+                    </div>
+                </div>
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b>Gender :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.Gender)
+                    </div>
+                </div>
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Mobile Number :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.MobileNumber)
+                    </div>
+                </div>
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b>Alternate Number:</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.AlternateMobileNumber)
+                    </div>
+                </div>
+            </div>
+        </div>
+        &nbsp;
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b>Email Address:</b></label>
+                    <div class="col-sm-7 ">
+                        @Html.DisplayFor(model => model.EmailAddress)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Language :</b></label>
+                    <div class="col-sm-7 ">
+                        @Html.DisplayFor(model => model.Language)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Qualification :</b></label>
+                    <div class="col-sm-7 ">
+                        @Html.DisplayFor(model => model.Qualification)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> College :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.College)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> University :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.University)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Percentage:</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.AggregatePercentage)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Joining Date :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.JoiningDate)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Country :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.Country)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> State :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.State)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> City :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.City)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Location :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.Location)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> User Type :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.UserType)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> User Role :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.UserRole)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Donor Program :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.DonorProgram)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Department :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.Department)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"><b> Address :</b></label>
+                    <div class="col-sm-7">
+                        @Html.DisplayFor(model => model.Address)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+   
+
+
+

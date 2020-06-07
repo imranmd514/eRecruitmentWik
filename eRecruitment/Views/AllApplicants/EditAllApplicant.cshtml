@@ -1,0 +1,612 @@
+﻿@model Models.AllApplicantsBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicants</a></li>
+                <li class="breadcrumb-item active">All Applicants</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i><b>All Applicants</b></h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-xs btn-rounded w-md" onclick="OnSubmitApproveApplicant();">ShortList</button>
+                    <button type="button" class="btn btn-danger btn-xs btn-rounded w-md" onclick="RejectApplicant();">Reject</button>
+                    @*<button type="button" class="btn btn-primary btn-xs btn-rounded w-md" onclick="OnHoldApplicant();">On Hold</button>*@
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="vd_content-section clearfix">
+            <div class="custom-modal-text">
+                <div id="profile-tab" class="tab-pane active">
+                    <div class="pd-15">
+                        <div class="row">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse1" style="width:705%;text-align:left"><i class="mdi mdi-account-multiple"></i> Applicant Information</button>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse in">
+                                <div class="row">
+                                    @Html.HiddenFor(m => m.ApplicantId)
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">First Name :<span class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "FirstName", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Middle Name :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", id = "MiddleName", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Last Name :<span class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "LastName", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Mobile Number :<span class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Alternative Phone Number :<span class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.AlternativePhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", id = "EmailAddress", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Appplication Letter :</label>
+                                            <div class="col-sm-7 controls">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.SaveApplicationLetter != null && Model.SaveApplicationLetter != "")
+                                                    {
+                                                        @Html.ActionLink(Model.ApplicationLetter, "DownloadApplicationLetter", new { fileSavedName = Model.SaveApplicationLetter, fileActualName = Model.ApplicationLetter })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Address :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.AppliAddress, new { @class = "form-control", id = "Address", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Resume :<span class="vd_red">*</span>:</label>
+                                            @Html.HiddenFor(m => m.Resume)
+                                            @Html.HiddenFor(m => m.ResumeSaved)
+                                            <div class="col-sm-7 controls">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.ResumeSaved != null && Model.ResumeSaved != "")
+                                                    {
+                                                        @Html.ActionLink(Model.Resume, "DownloadResume", new { fileSavedName = Model.ResumeSaved, fileActualName = Model.Resume })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Citizen ShipId Copy :</label>
+                                            <div class="col-sm-7 controls">
+                                                @if (Model.CitizenShipIdSaveCopy != null && Model.CitizenShipIdSaveCopy != "")
+                                                {
+                                                    @Html.ActionLink(Model.CitizenShipIdCopy, "DownloadCitizenShipIdCopy", new { fileSavedName = Model.CitizenShipIdSaveCopy, fileActualName = Model.CitizenShipIdCopy })
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse2" style="width:750%;text-align:left"><i class="mdi mdi-account"></i> Qualification Details </button>
+                                </h4>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse ">
+                                <div class="row">
+                                    @Html.HiddenFor(m => m.ApplicantId)
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Bachelors :</label>
+                                            <div class="col-sm-7">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.SaveBachelors != null && Model.SaveBachelors != "")
+                                                    {
+                                                        @Html.ActionLink(Model.Bachelors, "DownloadBachelors", new { fileSavedName = Model.SaveBachelors, fileActualName = Model.Bachelors })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Diploma :</label>
+                                            <div class="col-sm-7">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.SaveDiploma != null && Model.SaveDiploma != "")
+                                                    {
+                                                        @Html.ActionLink(Model.Diploma, "DownloadDiploma", new { fileSavedName = Model.SaveDiploma, fileActualName = Model.Diploma })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">MSC :</label>
+                                            <div class="col-sm-7">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.SaveMSC != null && Model.SaveMSC != "")
+                                                    {
+                                                        @Html.ActionLink(Model.MSC, "DownloadMSC", new { fileSavedName = Model.SaveMSC, fileActualName = Model.MSC })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">PHD :</label>
+                                            <div class="col-sm-7">
+                                                @if (Model != null)
+                                                {
+                                                    if (Model.SavePHD != null && Model.SavePHD != "")
+                                                    {
+                                                        @Html.ActionLink(Model.PHD, "DownloadPHD", new { fileSavedName = Model.SavePHD, fileActualName = Model.PHD })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Start Date :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">End Date :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Discipline :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.Discipline, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">University :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Nationality :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.Nationality, new { @class = "form-control", id = "Nationality", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Degree :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.Degree, new { @class = "form-control", id = "Degree", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">CSS :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.CreditScoreClass, new { @class = "form-control", id = "CSS", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse3" style="width:740%;text-align:left"><i class="mdi mdi-account"></i> Employment History </button>
+                                </h4>
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse ">
+                                <div class="row">
+                                    @Html.HiddenFor(m => m.ApplicantId)
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Employer Name :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.EmployerName, new { @class = "form-control", id = "EmployerName", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Type Of Industry :</label>
+                                            <div class="col-sm-7">
+
+                                                @Html.TextBoxFor(model => model.TypeOfIndustry, new { @class = "form-control", id = "TypeOfIndustry", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Telephone Number :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.TelephoneContact, new { @class = "form-control", id = "TelephoneContact", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Job Title :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control", id = "JobTitle", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">City :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.City, new { @class = "form-control", id = "City", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Start Date :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "QuaStartDate", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">End Date :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "QuaEndDate", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Responsibility :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.Responsibility, new { @class = "form-control", id = "Responsibility", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Monthly Salary :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.MonthlySalary, new { @class = "form-control", id = "MonthlySalary", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Notice Period :</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.NoticePeriod, new { @class = "form-control", id = "NoticePeriod", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-9"><h3> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Comments :</h3></div>
+                            <div class="col-lg-3">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-sm-12">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-3"><b>Comments :</b><span class="text-danger">*</span></label>
+                                <div class="col-sm-5">
+                                    @Html.TextAreaFor(model => model.Comments, new { @placeholder = "Comments", @class = "form-control", id = "Comments" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div><!-- end wrapper -->
+    </div> <!-- end col -->
+</div>
+
+
+<script type="text/javascript">
+
+    var data = new FormData();
+
+    function OnSubmitApproveApplicant() {
+        var str = "";
+        if ($("#Comments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var ApplicantId = $("#ApplicantId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Address = $("#Address").val();
+            var Resume = $("#Resume").val();
+            var ResumeSaved = $("#ResumeSaved").val();
+            var Comments = $("#Comments").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "PhoneNumber": PhoneNumber,
+                "EmailAddress": EmailAddress,
+                "Address": Address,
+                "Resume": Resume,
+                "ResumeSaved": ResumeSaved,
+                "Comments": Comments,
+                "IsActive": IsActive,
+            }
+            SaveApprovedApplicant(Data);
+        }
+
+
+        function SaveApprovedApplicant(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../AllApplicants/saveApprovedApplicant',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "All Applicants created successfully !!", 'top-right', '#5ba035', 'success');
+                        GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+
+    function RejectApplicant() {
+        var str = "";
+        if ($("#Comments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+
+            var ApplicantId = $("#ApplicantId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Address = $("#Address").val();
+            var Resume = $("#Resume").val();
+            var Comments = $("#Comments").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "PhoneNumber": PhoneNumber,
+                "EmailAddress": EmailAddress,
+                "Address": Address,
+                "Resume": Resume,
+                "Comments": Comments,
+                "IsActive": IsActive,
+            }
+
+            SaveRejectedApplicant(Data);
+        }
+
+        function SaveRejectedApplicant(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../AllApplicants/saveRejectedApplicant',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+    function OnHoldApplicant() {
+        var str = "";
+
+        if ($("#Comments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+
+            var ApplicantId = $("#ApplicantId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Address = $("#Address").val();
+            var Resume = $("#Resume").val();
+            var Comments = $("#Comments").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "PhoneNumber": PhoneNumber,
+                "EmailAddress": EmailAddress,
+                "Address": Address,
+                "Resume": Resume,
+                "Comments": Comments,
+                "IsActive": IsActive,
+            }
+            SaveOnHoldApplicant(Data);
+        }
+
+        function SaveOnHoldApplicant(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../AllApplicants/saveonHoldApplicant',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "AllApplicants")';
+        window.location.href = url;
+    }
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "AllApplicants")';
+        window.location.href = url;
+    }
+
+</script>

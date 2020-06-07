@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Models.ApplicantRefereesBO>
+
+<table class="table" id="ApplicantRefereesGrid">
+    <thead>
+        <tr class="TableHeader">
+            <th style="width:50px;vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                First Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Second Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Position
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                RelationShip
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Organization
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Telephone Contact
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Email Address
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbody">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="cursor:pointer">@item.EmpFirstName</td>
+                <td>@item.SecondName</td>
+                <td>@item.Position</td>
+                <td>@item.RelationshipTOApplicant</td>
+                <td>@item.NameOfTheOrganization</td>
+                <td>@item.TelephoneContact</td>
+                <td>@item.EmpEmailAddress</td>
+                <td>@item.IsActive</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditRefereesData(@item.RefereesId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteRefereesData(@item.RefereesId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+

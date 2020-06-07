@@ -1,0 +1,2051 @@
+﻿@model Models.ApprovedApplicantsBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicants</a></li>
+                <li class="breadcrumb-item active">ShortListed Applicants</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i><b>ShortListed Applicant</b></h4>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ApplicantId)
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-xs btn-rounded w-md" onclick="EvolutionForm(@Model.ApplicantId,@Model.JobId);">Evolution Form</button>
+                    @*<button type="button" class="btn btn-success btn-xs btn-rounded waves-effect waves-light w-md" id="success" onclick="SelectApplicant();">Select</button>
+                        <button type="button" class="btn btn-danger btn-xs btn-rounded w-md" onclick="RejectApplicant();">Reject</button>*@
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="col-sm-12">
+                        <div class="vd_content-section clearfix">
+                            <div class="custom-modal-text">
+                                <div id="profile-tab" class="tab-pane active">
+                                    <div class="pd-15">
+                                        <div class="row">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse1" style="width:651%;text-align:left"><i class="mdi mdi-account"></i> Applicant Information</button>
+                                                </h4>
+                                            </div>
+                                            <div id="collapse1" class="panel-collapse collapse in">
+                                                <br />
+                                                @Html.HiddenFor(model => model.ApplicantId)
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <div class="text-center vd_info-parent">
+                                                            <img src="@ViewBag.ImagePath" id="image" style="width:180px;height:190px" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-1"></div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Title :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.Title)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>First Name:</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.FirstName)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Middle Name:</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.MiddleName)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Last Name:</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.LastName)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>DOB :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.DateOfBirth)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Gender :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.Gender)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Id Type :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.IdType)
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Id Type Copy:</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @if (Model.CitizenShipIdCopySavedName != null && Model.CitizenShipIdCopySavedName != "")
+                                                                {
+                                                                @Html.ActionLink(Model.CitizenShipIdCopy, "DownloadCitizenShipIdCopy", new { fileSavedName = Model.CitizenShipIdCopySavedName, fileActualName = Model.CitizenShipIdCopy })
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Country :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.Country)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Email Address :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.EmailAddress)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Phone Number :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.PhoneNumber)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Alternative PhoneNo :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.AlternativePhoneNumber)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Mother Tongue :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.MotherTongue)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Nationality :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.Nationality)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>County :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.County)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Appplication Letter:</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @if (Model != null)
+                                                                {
+                                                                    if (Model.ApplicationLetterSavedName != null && Model.ApplicationLetterSavedName != "")
+                                                                    {
+                                                                @Html.ActionLink(Model.ApplicationLetter, "DownloadApplicationLetter", new { fileSavedName = Model.ApplicationLetterSavedName, fileActualName = Model.ApplicationLetter })
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>CV :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @if (Model != null)
+                                                                {
+                                                                    if (Model.CVSavedName != null && Model.CVSavedName != "")
+                                                                    {
+                                                                @Html.ActionLink(Model.CV, "DownloadResume", new { fileSavedName = Model.CVSavedName, fileActualName = Model.CV })
+                                                                    }
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Special Need :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.SpecialNeed)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>SpecialNeed Details :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.SpecialNeedDetails)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="row mgbt-sm-0">
+                                                            <label class="col-sm-6"><b>Address :</b></label>
+                                                            <div class="col-sm-6 controls">
+                                                                @Html.DisplayFor(model => model.Address)
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <h4><u>Details Who Work in WIK</u></h4>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="ApplicantRelationList">
+                                                            @if (Model.ApplicantRelationList != null)
+                                                            {
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="TableHeader">
+                                                                        <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                            #
+                                                                        </th>
+                                                                        <th>
+                                                                            Do you know anyone who work in WIK?
+                                                                        </th>
+                                                                        <th>
+                                                                            Name
+                                                                        </th>
+                                                                        <th>
+                                                                            Relationship
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody id="tbody">
+                                                                    @{
+                                                                            var count = 1;
+                                                                    }
+                                                                    @foreach (var item in Model.ApplicantRelationList)
+                                                                        {
+                                                                        <tr>
+                                                                            <td>@(count++)</td>
+                                                                            <td>@item.AnyoneWorkinWIK</td>
+                                                                            <td>@item.RelativeName </td>
+                                                                            <td>@item.Relationship</td>
+                                                                        </tr>
+                                                                        }
+                                                                </tbody>
+                                                            </table>
+                                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div><h4><u>Language Details</u></h4></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="ApplicantLanguageList">
+                                                            @if (Model.ApplicantLanguageList != null)
+                                                            {
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="TableHeader">
+                                                                        <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                            #
+                                                                        </th>
+                                                                        <th>
+                                                                            Language
+                                                                        </th>
+                                                                        <th>
+                                                                            Read
+                                                                        </th>
+                                                                        <th>
+                                                                            Write
+                                                                        </th>
+                                                                        <th>
+                                                                            Speak
+                                                                        </th>
+                                                                        <th>
+                                                                            Understand
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody id="tbody">
+                                                                    @{
+                                                                            var count = 1;
+                                                                    }
+                                                                    @foreach (var item in Model.ApplicantLanguageList)
+                                                                        {
+                                                                        <tr>
+                                                                            <td>@(count++)</td>
+                                                                            <td>@item.Language</td>
+                                                                            <td>@item.LanguageRead </td>
+                                                                            <td>@item.Write </td>
+                                                                            <td>@item.Speak </td>
+                                                                            <td>@item.Understand</td>
+                                                                        </tr>
+                                                                        }
+                                                                </tbody>
+                                                            </table>
+                                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse2" style="width:961%;text-align:left"><i class="mdi mdi-account"></i> Qualification </button>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse2" class="panel-collapse collapse">
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div id="ApplicantQualificationList" style="overflow-x:scroll;width:99%">
+                                                        @if (Model.ApplicantQualificationList != null)
+                                                        {
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr class="TableHeader">
+                                                                        <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                            #
+                                                                        </th>
+                                                                        <th>
+                                                                            Academic Qualifications
+                                                                        </th>
+                                                                        <th>
+                                                                            Course of Study
+                                                                        </th>
+                                                                        <th>
+                                                                            Name of Institution
+                                                                        </th>
+                                                                        <th>
+                                                                            Start _Date
+                                                                        </th>
+                                                                        <th>
+                                                                            End_Date
+                                                                        </th>
+                                                                        <th>
+                                                                            Attachments
+                                                                        </th>
+                                                                        <th>
+                                                                            Credit/Scores/Class
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody id="tbody">
+                                                                    @{
+                                                                        var count = 1;
+                                                                    }
+                                                                    @foreach (var item in Model.ApplicantQualificationList)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@(count++)</td>
+                                                                            <td>@item.AcademicQualification </td>
+                                                                            <td>@item.Discipline </td>
+                                                                            <td>@item.University </td>
+                                                                            <td>@item.StartDate </td>
+                                                                            <td>@item.EndDate</td>
+                                                                            <td>
+                                                                                @if (Model != null)
+                                                                                {
+                                                                                    if (@item.AttachmentSavedName != null && @item.AttachmentSavedName != "" && @item.AcademicQualificationAttachment != null && @item.AcademicQualificationAttachment != "")
+                                                                                    {
+                                                                                        @Html.ActionLink(@item.AcademicQualificationAttachment, "DownloadQualificationAttachment", new { fileSavedName = @item.AttachmentSavedName, fileActualName = @item.AcademicQualificationAttachment })
+                                                                                    }
+                                                                                }
+
+                                                                            </td>
+                                                                            <td>@item.CreditScoreClass</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div><h4><u>Professional Body Membership</u></h4></div>
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Professional body Membership ?</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.MembershipData)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Name of Professional body :</b> </label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.NameofProfessionalBody)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Membership Number:</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.MembershipNumber)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Validity of Membership:</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.ValidityData)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse3" style="width:682%;text-align:left"><i class="mdi mdi-account"></i> Employment History </button>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse3" class="panel-collapse collapse">
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div id="ApplicantEmploymentList" style="overflow-x:scroll;width:110%">
+                                                        @if (Model.ApplicantEmploymentList != null)
+                                                        {
+                                                        <table class="table table-bordered table-hover">
+                                                            <thead>
+                                                                <tr class="TableHeader" @*style="background-color:#480202"*@>
+                                                                    <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                        #
+                                                                    </th>
+                                                                    <th>
+                                                                        Employer Name
+                                                                    </th>
+                                                                    <th>
+                                                                        TypeOfIndustry
+                                                                    </th>
+                                                                    <th>
+                                                                        Job Title
+                                                                    </th>
+                                                                    <th>
+                                                                        Start Date
+                                                                    </th>
+                                                                    <th>
+                                                                        End Date
+                                                                    </th>
+                                                                    <th>
+                                                                        Responsibility
+                                                                    </th>
+                                                                    <th>
+                                                                        Notice Period
+                                                                    </th>
+                                                                    <th>
+                                                                        Reasonforleaving
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody id="tbody">
+                                                                @{
+                                                                        var count = 1;
+                                                                }
+                                                                @foreach (var item in Model.ApplicantEmploymentList)
+                                                                    {
+                                                                    <tr>
+                                                                        <td>@(count++)</td>
+                                                                        <td>@item.EmployerName </td>
+                                                                        <td>@item.TypeOfIndustry </td>
+                                                                        <td>@item.JobTitle </td>
+                                                                        <td>@item.EmpStartDate </td>
+                                                                        <td>@item.EmpEndDate</td>
+                                                                        <td>@item.Responsibility</td>
+                                                                        <td>@item.NoticePeriod</td>
+                                                                        <td>@item.Reasonforleaving</td>
+                                                                    </tr>
+                                                                    }
+                                                            </tbody>
+                                                        </table>
+                                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*<div><h4><u>Refered By</u></h4></div>
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div id="ApplicantRefereesList" style="overflow-x:scroll;width:110%">
+                                                            @if (Model.ApplicantRefereesList != null)
+                                                            {
+                                                                <table class="table table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr class="TableHeader" @*style="background-color:#480202;font:white">
+                                                                            <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                                #
+                                                                            </th>
+                                                                            <th>
+                                                                                FirstName
+                                                                            </th>
+                                                                            <th>
+                                                                                SecondName
+                                                                            </th>
+                                                                            <th>
+                                                                                Position
+                                                                            </th>
+                                                                            <th>
+                                                                                RelationshipTOApplicant
+                                                                            </th>
+                                                                            <th>
+                                                                                NameOfTheOrganization
+                                                                            </th>
+                                                                            <th>
+                                                                                TelephoneContact
+                                                                            </th>
+                                                                            <th>
+                                                                                EmpEmailAddress
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody id="tbody">
+                                                                        @{
+                                                                            var count = 1;
+                                                                        }
+                                                                        @foreach (var item in Model.ApplicantRefereesList)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@(count++)</td>
+                                                                                <td>@item.EmpFirstName </td>
+                                                                                <td>@item.SecondName </td>
+                                                                                <td>@item.Position </td>
+                                                                                <td>@item.RelationshipTOApplicant </td>
+                                                                                <td>@item.NameOfTheOrganization</td>
+                                                                                <td>@item.TelephoneContact</td>
+                                                                                <td>@item.EmpEmailAddress</td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse4" style="width:801%;text-align:left"><i class="mdi mdi-account"></i> Motivation Skills</button>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse4" class="panel-collapse collapse">
+                                            <br />
+                                            <div class="col-sm-12">
+                                                @*<div class="row">
+                                                    <div><h4><u>Professional Body Membership</u></h4></div>
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Professional body Membership ?</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.MembershipData)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Name of Professional body :</b> </label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.NameofProfessionalBody)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Membership Number:</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.MembershipNumber)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-7"><b>Validity of Membership:</b></label>
+                                                                <div class="col-sm-5">
+                                                                    @Html.DisplayFor(model => model.ValidityData)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                                <div class="row">
+                                                    <div><h4><u>Motivation Skills & Experience</u></h4></div>
+                                                    <div class="col-sm-12">
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-6"><b>Please give details of why you are Applying For this role and how you can demonstrate the Skills Outlined in the Description ?</b></label>
+                                                                <div class="col-sm-6 controls">
+                                                                    @Html.DisplayFor(model => model.JobDescription)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-6"><b>Referer:</b></label>
+                                                                <div class="col-sm-6 controls">
+                                                                    @Html.DisplayFor(model => model.Referer)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row mgbt-sm-0">
+                                                                <label class="col-sm-6"><b>Would You Accept Employment For Less than 6 months?</b></label>
+                                                                <div class="col-sm-6 controls">
+                                                                    @Html.DisplayFor(model => model.ApplicationNote)
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse5" style="width:1173%;text-align:left"><i class="mdi mdi-account"></i> Referees </button>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse5" class="panel-collapse collapse">
+                                            <br />
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div><h4><u>Refered By</u></h4></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div id="ApplicantRefereesList" style="overflow-x:scroll;width:100%">
+                                                                    @if (Model.ApplicantRefereesList != null)
+                                                                {
+                                                                        <table class="table table-bordered table-hover">
+                                                                            <thead>
+                                                                                <tr class="TableHeader" @*style="background-color:#480202;font:white"*@>
+                                                                                    <th style="width:50px;vertical-align:middle;padding-left:30px">
+                                                                                        #
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        FirstName
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        SecondName
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        Position
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        RelationshipTOApplicant
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        NameOfTheOrganization
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        TelephoneContact
+                                                                                    </th>
+                                                                                    <th>
+                                                                                        EmpEmailAddress
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+
+                                                                            <tbody id="tbody">
+                                                                                @{
+                                                                                var count = 1;
+                                                                                }
+                                                                                @foreach (var item in Model.ApplicantRefereesList)
+                                                                            {
+                                                                                    <tr>
+                                                                                        <td>@(count++)</td>
+                                                                                        <td>@item.EmpFirstName </td>
+                                                                                        <td>@item.SecondName </td>
+                                                                                        <td>@item.Position </td>
+                                                                                        <td>@item.RelationshipTOApplicant </td>
+                                                                                        <td>@item.NameOfTheOrganization</td>
+                                                                                        <td>@item.TelephoneContact</td>
+                                                                                        <td>@item.EmpEmailAddress</td>
+                                                                                    </tr>
+                                                                            }
+                                                                            </tbody>
+                                                                        </table>
+                                                                                }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse6" style="width:1019%;text-align:left"><i class="mdi mdi-account"></i> Declaration</button>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse6" class="panel-collapse collapse">
+                                            <br />
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-9"><h4> Section 1) Employment History</h4></div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Has your employment ever been terminated by any organization for any reason? </label>
+                                                                        <div class="col-sm-5" onchange="OnTerminatedIdChange()" disabled>
+                                                                            @if (@Model.TerminatedId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.TerminatedId, "Yes", new { id = "TerminatedId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.TerminatedId, "No", new { id = "TerminatedId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.TerminatedId, "Yes", new { id = "TerminatedId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.TerminatedId, "No", new { id = "TerminatedId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Terminatation, new { @class = "form-control", id = "Terminatation", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Are you currently, or have you ever been, the subject of an investigation or any other process into suspected or alleged misconduct? </label>
+                                                                        <div class="col-sm-5" onchange="OnMisconductIdChange()" disabled>
+                                                                            @if (@Model.MisconductId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.MisconductId, "Yes", new { id = "MisconductId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.MisconductId, "No", new { id = "MisconductId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.MisconductId, "Yes", new { id = "MisconductId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.MisconductId, "No", new { id = "MisconductId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Misconduct, new { @class = "form-control", id = "Misconduct", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Are you currently, or have you ever been, the subject or an investigation or any other process relating to alleged unsatisfactory performance, where you participating in a formal performance management process? </label>
+                                                                        <div class="col-sm-5" onchange="OnManagementIdChange()">
+                                                                            @if (@Model.ManagementId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.ManagementId, "Yes", new { id = "ManagementId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.ManagementId, "No", new { id = "ManagementId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.ManagementId, "Yes", new { id = "ManagementId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.ManagementId, "No", new { id = "ManagementId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Management, new { @class = "form-control", id = "Management", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you ever been a subject of an investigation into suspected or alleged misconduct by you or been the subject of allegations of misconduct during previous employment where such investigation or disciplinary process was not completed including by reason that your employment ended prior to the completion of the investigation process? </label>
+                                                                        <div class="col-sm-5" onchange="OnInvestigationIdChange()">
+                                                                            @if (@Model.InvestigationId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.InvestigationId, "Yes", new { id = "InvestigationId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.InvestigationId, "No", new { id = "InvestigationId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.InvestigationId, "Yes", new { id = "InvestigationId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.InvestigationId, "No", new { id = "InvestigationId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Investigation, new { @class = "form-control", id = "Investigation", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-9"><h4>Section 2) Criminal History / Code of Conduct</h4></div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Are you currently facing charges, yet to be determined, for any criminal offence? </label>
+                                                                        <div class="col-sm-5" onchange="OnCriminalOffenceIdChange()">
+                                                                            @if (@Model.CriminalOffenceId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.CriminalOffenceId, "Yes", new { id = "CriminalOffenceId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.CriminalOffenceId, "No", new { id = "CriminalOffenceId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")}
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.CriminalOffenceId, "Yes", new { id = "CriminalOffenceId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.CriminalOffenceId, "No", new { id = "CriminalOffenceId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.CriminalOffence, new { @class = "form-control", id = "CriminalOffence", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you ever been investigated, arrested, reported for or pleaded or found guilty of any criminal offences, including any road traffic offences or convictions that were not recorded?	</label>
+                                                                        <div class="col-sm-5" onchange="OnConvictionsIdChange()">
+                                                                            @if (@Model.ConvictionsId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.ConvictionsId, "Yes", new { id = "ConvictionsId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.ConvictionsId, "No", new { id = "ConvictionsId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.ConvictionsId, "Yes", new { id = "ConvictionsId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.ConvictionsId, "No", new { id = "ConvictionsId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Convictions, new { @class = "form-control", id = "Convictions", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you, singly or with others been adjudged by a court of law in for any fraud, corruption or other misconduct?</label>
+                                                                        <div class="col-sm-5" onchange="OnCorruptionIdChange()">
+                                                                            @if (@Model.CorruptionId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.CorruptionId, "Yes", new { id = "CorruptionId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.CorruptionId, "No", new { id = "CorruptionId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.CorruptionId, "Yes", new { id = "CorruptionId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.CorruptionId, "No", new { id = "CorruptionId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Corruption, new { @class = "form-control", id = "Corruption", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you ever been the subject of a disciplinary hearing by a professional body (i.e. TSC, IHRM, ICPAK, KISM, IPOA)  </label>
+                                                                        <div class="col-sm-5" onchange="OnDisciplinaryIdChange()">
+                                                                            @if (@Model.DisciplinaryId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.DisciplinaryId, "Yes", new { id = "DisciplinaryId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.DisciplinaryId, "No", new { id = "DisciplinaryId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.DisciplinaryId, "Yes", new { id = "DisciplinaryId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.DisciplinaryId, "No", new { id = "DisciplinaryId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.Disciplinary, new { @class = "form-control", id = "Disciplinary", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you ever been the subject of allegations of conduct by you of a violent and/or sexual nature towards or in relation to a child or children (person under 18 years of age)? </label>
+                                                                        <div class="col-sm-5" onchange="OnRelationToChildIdChange()">
+                                                                            @if (@Model.RelationToChildId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.RelationToChildId, "Yes", new { id = "RelationToChildId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.RelationToChildId, "No", new { id = "RelationToChildId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.RelationToChildId, "Yes", new { id = "RelationToChildId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.RelationToChildId, "No", new { id = "RelationToChildId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.RelationToChild, new { @class = "form-control", id = "RelationToChild", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Have you ever been the subject of allegations of conduct by you of a violent and/or sexual nature towards or in relation to an adult person (over 18 years of age)?  </label>
+                                                                        <div class="col-sm-5" onchange="OnRelationToAdultIdChange()">
+                                                                            @if (@Model.RelationToAdultId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.RelationToAdultId, "Yes", new { id = "RelationToAdultId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.RelationToAdultId, "No", new { id = "RelationToAdultId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.RelationToAdultId, "Yes", new { id = "RelationToAdultId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.RelationToAdultId, "No", new { id = "RelationToAdultId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.RelationToAdult, new { @class = "form-control", id = "RelationToAdult", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-9"><h4>Section 3) Conflict of Interest</h4></div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Is any member of the interview panel leading to this employment a relative or personal friend to you? 	</label>
+                                                                        <div class="col-sm-5" onchange="OnRelativeIdChange()">
+                                                                            @Html.RadioButtonFor(model => model.RelativeId, "Yes", new { id = "RelativeId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.RelativeId, "No", new { id = "RelativeId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <label class="col-sm-7">Do you, your family members, close relatives or personal friends have any direct or indirect interest in any company that has business dealings with WIK?</label>
+                                                                        <div class="col-sm-5" onchange="OnDealingsWithWIKIdChange()">
+                                                                            @if (@Model.DealingsWithWIKId == "Yes")
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.DealingsWithWIKId, "Yes", new { id = "DealingsWithWIKId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.DealingsWithWIKId, "No", new { id = "DealingsWithWIKId", disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                            @Html.RadioButtonFor(model => model.DealingsWithWIKId, "Yes", new { id = "DealingsWithWIKId", disabled = "disabled" })
+                                                                            @Html.Label("Yes", "Yes")
+                                                                            @Html.RadioButtonFor(model => model.DealingsWithWIKId, "No", new { id = "DealingsWithWIKId", @checked = true, disabled = "disabled" })
+                                                                            @Html.Label("No", "No")
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12">
+                                                                    <div class="row mgbt-sm-0">
+                                                                        <div class="col-sm-12">
+                                                                            @Html.TextAreaFor(model => model.DealingsWithWIK, new { @class = "form-control", id = "DealingsWithWIK", @readonly = "true" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-lg-9"><h4>Section 4) Declaration and Acknowledgement</h4></div>
+                                                            <div class="col-lg-3">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div>
+                                                                        <p>
+                                                                            @Html.CheckBoxFor(model => model.Declarationinfo, new { disabled = "disabled" }) I confirm that the information in this declaration is true and correct in every detail. I also understand that the offer of this employment in WIK   has been made on the basis that the information I have provided in connection with my character is true and correct in every detail.
+                                                                        </p>
+
+                                                                        <p>
+                                                                            @Html.CheckBoxFor(model => model.Statement, new { disabled = "disabled" }) I further understand that any false statement or withheld information made in connection to the job offer by
+                                                                            WIK may lead to cancellation of the job offer and / or, in the event that I am employed by WIK, will amount to misconduct and render me
+                                                                            liable to disciplinary action, including termination of Employment.
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<br />
+                                        <div class="row">
+                                            <div class="col-lg-9"><h3> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Comments :</h3></div>
+                                            <div class="col-lg-3">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-sm-12">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-3"><b>Comments   :</b><span class="text-danger">*</span></label>
+                                                <div class="col-sm-5">
+                                                    @Html.TextAreaFor(model => model.Comments, new { @placeholder = "Comments", @class = "form-control", id = "Comments" })
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="vd_content-section clearfix">
+                <div class="custom-modal-text">
+                    <div id="profile-tab" class="tab-pane active">
+                        <div class="pd-15">
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse1" style="width:705%;text-align:left"><i class="mdi mdi-account-multiple"></i> Applicant Information</button>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in">
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">First Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "FirstName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Middle Name :</label>
+                                                <div class="col-sm-7">
+
+                                                    @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", id = "MiddleName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Last Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "LastName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Mobile Number :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Alternative Phone Number :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.AlternativePhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Email Address :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", id = "EmailAddress", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Appplication Letter :</label>
+                                                <div class="col-sm-7 controls">
+
+                                                    @if (Model.ApplicationLetterSavedName != null && Model.ApplicationLetterSavedName != "")
+                                                    {
+                                                        @Html.ActionLink(Model.ApplicationLetterSavedName, "DownloadApplicationLetter", new { fileSavedName = Model.ApplicationLetterSavedName, fileActualName = Model.ApplicationLetter })
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Address  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.AlterAddress, new { @class = "form-control", id = "Address", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Resume :<span class="vd_red">*</span>:</label>
+                                                @Html.HiddenFor(m => m.CV)
+                                                @Html.HiddenFor(m => m.CVSavedName)
+                                                <div class="col-sm-7 controls">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.CVSavedName != null && Model.CVSavedName != "")
+                                                        {
+
+                                                            @Html.ActionLink(Model.CV, "DownloadResume", new { fileSavedName = Model.CVSavedName, fileActualName = Model.CV })
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-6">Citizen ShipId Copy :</label>
+                                                <div class="col-sm-6 controls">
+                                                    @if (Model.CitizenShipIdCopySavedName != null && Model.CitizenShipIdCopySavedName != "")
+                                                    {
+                                                        @Html.ActionLink(Model.CitizenShipIdCopy, "DownloadCitizenShipIdCopy", new { fileSavedName = Model.CitizenShipIdCopySavedName, fileActualName = Model.CitizenShipIdCopy })
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse2" style="width:750%;text-align:left"><i class="mdi mdi-account"></i> Qualification Details </button>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse ">
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Bachelors  :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.BachelorsSavedName != null && Model.BachelorsSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.Bachelors, "DownloadBachelors", new { fileSavedName = Model.BachelorsSavedName, fileActualName = Model.Bachelors })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.Bachelors, new { @class = "form-control", id = "Bachelors", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Diploma  :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.DiplomaSavedName != null && Model.DiplomaSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.Diploma, "DownloadDiploma", new { fileSavedName = Model.DiplomaSavedName, fileActualName = Model.Diploma })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.Diploma, new { @class = "form-control", id = "Diploma", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">MSC :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.MSCSavedName != null && Model.MSCSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.MSC, "DownloadMSC", new { fileSavedName = Model.MSCSavedName, fileActualName = Model.MSC })
+                                                        }
+                                                    }
+
+                                                    @Html.TextBoxFor(model => model.MSC, new { @class = "form-control", id = "MSC", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">PHD :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.PHDSavedName != null && Model.PHDSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.PHD, "DownloadPHD", new { fileSavedName = Model.PHDSavedName, fileActualName = Model.PHD })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.PHD, new { @class = "form-control", id = "PHD", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Start Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">End Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Discipline  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Discipline, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">University  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Nationality  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Nationality, new { @class = "form-control", id = "Nationality", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Degree  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Degree, new { @class = "form-control", id = "Degree", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">CSS  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.CreditScoreClass, new { @class = "form-control", id = "CSS", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse3" style="width:740%;text-align:left"><i class="mdi mdi-account"></i> Employment History </button>
+                                    </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse ">
+                                    <br />
+
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Employer Name  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.EmployerName, new { @class = "form-control", id = "EmployerName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Type Of Industry  :</label>
+                                                <div class="col-sm-7">
+
+                                                    @Html.TextBoxFor(model => model.TypeOfIndustry, new { @class = "form-control", id = "TypeOfIndustry", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Telephone Number  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.TelephoneContact, new { @class = "form-control", id = "TelephoneContact", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Job Title  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control", id = "JobTitle", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">City  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control", id = "City", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Start Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "QuaStartDate", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">End Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "QuaEndDate", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Responsibility  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Responsibility, new { @class = "form-control", id = "Responsibility", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Monthly Salary  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.MonthlySalary, new { @class = "form-control", id = "MonthlySalary", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Notice Period  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.NoticePeriod, new { @class = "form-control", id = "NoticePeriod", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-9"><h3> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Comments :</h3></div>
+                                <div class="col-lg-3">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-3"><b>Comments   :</b><span class="text-danger">*</span></label>
+                                    <div class="col-sm-5">
+                                        @Html.TextAreaFor(model => model.Comments, new { @placeholder = "Comments", @class = "form-control", id = "Comments" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+
+        @*<div class="vd_content-section clearfix">
+                <div class="custom-modal-text">
+                    <div id="profile-tab" class="tab-pane active">
+                        <div class="pd-15">
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse1" style="width:705%;text-align:left"><i class="mdi mdi-account-multiple"></i> Applicant Information</button>
+                                    </h4>
+                                </div>
+                                <div id="collapse1" class="panel-collapse collapse in">
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">First Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", id = "FirstName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Middle Name :</label>
+                                                <div class="col-sm-7">
+
+                                                    @Html.TextBoxFor(model => model.MiddleName, new { @class = "form-control", id = "MiddleName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Last Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", id = "LastName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Mobile Number :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Alternative Phone Number :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.AlternativePhoneNumber, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Email Address :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", id = "EmailAddress", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Appplication Letter :</label>
+                                                <div class="col-sm-7 controls">
+
+                                                    @if (Model.ApplicationLetterSavedName != null && Model.ApplicationLetterSavedName != "")
+                                                    {
+                                                        @Html.ActionLink(Model.ApplicationLetterSavedName, "DownloadApplicationLetter", new { fileSavedName = Model.ApplicationLetterSavedName, fileActualName = Model.ApplicationLetter })
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Address  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.AlterAddress, new { @class = "form-control", id = "Address", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Resume :<span class="vd_red">*</span>:</label>
+                                                @Html.HiddenFor(m => m.CV)
+                                                @Html.HiddenFor(m => m.CVSavedName)
+                                                <div class="col-sm-7 controls">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.CVSavedName != null && Model.CVSavedName != "")
+                                                        {
+
+                                                            @Html.ActionLink(Model.CV, "DownloadResume", new { fileSavedName = Model.CVSavedName, fileActualName = Model.CV })
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-6">Citizen ShipId Copy :</label>
+                                                <div class="col-sm-6 controls">
+                                                    @if (Model.CitizenShipIdCopySavedName != null && Model.CitizenShipIdCopySavedName != "")
+                                                    {
+                                                        @Html.ActionLink(Model.CitizenShipIdCopy, "DownloadCitizenShipIdCopy", new { fileSavedName = Model.CitizenShipIdCopySavedName, fileActualName = Model.CitizenShipIdCopy })
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse2" style="width:750%;text-align:left"><i class="mdi mdi-account"></i> Qualification Details </button>
+                                    </h4>
+                                </div>
+                                <div id="collapse2" class="panel-collapse collapse ">
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Bachelors  :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.BachelorsSavedName != null && Model.BachelorsSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.Bachelors, "DownloadBachelors", new { fileSavedName = Model.BachelorsSavedName, fileActualName = Model.Bachelors })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.Bachelors, new { @class = "form-control", id = "Bachelors", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Diploma  :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.DiplomaSavedName != null && Model.DiplomaSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.Diploma, "DownloadDiploma", new { fileSavedName = Model.DiplomaSavedName, fileActualName = Model.Diploma })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.Diploma, new { @class = "form-control", id = "Diploma", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">MSC :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.MSCSavedName != null && Model.MSCSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.MSC, "DownloadMSC", new { fileSavedName = Model.MSCSavedName, fileActualName = Model.MSC })
+                                                        }
+                                                    }
+
+                                                    @Html.TextBoxFor(model => model.MSC, new { @class = "form-control", id = "MSC", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">PHD :</label>
+                                                <div class="col-sm-7">
+                                                    @if (Model != null)
+                                                    {
+                                                        if (Model.PHDSavedName != null && Model.PHDSavedName != "")
+                                                        {
+                                                            @Html.ActionLink(Model.PHD, "DownloadPHD", new { fileSavedName = Model.PHDSavedName, fileActualName = Model.PHD })
+                                                        }
+                                                    }
+                                                    @Html.TextBoxFor(model => model.PHD, new { @class = "form-control", id = "PHD", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Start Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">End Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Discipline  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Discipline, new { @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">University  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.University, new { @class = "form-control", id = "University", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Nationality  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Nationality, new { @class = "form-control", id = "Nationality", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Degree  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Degree, new { @class = "form-control", id = "Degree", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">CSS  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.CreditScoreClass, new { @class = "form-control", id = "CSS", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse3" style="width:740%;text-align:left"><i class="mdi mdi-account"></i> Employment History </button>
+                                    </h4>
+                                </div>
+                                <div id="collapse3" class="panel-collapse collapse ">
+                                    <br />
+
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Employer Name  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.EmployerName, new { @class = "form-control", id = "EmployerName", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Type Of Industry  :</label>
+                                                <div class="col-sm-7">
+
+                                                    @Html.TextBoxFor(model => model.TypeOfIndustry, new { @class = "form-control", id = "TypeOfIndustry", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Telephone Number  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.TelephoneContact, new { @class = "form-control", id = "TelephoneContact", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Job Title  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control", id = "JobTitle", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">City  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.City, new { @class = "form-control", id = "City", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Start Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaStartDate, new { @class = "form-control", id = "QuaStartDate", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">End Date  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.QuaEndDate, new { @class = "form-control", id = "QuaEndDate", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Responsibility  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.Responsibility, new { @class = "form-control", id = "Responsibility", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Monthly Salary  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.MonthlySalary, new { @class = "form-control", id = "MonthlySalary", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Notice Period  :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.NoticePeriod, new { @class = "form-control", id = "NoticePeriod", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-9"><h3> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Comments :</h3></div>
+                                <div class="col-lg-3">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-3"><b>Comments   :</b><span class="text-danger">*</span></label>
+                                    <div class="col-sm-5">
+                                        @Html.TextAreaFor(model => model.Comments, new { @placeholder = "Comments", @class = "form-control", id = "Comments" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function EvolutionForm(iApplicantId, iJobId) {
+        debugger;
+        ShowLoader();
+        var AppliedJobId = iApplicantId;
+        var url = "../ApprovedApplicants/CreateEvaluation?A_iApplicantId=" + iApplicantId + "&A_iJobId=" + iJobId;
+        $(location).attr('href', url);
+    }
+
+    function SelectApplicant() {
+        var str = "";
+        if ($("#Comments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+
+        }
+        else {
+            var ApplicantId = $("#ApplicantId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Address = $("#Address").val();
+            var Resume = $("#Resume").val();
+            var ResumeSaved = $("#ResumeSaved").val();
+            var Comments = $("#Comments").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "PhoneNumber": PhoneNumber,
+                "EmailAddress": EmailAddress,
+                "Address": Address,
+                "Resume": Resume,
+                "Comments": Comments,
+                "IsActive": IsActive,
+            }
+            debugger;
+            SaveSelectedApplicant(Data);
+        }
+
+
+        function SaveSelectedApplicant(Data) {
+            ShowLoader();
+            debugger;
+            $.ajax({
+                url: '../ApprovedApplicants/SaveSelectApplicant',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "Applicant Selected successfully !!", 'top-right', '#5ba035', 'success');
+                        GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+
+    function RejectApplicant() {
+        var str = "";
+        if ($("#Comments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+
+        }
+        else {
+
+            var ApplicantId = $("#ApplicantId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Address = $("#Address").val();
+            var Resume = $("#Resume").val();
+            var ResumeSaved = $("#ResumeSaved").val();
+            var Comments = $("#Comments").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "PhoneNumber": PhoneNumber,
+                "EmailAddress": EmailAddress,
+                "Address": Address,
+                "Resume": Resume,
+                "Comments": Comments,
+                "IsActive": IsActive,
+            }
+
+            debugger;
+
+            SaveRejectedApplicant(Data);
+        }
+
+        function SaveRejectedApplicant(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../ApprovedApplicants/SaveRejectedApplicant',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "Rejected successfully !!", 'top-right', '#5ba035', 'success');
+                        //   GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "ApprovedApplicants")';
+        window.location.href = url;
+    }
+
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "ApprovedApplicants")';
+        window.location.href = url;
+    }
+
+</script>

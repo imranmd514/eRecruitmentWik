@@ -1,0 +1,83 @@
+﻿@model Models.JobStatusBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Jobs</a></li>
+                <li class="breadcrumb-item active">Job Status</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i>Job Status</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="row">
+                        <div class="form-group row">
+                            <div class="top-right" style="margin-left:1100px;">
+                                <div class="col-sm-7">
+                                    @*<button type="button" class="btn btn-success btn-rounded w-md" id="Add" onclick="Add();"><b>Add</b></button>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="table table-bordered table-striped" id="JobStatusGridList">
+
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                </div>
+            </div> <!-- end card-box -->
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HideLoader();
+        GetJobStatusList();
+    });
+
+
+    function GetJobStatusList() {
+        ShowLoader();
+        $.ajax({
+            type: "GET",
+            url:"@Url.Action("GetAllApplicantsJobList", "JobStatus")",
+            data: {
+            },
+            success: function (data) {
+                $("#JobStatusGridList").html(data);
+                $('#ApplyJobStatusGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+    //function ViewApplyJob(iJobPostingId) {
+    //    var Id = iJobPostingId;
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '../ApplyJobs/ViewApplyJob',
+    //        data: {
+    //            iJobPostingId: Id,
+    //        },
+    //        success: function (data) {
+    //            $("#ApplyJobDetails").html(data);
+    //        }
+    //    });
+    //}
+
+</script>

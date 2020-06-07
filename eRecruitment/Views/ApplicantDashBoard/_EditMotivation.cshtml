@@ -1,0 +1,71 @@
+﻿@model Models.ApplicantMotivationBO
+
+
+
+<section>
+    <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3><i class="mdi mdi-account-multiple"></i>&nbsp; Motivation Skills</h3>
+    </div>
+    <hr class="pd-10" />
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group row">
+                <div class="form-group row col-sm-12">
+                    <div style="width:99%;" align="right">
+                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light w-md" onclick="OnSubmitMotivation();">Submit</button>
+                        <button type="button" class="btn btn-primary btn-rounded w-md" onclick="EditMotivation();">Edit</button>
+                        <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="CancelMotivation();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Please give details of why you are Applying For this role and how you can demonstrate the Skills Outlined in the Description ?<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextAreaFor(model => model.JobDescription, new { @placeholder = "Job Description", @class = "form-control", id = "JobDescription", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="pd-10">
+                        <div class="row">
+                            <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i> How Did You Learn About The Vacancy</h4></div>
+                            <div class="col-lg-3">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5"> Friends </label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.Friends, new { @placeholder = "Friends", @class = "form-control", id = "Friends", @readonly = "readonly" })
+                                        </div>
+                                    </div><br />
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">WIKWebsite</label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.WIKWebsite, new { @placeholder = "WIK Website", @class = "form-control", id = "WIKWebsite", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">Social Media</label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.SocialMedia, new { @placeholder = "Social Media", @class = "form-control", id = "SocialMedia", @readonly = "readonly" })
+                                        </div>
+                                    </div><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

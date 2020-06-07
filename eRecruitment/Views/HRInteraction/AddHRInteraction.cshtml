@@ -1,0 +1,184 @@
+﻿@model Models.HRInteractionBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicant</a></li>
+                <li class="breadcrumb-item active">HR Interaction</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i><b>HR Interaction</b></h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="form-group row col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-rounded w-md" onclick="OnSubmit();">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="row">
+                @Html.HiddenFor(m => m.RequestId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Applicant Name <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.ApplicantName, new { @placeholder = "Applicant Name", @class = "form-control", id = "ApplicantName" })
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Email Id<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(model => model.EmailId, new { @placeholder = "Email Id", @class = "form-control", id = "EmailId" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Subject</label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(model => model.Subject, new { @placeholder = "Subject", @class = "form-control", id = "Subject" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Requested Date<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.RequestDate, new { @placeholder = "Request Date", @class = "form-control", id = "RequestDate" })
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Decription</label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(model => model.Description, new { @placeholder = "Decription", @class = "form-control", id = "Decription" })
+                        </div>
+                    </div>
+                </div>
+                
+            </div> <!-- end row -->
+        </div> <!-- end card-box -->        
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+    $("#RequestDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-100y:c+nn',
+        //maxDate: '-1d'
+    });
+
+
+    function OnSubmit() {
+        var str = "";
+        if ($("#ApplicantName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Applicant Name is Required. <br/>";
+        }
+        if ($("#EmailId").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Email Id is Required. <br/>";
+        }
+        if ($("#RequestDate").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Request Date is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var RequestId = $("#RequestId").val();
+            var ApplicantName = $("#ApplicantName").val();
+            var EmailId = $("#EmailId").val();
+            var Subject = $("#Subject").val();
+            var Description = $("#Description").val();
+            var RequestDate = $("#RequestDate").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+
+                "RequestId": RequestId,
+                "ApplicantName": ApplicantName,
+                "EmailId": EmailId,
+                "Subject": Subject,
+                "Description": Description,
+                "RequestDate": RequestDate,
+                "IsActive": IsActive,
+            }
+            SaveHRInteraction(Data);
+        }
+
+        function SaveHRInteraction(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../HRInteraction/saveHRInteraction',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "HR Interaction created successfully !!", 'top-right', '#5ba035', 'success');
+                        GoMenu();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                        
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+    function Clear() {
+
+        $("#ApplicantName").val("");
+        $("#EmailId").val("");
+        $("#Subject").val("");
+        $("#Description").val("");
+        $("#RequestDate").val("");
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "HRInteraction")';
+        window.location.href = url;
+    }
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "HRInteraction")';
+        window.location.href = url;
+    }
+
+</script>

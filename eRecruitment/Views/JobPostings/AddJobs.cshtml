@@ -1,0 +1,304 @@
+﻿@model Models.PostingJobBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Jobs</a></li>
+                <li class="breadcrumb-item active">Job Posting</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i><b>Job Posting</b></h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+
+        <div class="form-group col-sm-12">
+            <div style="width:100%;" align="right">
+                <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light w-md" onclick="OnSubmitJobPosting();">Submit</button>
+                <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+            </div>
+        </div>
+
+        <div class="card-box">
+            <div class="row">
+                @Html.HiddenFor(m => m.JobPostingId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Name <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobName, new { @placeholder = "Job Name", @class = "form-control", id = "JobName", onchange = "validate(this)", @maxLength = "50" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Code</label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(model => model.JobCode, new { @placeholder = "Job Code", @class = "form-control", id = "JobCode", @maxLength = "50" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Description</label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(model => model.JobDescription, new { @placeholder = "Job Description", @class = "form-control", id = "JobDescription", @maxLength = "1500" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5"> Job Description File</label>
+                        <div class="col-sm-7">
+                            <input type="file" class="form-control" id="JobDescriptionFileAttachment" new { enctype="multipart/form-data" accept=".docx,.doc,.pdf" }>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5"> Job Description File</label>
+                        <div class="col-sm-7">
+                            @if (Model != null)
+                            {
+                                if (Model.JobDescriptionFileSavedName != null && Model.JobDescriptionFileSavedName != "" && Model.JobDescriptionFile != null && Model.JobDescriptionFile != "")
+                                {
+                                    @Html.ActionLink(Model.JobDescriptionFile, "DownloadAttachment", new { fileSavedName = Model.JobDescriptionFileSavedName, fileActualName = Model.JobDescriptionFile })
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Donor Program<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.DonorProgramId, new SelectList(Model.DonorProgramList, "Id", "Value"), "Select Donor Program", new { @class = "form-control", id = "DonorProgram", @maxLength = "7" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">No Of Positions<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.NoOfPositions, new { @placeholder = "No Of Positions Required", @class = "form-control", id = "NoOfPositions", @maxLength = "50" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Location</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobLocation, new { @placeholder = "JobLocation", @class = "form-control", id = "JobLocation", @maxLength = "100" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Timings</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobTimings, new { @placeholder = "Job Timings", @class = "form-control", id = "JobTimings", @maxLength = "200" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job Duration</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobDuration, new { @placeholder = "Job Duration", @class = "form-control", id = "JobDuration", @maxLength = "100" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Qualification<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(model => model.Qualification, new { @placeholder = "Qualification", @class = "form-control", id = "Qualification", @maxLength = "500" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-xs-0">
+                        <label class="col-sm-5">Experience</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.Experience, new { @placeholder = "Experience", @class = "form-control", id = "Experience", @maxLength = "50" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Skills<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(model => model.Skills, new { @placeholder = "Skills", @class = "form-control", id = "Skills", @maxLength = "1000" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">HOD Comments<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(model => model.HOD_Comments, new { @placeholder = "HOD Comments", @class = "form-control", id = "HODComments", @maxLength = "500" })
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div> <!-- end card-box -->
+    </div> <!-- end col -->
+</div>
+
+<script type="text/javascript">
+
+    var data = new FormData();
+
+    function OnSubmitJobPosting() {
+        debugger;
+        var str = "";
+
+        if ($("#JobName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Job Name is Required. <br/>";
+        }
+        if ($("#NoOfPositions").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;No Of Positions is Required. <br/>";
+        }
+        if ($("#Skills").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Skills is Required. <br/>";
+        }
+        if ($("#DonorProgram").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Donor Program is Required. <br/>";
+        }
+        if ($("#Qualification").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Qualification is Required. <br/>";
+        }
+        if ($("#HODComments").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;HOD Comments is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+
+        }
+        else {
+
+            data = new FormData();
+            var JobPostingId = $("#JobPostingId").val();
+            var JobName = $("#JobName").val();
+            var JobCode = $("#JobCode").val();
+            var JobDescription = $("#JobDescription").val();
+            var JobDescriptionFileAttachment = $("#JobDescriptionFileAttachment").val();
+            var NoOfPositions = $("#NoOfPositions").val();
+            var JobLocation = $("#JobLocation").val();
+            var JobTimings = $("#JobTimings").val();
+            var JobDuration = $("#JobDuration").val();
+            var Qualification = $("#Qualification").val();
+            var Experience = $("#Experience").val();
+            var Skills = $("#Skills").val();
+            var IsActive = $("#IsActive").is(':checked');
+            var DonorProgram = $("#DonorProgram").val();
+            var HODComments = $("#HODComments").val();
+
+            // JobDescription
+
+            FileName = "";
+
+            var files = $("#JobDescriptionFileAttachment").get(0).files;
+            if (files.length > 0) {
+                for (j = 0; j < files.length; j++) {
+                    data.append(files[j].name, files[j]);
+                    FileName = files[j].name;
+                }
+            }
+
+            var JobDescriptionFileAttachment = FileName;
+
+
+
+
+            var Data = {
+                "JobPostingId": JobPostingId,
+                "JobName": JobName,
+                "JobCode": JobCode,
+                "JobDescription": JobDescription,
+                "JobDescriptionFile": JobDescriptionFileAttachment,
+                "NoOfPositions": NoOfPositions,
+                "JobLocation": JobLocation,
+                "JobTimings": JobTimings,
+                "JobDuration": JobDuration,
+                "Qualification": Qualification,
+                "Experience": Experience,
+                "Skills": Skills,
+                "IsActive": IsActive,
+                "DonorProgramId": DonorProgram,
+                "HOD_Comments": HODComments
+            }
+            for (var key in Data) {
+                data.append(key, Data[key]);
+            }
+            SaveJob(Data);
+        }
+
+        function SaveJob(Data) {
+            $.ajax({
+                url: '../JobPostings/SaveJobPosting',
+                data: data,
+                type: 'POST',
+                contentType: false,
+                dataType: 'json',
+                encode: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        GoMenu();
+                        $.NotificationApp.send("Success!", "Job status updated successfully !!", 'top-right', '#5ba035', 'success');
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                    }
+                    else {
+                        $.NotificationApp.send("Information!", "Check below fields please " + data, 'top-right', '#da8609', 'warning');
+                    }
+                }
+            });
+        }
+    }
+
+    function Clear() {
+        $("#JobName").val("");
+        $("#JobCode").val("");
+        $("#JobDescription").val("");
+        $("#NoOfPositions").val("");
+        $("#JobLocation").val("");
+        $("#JobTimings").val("");
+        $("#JobDuration").val("");
+        $("#Qualification").val("");
+        $("#Experience").val("");
+        $("#Skills").val("");
+        $("#IsActive").val("");
+        $("#HODComments").val("");
+        $("#DonorProgram")[0].selectedIndex = 0;
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "JobPostings")';
+        window.location.href = url;
+    }
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "JobPostings")';
+        window.location.href = url;
+    }
+
+</script>

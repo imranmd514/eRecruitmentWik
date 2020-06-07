@@ -1,0 +1,246 @@
+﻿@model Models.BranchMasterBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">Branch Master</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-home-variant"></i><b> Branch Master</b></h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-4">
+                <div class="top-right" style="margin-left:40px;">
+                    <button type="button" class="btn btn-success btn-rounded waves-effect waves-light w-md" id="success" onclick="OnSubmitUser();">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-box">
+            @Html.HiddenFor(m => m.BranchId)
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Branch Name<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.BranchName, new { @placeholder = "Branch Name", @class = "form-control", id = "BranchName", @maxLength = "50" })
+                                </div>
+                            </div><br />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Organization Name</label>
+                                <div class="col-sm-7">
+                                      @Html.DropDownListFor(m => m.OrganizationId, new SelectList(Model.getOrganizationList, "Id", "Value"), "Select Type", new { @class = "form-control"})
+                                </div>
+                            </div><br />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Description</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Details, new { @placeholder = "Description", @class = "form-control", id = "Details", @maxLength = "50" })
+                                </div>
+                            </div><br />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Address</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Address, new { @placeholder = "Address", @class = "form-control", id = "Address", @maxLength = "500" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Cell Number<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.CellNumber, new { @placeholder = "Cell Number", @class = "form-control", id = "CellNumber", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Land Number</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.LandNumber, new { @placeholder = "Land Number", @class = "form-control", id = "LandNumber", @maxLength = "50" })
+                                </div>
+                            </div><br />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Email Id<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.EmailId, new { @placeholder = "Email Id", @class = "form-control", id = "EmailId", @maxLength = "50" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Website</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.Website, new { @placeholder = "Website", @class = "form-control", id = "Website", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-xs-0">
+                                <label class="col-sm-5">Is MainBranch</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.IsMainBranch, new { @placeholder = "Is MainBranch", @class = "form-control", id = "IsMainBranch" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">IsActive</label>
+                                <div class="col-sm-6" id="IsActive">
+                                    @Html.CheckBoxFor(model => model.IsActive)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    function OnSubmitUser() {
+        var str = "";
+
+        if ($("#BranchName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Branch Name is Required. <br/>";
+        }
+        if ($("#CellNumber").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;CellNumber is Required. <br/>";
+        }
+        if ($("#EmailId").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Email Id is Required. <br/>";
+        }
+
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var BranchName = $("#BranchName").val();
+            var BranchId = $("#BranchId").val();
+            var OrganizationId = $("#OrganizationId").val();
+            var OrganizationName = $("#OrganizationName").val();
+            var Details = $("#Details").val();
+            var Address = $("#Address").val();
+            var CellNumber = $("#CellNumber").val();
+            var LandNumber = $("#LandNumber").val();
+            var EmailId = $("#EmailId").val();
+            var Website = $("#Website").val();
+            var IsMainBranch = $("#IsMainBranch").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+
+                "BranchName": BranchName,
+                "BranchId": BranchId,
+                "OrganizationId": OrganizationId,
+                "OrganizationName": OrganizationName,
+                "Details": Details,
+                "Address": Address,
+                "CellNumber": CellNumber,
+                "LandNumber": LandNumber,
+                "EmailId": EmailId,
+                "Website": Website,
+                "IsMainBranch": IsMainBranch,
+                "IsActive": IsActive,
+            }
+
+            Save(Data);
+        }
+
+        function Save(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../BranchMaster/SaveBranchMaster',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "BranchMaster created successfully !!", 'top-right', '#5ba035', 'success');
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }   
+
+    //function success() {
+    //    notification("Success", "You successfully Created User ", 'top-right', '#5ba035', 'success');
+    //}
+
+    //function alreadyexists() {
+    //    notification("Oh snap!", "Change a few things up and try submitting again.", 'top-right', '#bf441d', 'Warning');
+    //}
+
+    //function fail() {
+    //    notification("Heads up!", "Submission Failed.", 'top-right', '#da8609', 'error!');
+    //}
+
+
+    function Clear() {
+        $("#BranchName").val("");
+        $("#BranchId").val("");
+        $("#OrganizationId").val("");
+        $("#OrganizationName").val("");
+        $("#Details").val("");
+        $("#Address").val("");
+        $("#CellNumber").val("");
+        $("#LandNumber").val("");
+        $("#EmailId").val("");
+        $("#Website").val("");
+        $("#IsMainBranch").val("");
+        $("#IsActive").val("");
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "BranchMaster")';
+        window.location.href = url;
+    }
+
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "BranchMaster")';
+        window.location.href = url;
+    }
+
+
+
+</script>

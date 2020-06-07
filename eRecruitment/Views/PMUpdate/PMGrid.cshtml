@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Models.PostJobBO>
+
+
+<table class="table" id="AllJobsGrid" align="center">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Job Name
+            </th>
+            <th style="text-align:center">
+                Job Code
+            </th>
+            <th style="text-align:center">
+                Job Description
+            </th>
+            <th style="text-align:center">
+                Donor Program
+            </th>
+            <th style="text-align:center">
+                No Of Postions
+            </th>
+            <th style="text-align:center">
+                Qualification
+            </th>
+            <th style="text-align:center">
+                Skills
+            </th>
+            <th style="text-align:center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyUser">
+        @{
+            var count = 1;
+        }
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+        <tr style="text-align:center" id='@item.JobPostingId'>
+            <td style='width:20px;vertical-align:middle;'>
+                <span class='label label-info'>
+                    @(count++)
+                </span>
+            </td>
+            <td style="text-align:center" cursor:pointer" onclick="ViewApprovedJob(@item.JobPostingId);">@item.JobName</td>
+            <td style="text-align:center">@item.JobCode</td>
+            <td style="text-align:center">@item.JobDescription</td>
+            <td style="text-align:center">@item.DonorProgram</td>
+            <td style="text-align:center">@item.NoOfPositions</td>
+            <td style="text-align:center">@item.Qualification</td>
+            <td style="text-align:center">@item.Skills</td>
+            <td style='width:110px;text-align:center;' class='menu-action'>
+                <a href='#custom-modal' data-animation='corner' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewPMAllJobs(@item.JobPostingId);'></i> </a>&nbsp;&nbsp;
+                <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditPMUpdateGrid(@item.JobPostingId);'></i></a>&nbsp;&nbsp;
+                @*<a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteJobPosting(@item.JobPostingId);'></i> </a>*@
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+
+</table>
+
+
+

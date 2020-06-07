@@ -1,0 +1,44 @@
+﻿@model Models.LocationMasterBO
+
+<div class="col-lg-12">
+    <div class="panel-heading">
+        <div class="card-box col-lg-12">
+            <h3 class="panel-title">&nbsp;&nbsp;&nbsp; <span class="menu-icon"> <i class="fa fa-book"></i></span> Location Entry </h3>
+            <br />
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <form class="form-horizontal" action="#" role="form">
+                        <div class="form-group">
+                            @Html.HiddenFor(m => m.LocationId)
+                            <div class="row mgbt-sm-0">
+                                &nbsp;&nbsp;&nbsp;
+                                <label class="col-sm-4" style="font-size:15px;">Location<span class="text-danger">*</span></label>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(model => model.Location, new { @placeholder = "Location", @class = "form-control", id = "Location", @maxLength = "50" })
+                                </div>
+                            </div><br />
+
+                            <div class="row mgbt-sm-0">
+                                &nbsp;&nbsp;
+                                <label class="col-sm-4" style="font-size:15px;margin-left:5px;">IsActive</label>
+                                <div class="col-sm-6">
+                                    @Html.CheckBoxFor(model => model.IsActive)
+                                </div>
+                            </div><br />
+                            <div class="form-group form-actions">
+                                <div class="col-lg-12">
+                                    <button type="button" class="btn btn-success btn-rounded w-sm" onclick="OnSubmitLocationMaster();">Submit</button>
+                                    <button type="button" class="btn btn-secondary btn-rounded w-sm" onclick="CancelLocationMaster();">Cancel</button>
+                                    <button type="button" class="btn btn-primary btn-rounded w-sm" onclick="ClearLocationMaster();">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

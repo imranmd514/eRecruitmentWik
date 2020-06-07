@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Models.JobApplicantModelBO>
+
+
+<style>
+    .table {
+        width: 95%;
+        margin-left: 30px;
+    }
+</style>
+
+<table class="table" id="AllApplicantsGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+            <th style="vertical-align:middle;">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Applicant Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Gender
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Date Of Birth
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Phone Number
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Job Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyBranch">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr id='@item.ApplicantJobId'>
+                <td style='width:20px;text-align:center;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td>@item.Applicantname</td>
+                <td>@item.Gender</td>
+                <td>@item.DateOfBirth</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.JobName</td>
+                <td>@item.Status</td>
+                <td style='width:100px;text-align:center;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewApplicant(@item.ApplicantJobId);'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Models.ApplicantsListBO>
+
+<table class="table" id="ApplicantsGrid" align="center">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Applicant Name
+            </th>
+            <th style="text-align:center">
+                Qualification 
+            </th>
+            <th style="text-align:center">
+                Mobile number
+            </th>
+            <th style="text-align:center">
+                Email address
+            </th>
+            <th style="text-align:center">
+                Mother tongue
+            </th>
+            <th style="text-align:center">
+                DOB
+            </th>
+            <th style="text-align:center">
+                Gender
+            </th>
+            <th style="text-align:center">
+                Programme
+            </th>
+            <th style="text-align:center">
+                Name of professional body
+            </th>
+            <th style="text-align:center">
+                Membership Number
+            </th>
+            <th style="text-align:center">
+                Validity of Membership 
+            </th>
+            <th style="text-align:center">
+                Subject
+            </th>
+            <th style="text-align:center">
+                Status
+            </th>
+            @*<th style="text-align:center">
+                Comments
+            </th>*@
+        </tr>
+    </thead>
+
+    <tbody style="background-color: white" id="tbodyApplicant">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="text-align:center">
+                <td style='width:100px;vertical-align:middle;'>
+                    <span class='label label-warning'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center">@item.FullName</td>
+                <td style="text-align:center">@item.AcademicQualification</td>
+                <td style="text-align:center">@item.PhoneNumber</td>
+                <td style="text-align:center">@item.EmailAddress</td>
+                <td style="text-align:center">@item.MotherTongue</td>
+                <td style="text-align:center">@item.DateOfBirth</td>
+                <td style="text-align:center">@item.Gender</td>
+                <td style="text-align:center">@item.DonorProgram</td>
+                <td style="text-align:center">@item.ProfessionalBodyName</td>
+                <td style="text-align:center">@item.MembershipNumber</td>
+                <td style="text-align:center">@item.Validity</td>
+                <td style="text-align:center">@item.Subject</td>
+                <td style="text-align:center">@item.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

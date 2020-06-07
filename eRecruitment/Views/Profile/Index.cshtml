@@ -1,0 +1,149 @@
+﻿@model Models.ProfileBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Profile</a></li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black"></i>Profile</h4>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="text-center vd_info-parent">
+                        <img src="@ViewBag.ImagePath" id="image" style="width:180px;height:200px" />
+                    </div>
+                </div>
+                @*<div class="col-sm-1"></div>*@
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b> First Name :</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.FirstName)
+                        </div>
+                    </div>
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b>Middle Name:</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.MiddleName)
+                        </div>
+                    </div>
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b> Last Name :</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.LastName)
+                        </div>
+                    </div>
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b>Gender :</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.Gender)
+                        </div>
+                    </div>
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b> Mobile Number :</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.MobileNumber)
+                        </div>
+                    </div>
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b>Alternate Number:</b></label>
+                        <div class="col-sm-7">
+                            @Html.DisplayFor(model => model.AlternateMobileNumber)
+                        </div>
+                    </div>
+
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-3"><b>Email Address:</b></label>
+                        <div class="col-sm-7 ">
+                            @Html.DisplayFor(model => model.EmailAddress)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            &nbsp;
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> Language :</b></label>
+                            <div class="col-sm-7 ">
+                                @Html.DisplayFor(model => model.Language)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> Qualification :</b></label>
+                            <div class="col-sm-7 ">
+                                @Html.DisplayFor(model => model.Qualification)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> Country :</b></label>
+                            <div class="col-sm-7">
+                                @Html.DisplayFor(model => model.Country)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> City :</b></label>
+                            <div class="col-sm-7">
+                                @Html.DisplayFor(model => model.City)
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> User Role :</b></label>
+                            <div class="col-sm-7">
+                                @Html.DisplayFor(model => model.UserRole)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> Department :</b></label>
+                            <div class="col-sm-7">
+                                @Html.DisplayFor(model => model.Department)
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3"><b> Address :</b></label>
+                            <div class="col-sm-7">
+                                @Html.DisplayFor(model => model.Address)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

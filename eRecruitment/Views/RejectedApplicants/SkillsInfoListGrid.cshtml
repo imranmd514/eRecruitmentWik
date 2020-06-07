@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Models.RejectedApplicantsBO>
+
+<table class="table table-bordered table-hover" style="border:1px solid #ddd">
+    <thead>
+        <tr class="TableHeader">
+            <th style="width:50px;vertical-align:middle;padding-left:30px">
+                #
+            </th>
+            <th style="vertical-align:middle;">
+                Skills
+            </th>
+            <th style="vertical-align:middle;">
+                Rating
+            </th>
+            <th style="vertical-align:middle;">
+                Comments
+            </th>
+            @*<th style="vertical-align:middle;">
+                    Action
+                </th>*@
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+            {
+            <tr id='@item.ApplicantSkillId'>
+                <td>@(count++)</td>
+                <td>@item.Skill</td>
+                <td>@item.RatingId</td>
+                <td>@item.EvaluationComments</td>
+                @*<td style='width:100px;vertical-align:middle;' class='menu-action'>
+                        @*<a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditApplicantSkill(@item.ApplicantSkillId);'></i> </a>&nbsp;&nbsp;
+                        <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteApplicantSkill(@item.ApplicantSkillId);'></i> </a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

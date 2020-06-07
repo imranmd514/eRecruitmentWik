@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B365D05E-36CC-412B-B41A-D1F00B106AF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Models</RootNamespace>
+    <AssemblyName>Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddRequisitionByHODBO.cs" />
+    <Compile Include="AdministratorBO.cs" />
+    <Compile Include="AllApplicantsBO.cs" />
+    <Compile Include="AllJobsBO.cs" />
+    <Compile Include="ApplicantBO.cs" />
+    <Compile Include="ApplicantDashboardBO.cs" />
+    <Compile Include="ApplicantEmploymentHistoryBO.cs" />
+    <Compile Include="ApplicantMotivationalSkillBO.cs" />
+    <Compile Include="ApplicantMotivationBO.cs" />
+    <Compile Include="ApplicantPersonalInformationBO.cs" />
+    <Compile Include="ApplicantQualificationBO.cs" />
+    <Compile Include="ApplicantRefereesBO.cs" />
+    <Compile Include="ApplicantRegistrationBO.cs" />
+    <Compile Include="ApplicantRelationBO.cs" />
+    <Compile Include="ApplicantSkillsDetailsBO.cs" />
+    <Compile Include="ApplicantsListBO.cs" />
+    <Compile Include="AppliedJobsModelBO.cs" />
+    <Compile Include="ApplyJobsBO.cs" />
+    <Compile Include="ApplyJobsListBO.cs" />
+    <Compile Include="ApprovedApplicantsBO.cs" />
+    <Compile Include="ApprovedJobsBO.cs" />
+    <Compile Include="ApprovedJobsListBO.cs" />
+    <Compile Include="BranchMasterBO.cs" />
+    <Compile Include="ChangePassWordBO.cs" />
+    <Compile Include="CommonDropDownBO.cs" />
+    <Compile Include="DeclarationBO.cs" />
+    <Compile Include="DonorProgramBO.cs" />
+    <Compile Include="EmailAddressBO.cs" />
+    <Compile Include="EvaluationFormBO.cs" />
+    <Compile Include="HODModelBO.cs" />
+    <Compile Include="HRInteractionBO.cs" />
+    <Compile Include="HRModelBO.cs" />
+    <Compile Include="IdTypeMasterBO.cs" />
+    <Compile Include="JobApplicantModelBO.cs" />
+    <Compile Include="JobMarketingBO.cs" />
+    <Compile Include="JobMarketingListBO.cs" />
+    <Compile Include="JobPostingsBO.cs" />
+    <Compile Include="JobsListBO.cs" />
+    <Compile Include="JobsReportBO.cs" />
+    <Compile Include="JobStatusBO.cs" />
+    <Compile Include="LanguageSpokenBO.cs" />
+    <Compile Include="LocationMasterBO.cs" />
+    <Compile Include="MainMenuBO.cs" />
+    <Compile Include="ManagementBO.cs" />
+    <Compile Include="ManagementRequisitionDetailsBO.cs" />
+    <Compile Include="MarketerBO.cs" />
+    <Compile Include="MenuMasterBO.cs" />
+    <Compile Include="OnHoldJobsBO.cs" />
+    <Compile Include="OrganizationMasterBO.cs" />
+    <Compile Include="PostingJobBO.cs" />
+    <Compile Include="PostJobBO.cs" />
+    <Compile Include="ProfileBO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RejectedApplicantsBO.cs" />
+    <Compile Include="RejectedApplicantsListBO.cs" />
+    <Compile Include="RejectedJobsBO.cs" />
+    <Compile Include="RejectedJobsListBO.cs" />
+    <Compile Include="RolesBO.cs" />
+    <Compile Include="SelectedApplicantsListBO.cs" />
+    <Compile Include="SelectedListBO.cs" />
+    <Compile Include="ShortListDetailsBO.cs" />
+    <Compile Include="ShortListDetailsListBO.cs" />
+    <Compile Include="TypeOfIndustryMasterBO.cs" />
+    <Compile Include="UserMasterBO.cs" />
+    <Compile Include="UserRegistrationBO.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

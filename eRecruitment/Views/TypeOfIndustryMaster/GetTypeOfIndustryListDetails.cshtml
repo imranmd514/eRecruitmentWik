@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Models.TypeOfIndustryMasterBO>
+
+<table class="table" id="TypeOfIndustryMasterGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+
+            <th style="width:50px;vertical-align:middle;padding-left:30px;">
+                #
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Type Of Industry</b>
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Is Active</b>
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Action</b>
+            </th>
+    </thead>
+
+    <tbody id="tbodyTypeOfIndustryMaster" style="text-align:center;">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+            {
+            <tr id='@item.TypeOfIndustryId'>
+                <td>@(count++)</td>
+                <td style="cursor:pointer" onclick="EditTypeOfIndustry(@item.TypeOfIndustryId);"> @item.TypeOfIndustry</td>
+                <td>@item.IsActive</td>
+                <td style="cursor:pointer" onclick="DeleteTypeOfIndustry(@item.TypeOfIndustryId,'TypeOfIndustryMaster');"><i class="mdi mdi-delete"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+

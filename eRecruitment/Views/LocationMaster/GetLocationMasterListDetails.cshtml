@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Models.LocationMasterBO>
+
+<table class="table" id="LocationMasterGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+
+            <th style="width:50px;vertical-align:middle;padding-left:30px;">
+                #
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Location</b>
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Is Active</b>
+            </th>
+            <th style="vertical-align:middle;">
+                <b>Action</b>
+            </th>
+    </thead>
+
+    <tbody id="tbodyLocationMaster" style="text-align:center;">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+            {
+            <tr id='@item.LocationId'>
+                <td>@(count++)</td>
+                <td style="cursor:pointer" onclick="EditLocationMaster(@item.LocationId);"> @item.Location</td>
+                <td>@item.IsActive</td>
+                <td style="cursor:pointer" onclick="DeleteLocationMaster(@item.LocationId,'IdTypeMaster');"><i class="mdi mdi-delete"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+

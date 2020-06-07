@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Models.ApplicantEmploymentHistoryBO>
+
+<table class="table" id="ApplicantEmploymentHistoryGrid">
+    <thead>
+        <tr class="TableHeader">
+            <th style="width:50px;vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Employer Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Type Of Industry 
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Job Title
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Start Date
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                End Date
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Responsibility
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Notice Period
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Reason for leaving
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+               Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbody">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="cursor:pointer">@item.EmployerName</td>
+                <td>@item.TypeOfIndustry</td>
+                <td>@item.JobTitle</td>
+                <td>@item.EmpStartDate</td>
+                <td>@item.EmpEndDate</td>
+                <td>@item.Responsibility</td>
+                <td>@item.NoticePeriod</td>
+                <td>@item.Reasonforleaving</td>
+                <td>@item.IsActive</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditEmploymentHistory(@item.EmploymentHistoryId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteEmploymentHistory(@item.EmploymentHistoryId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+

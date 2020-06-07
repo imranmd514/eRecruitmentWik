@@ -1,0 +1,219 @@
+﻿@model Models.AdministratorBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+                <li class="breadcrumb-item active">Administrator View</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account" style="color:black;"></i>Administrator View</h4>
+        </div>
+    </div>
+    <ul class="nav nav-pills navtab-bg nav-justified">
+        <li class="nav-item">
+            <a href="#Users" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                Users
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Requisitions" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                Requisitions
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Applicants" data-toggle="tab" aria-expanded="false" class="nav-link">
+                Applicants
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Messages" data-toggle="tab" aria-expanded="false" class="nav-link">
+                Messages
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Content" data-toggle="tab" aria-expanded="false" class="nav-link">
+                Content
+            </a>
+        </li>
+    </ul>
+
+    <div class="col-lg-12">
+        <div class="card-box">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Users">
+                    <div class="row">
+                        <div class="form-group row">
+                            <div class="top-right" style="margin-left:20px;">
+                                <div class="col-sm-7">
+                                    <button type="button" class="btn btn-success btn-rounded w-md">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="row mgbt-sm-2">
+                                    <label class="control-label" for="Search">
+                                    </label>
+                                </div>
+                                <div class="input-group" style="margin-left:520px;">
+                                    <input class="form-control" id="Search" placeholder="Search" type="text">
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            User Name<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Id<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Phone Number<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Type<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div><!-- end row -->
+                </div>
+                <div class="tab-pane" id="Requisitions">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="row mgbt-sm-2">
+                                    <label class="control-label" for="Search">
+                                    </label>
+                                </div>
+                                <div class="input-group" style="margin-left:650px;">
+                                    <input class="form-control" id="email" placeholder="Search by Name or Email or MobileNumber" type="text">
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Requistion<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Job Title<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Description<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Experience<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                 </div>
+                <div class="tab-pane" id="Applicants">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="row mgbt-sm-2">
+                                    <label class="control-label" for="Search by Name or Email or MobileNumber ">
+                                    </label>
+                                </div>
+                                <div class="input-group" style="margin-left:650px;">
+                                    <input class="form-control" id="Search" placeholder="Search" type="text">
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Applicant Name<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Phone Number<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Type<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Gender<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Email<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div> <!-- end container -->
+                </div>
+                <div class="tab-pane" id="Messages">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Subject<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Descrpition<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Message From<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div> <!-- end row -->
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+         

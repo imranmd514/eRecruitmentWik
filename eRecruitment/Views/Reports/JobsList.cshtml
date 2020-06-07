@@ -1,0 +1,14 @@
+﻿@model Models.ReportInfoBO
+
+@{
+    ViewBag.Title = "JobsList";
+}
+
+<h2>JobsList</h2>
+
+@*<a id="ReportUrl_Performance" href="@Url.Action("ReportTemplate", "Report", new { ReportName = "Performance", ReportDescription = "Performance Report", Width = 100, Height = 650 })">
+    Performance Report
+</a>*@
+
+
+<iframe id="frmReport" src="@Model.ReportURL" frameborder="0" style="@String.Format("width:{0}%; height: {1}px;", Model.Width, Model.Height)" scrolling="no"></iframe>

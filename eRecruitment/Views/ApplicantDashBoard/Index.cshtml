@@ -1,0 +1,166 @@
+﻿@model Models.ApplicantDashboardBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                <li class="breadcrumb-item active">Applicant Dashboard</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i> Applicant Dashboard</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="panel widget" id="PersonalInformation">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel widget" id="Qualification">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="panel widget" id="Employment">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel widget" id="Motivation">
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- end card-box -->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        GetPersonalInformation();
+        $("#DateOfBirth").datepicker();
+        $("#QuaStartDate").datepicker();
+        $("#QuaEndDate").datepicker();
+        $("#EmpStartDate").datepicker();
+        $("#EmpEndDate").datepicker();
+    });
+
+
+
+    function GetPersonalInformation() {
+        $.ajax({
+            type: "GET",
+            url: '../ApplicantDashBoard/getPersonalInformation',
+            data: {
+            },
+            success: function (data) {
+                $("#PersonalInformation").html(data);
+            }
+        });
+    }
+
+    function GetQualification() {
+        $.ajax({
+            type: "GET",
+            url: '../ApplicantDashBoard/getQualification',
+            data: {
+            },
+            success: function (data) {
+                $("#Qualification").html(data);
+            }
+        });
+    }
+
+    function GetEmployment() {
+        $.ajax({
+            type: "GET",
+            url: '../ApplicantDashBoard/getEmployment',
+            data: {
+            },
+            success: function (data) {
+                $("#Employment").html(data);
+            }
+        });
+    }
+
+    function GetMotivation() {
+        $.ajax({
+            type: "GET",
+            url: '../ApplicantDashBoard/getMotivation',
+            data: {
+            },
+            success: function (data) {
+                $("#Motivation").html(data);
+            }
+        });
+    }
+
+
+    function EditPersonalInformation(Id) {
+        $.ajax({
+            url: '../ApplicantDashBoard/EditPersonalInformation?iApplicantId=' + Id,
+            success: function (data) {
+                $("#PersonalInformation").html(data);
+            }
+        });
+        $('#PersonalInformation').attr("autofocus", "");
+        setTimeout(function () {
+            $('#PersonalInformation').focus()
+        }, 500);
+    }
+
+
+    function EditQualification(Id) {
+        $.ajax({
+            url: '../ApplicantDashBoard/EditQualification?iApplicantId=' + Id,
+            success: function (data) {
+                $("#Qualification").html(data);
+            }
+        });
+        $('#Qualification').attr("autofocus", "");
+        setTimeout(function () {
+            $('#Qualification').focus()
+        }, 500);
+    }
+
+    function EditEmployment(Id) {
+        $.ajax({
+            url: '../ApplicantDashBoard/EditEmploymentHistory?iApplicantId=' + Id,
+            success: function (data) {
+                $("#Employment").html(data);
+            }
+        });
+        $('#Employment').attr("autofocus", "");
+        setTimeout(function () {
+            $('#Employment').focus()
+        }, 500);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>

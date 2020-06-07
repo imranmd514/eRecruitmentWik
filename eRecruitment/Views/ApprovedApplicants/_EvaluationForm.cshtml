@@ -1,0 +1,858 @@
+﻿@model Models.EvaluationFormBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicants</a></li>
+                <li class="breadcrumb-item active">ShortListed Applicants</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i><b>ShortListed Applicant</b></h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-xs btn-rounded waves-effect waves-light w-md" id="success" onclick="SelectApplicant();">Select</button>
+                    <button type="button" class="btn btn-danger btn-xs btn-rounded w-md" onclick="RejectApplicant();">Reject</button>
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                </div>
+            </div>
+        </div>
+      
+        <div class="col-sm-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="col-sm-12">
+                        <div class="vd_content-section clearfix">
+                            <div class="custom-modal-text">
+                                <div id="profile-tab" class="tab-pane active">
+                                    <div class="pd-10">
+                                        <div class="pd-10">
+                                            <div class="row">
+                                                <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i> Applicant Details</h4></div>
+                                                <div class="col-lg-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        @*@Html.HiddenFor(m => m.JobPostingId)*@
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5"> Candidate Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.ApplicantName, new { @class = "form-control", id = "ApplicantName", @readonly = "readonly" })
+                                                </div>
+                                            </div><br />
+                                        </div>
+                                        @Html.HiddenFor(m => m.JobPostingId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Job code :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.JobCode, new { @class = "form-control", id = "JobCode", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(m => m.DonorProgramId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5"> Program Name :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.ProgramName, new { @class = "form-control", id = "ProgramName", @readonly = "readonly" })
+                                                </div>
+                                            </div><br />
+                                        </div>
+                                        @Html.HiddenFor(m => m.HighestQualification)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Highest Qualification :</label>
+                                                <div class="col-sm-7">
+                                                    @Html.TextBoxFor(model => model.HighestQualification, new { @class = "form-control", id = "HighestQualification", @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end row -->
+                                    <br />
+                                    <div class="pd-10">
+                                        <div class="row">
+                                            <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Evaluation Form</h4></div>
+                                            <div class="col-lg-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.ApplicantEvaluationId)
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Communication Skills :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownListFor(m => m.CommunicationSkills, new SelectList(Model.CommunicationSkillList, "Id", "Value"), "Select Skill", new { @class = "form-control", id = "CommunicationSkills" })
+
+                                                </div>
+                                            </div><br />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Experienced :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownListFor(m => m.ExperienceId, new SelectList(Model.ExperienceList, "Id", "Value"), "Select Experience", new { @class = "form-control", id = "ExperienceId" })
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Experience :</h4></div>
+                                        <div class="col-lg-3">
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Year :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownListFor(m => m.Year, new SelectList(Model.getYearList, "Id", "Value"), "Select Year", new { @class = "form-control", id = "Year" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row mgbt-sm-0">
+                                                <label class="col-sm-5">Month :<span class="text-danger">*</span></label>
+                                                <div class="col-sm-7">
+                                                    @Html.DropDownListFor(m => m.Month, new SelectList(Model.getMonthsList, "Id", "Value"), "Select Month", new { @class = "form-control", id = "Month" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end row -->
+                                    <br />
+                                    <br />
+                                    <div class="pd-10">
+                                        @Html.HiddenFor(m => m.ApplicantSkillId)
+                                        @Html.HiddenFor(m => m.ApplicantId)
+                                        <div class="row">
+                                            <div class="col-lg-10"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i> Skill Evaluation</h4></div>
+                                            <div class="col-lg-2">
+                                                <div class="col-xs-2">
+                                                    @*<button class="btn btn-primary btn-xs" type="button" id="Add" onclick="SkillAddMore()">Add More</button>*@
+                                                    <button class="btn vd_btn vd_bg-green vd_white" id="btnSubmit" type="button" onclick="OnsubmitSkillInfo()">Save</button>
+                                                    <button class="btn vd_btn vd_bg-red vd_white" id="btnClear" type="button" onclick="ClearSkillInfo()">Clear</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="row mgbt-sm-0">
+                                                    <label class="col-sm-5"> Skills :<span class="text-danger">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        @Html.TextBoxFor(model => model.Skill, new { @class = "form-control", id = "Skill" })
+                                                    </div>
+                                                </div><br />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="row mgbt-sm-0">
+                                                    <label class="col-sm-5">Rating :</label>
+                                                    <div class="col-sm-7">
+                                                        @Html.DropDownListFor(m => m.Rating, new SelectList(Model.RatingList, "Id", "Value"), "Select Rating", new { @class = "form-control", id = "Rating" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="row mgbt-sm-0">
+                                                    <label class="col-sm-5">Comments :<span class="text-danger">*</span></label>
+                                                    <div class="col-sm-7">
+                                                        @Html.TextAreaFor(model => model.EvaluationComments, new { @class = "form-control", id = "EvaluationComments" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- end row -->
+                                        @*<div class="panel widget" id="SkillsList">
+                                            </div>*@
+                                        <br />
+                                        <div class="row">
+                                            <div class="panel-body table-responsive">
+                                                <div class="panel widget" id="SkillsInfoList">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end wrapper -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</div>
+@*<div class="vd_content-section clearfix">
+    <div class="custom-modal-text">
+        <div id="profile-tab" class="tab-pane active">
+            <div class="pd-10">
+                <div class="pd-10">
+                    <div class="row">
+                        <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i> Applicant Details</h4></div>
+                        <div class="col-lg-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                @Html.HiddenFor(m => m.ApplicantId)
+              @Html.HiddenFor(m => m.JobPostingId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5"> Candidate Name :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.ApplicantName, new { @class = "form-control", id = "ApplicantName", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+                @Html.HiddenFor(m => m.JobPostingId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Job code :</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.JobCode, new { @class = "form-control", id = "JobCode", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.DonorProgramId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5"> Program Name :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.ProgramName, new { @class = "form-control", id = "ProgramName", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+                @Html.HiddenFor(m => m.HighestQualification)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Highest Qualification :</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.HighestQualification, new { @class = "form-control", id = "HighestQualification", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- end row -->
+            <br />
+            <div class="pd-10">
+                <div class="row">
+                    <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Evaluation Form</h4></div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                @Html.HiddenFor(m => m.ApplicantEvaluationId)
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Communication Skills :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.CommunicationSkills, new SelectList(Model.CommunicationSkillList, "Id", "Value"), "Select Skill", new { @class = "form-control", id = "CommunicationSkills" })
+
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Experienced :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.ExperienceId, new SelectList(Model.ExperienceList, "Id", "Value"), "Select Experience", new { @class = "form-control", id = "ExperienceId" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-9"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Experience :</h4></div>
+                <div class="col-lg-3">
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Year :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.Year, new SelectList(Model.getYearList, "Id", "Value"), "Select Year", new { @class = "form-control", id = "Year" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Month :<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(m => m.Month, new SelectList(Model.getMonthsList, "Id", "Value"), "Select Month", new { @class = "form-control", id = "Month" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
+            <br />
+            <br />
+            <div class="pd-10">
+                @Html.HiddenFor(m => m.ApplicantSkillId)
+                @Html.HiddenFor(m => m.ApplicantId)
+                <div class="row">
+                    <div class="col-lg-10"><h4> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i> Skill Evaluation</h4></div>
+                    <div class="col-lg-2">
+                        <div class="col-xs-2">
+                            @*<button class="btn btn-primary btn-xs" type="button" id="Add" onclick="SkillAddMore()">Add More</button>
+                            <button class="btn vd_btn vd_bg-green vd_white" id="btnSubmit" type="button" onclick="OnsubmitSkillInfo()">Save</button>
+                            <button class="btn vd_btn vd_bg-red vd_white" id="btnClear" type="button" onclick="ClearSkillInfo()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5"> Skills :<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Skill, new { @class = "form-control", id = "Skill" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Rating :</label>
+                            <div class="col-sm-7">
+                                @Html.DropDownListFor(m => m.Rating, new SelectList(Model.RatingList, "Id", "Value"), "Select Rating", new { @class = "form-control", id = "Rating" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Comments :<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextAreaFor(model => model.EvaluationComments, new { @class = "form-control", id = "EvaluationComments" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end row -->
+                @*<div class="panel widget" id="SkillsList">
+                    </div>
+                <br />
+                <div class="row">
+                    <div class="panel-body table-responsive">
+                        <div class="panel widget" id="SkillsInfoList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end wrapper -->
+</div>*@
+
+<script type="text/javascript">
+
+    var kInx = 0;
+    var data = new FormData();
+    $(document).ready(function () {
+        HideLoader();
+        //  LoadSkillInfoGrid(ApplicantId);
+    });
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "ApprovedApplicants")';
+        window.location.href = url;
+    }
+
+
+
+    function SelectApplicant() {
+        debugger;
+        var str = "";
+        if ($("#CommunicationSkills").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Communication Skill is Required. <br/>"; }
+        if ($("#ExperienceId").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Experience is Required. <br/>"; }
+        if ($("#Year").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Year is Required. <br/>"; }
+        if ($("#Month").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Month is Required. <br/>"; }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields...." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            //var JobPostingId = $("#JobPostingId").val();
+            var ApplicantId = $("#ApplicantId").val();
+            var JobPostingId = $("#JobPostingId").val();
+            var DonorProgramId = $("#DonorProgramId").val();
+            var HighestQualification = $("#HighestQualification").val();
+            var CommunicationSkill = $("#CommunicationSkills").val();
+            var ApplicantExperience = $("#ExperienceId").val();
+            var Year = $("#Year").val();
+            var Month = $("#Month").val();
+
+            var Data = {
+                //"JobPostingId": JobPostingId,
+                "ApplicantId": ApplicantId,
+                "JobPostingId": JobPostingId,
+                "DonorProgramId": DonorProgramId,
+                "HighestQualification": HighestQualification,
+                "CommunicationSkillsId": CommunicationSkill,
+                "ExperienceId": ApplicantExperience,
+                "YearId": Year,
+                "MonthId": Month,
+            }
+            SaveSelectedApplicant(Data);
+        }
+
+    }
+
+    function SaveSelectedApplicant(Data) {
+        debugger;
+        $.ajax({
+            url: '../ApprovedApplicants/SaveSelectApplicant',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "Record Submitted Successfully !!", 'top-right', '#5ba035', 'success');
+                    Cancel();
+                    //notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Submitted Successfully");
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Record Already Exists", 'top-right', '#da8609', 'warning');
+                    // notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Already Exists");
+                }
+                else if (data == "FAIL") {
+                    notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Error in Record Submission");
+                }
+            }
+        });
+    }
+
+    function LoadSkillInfoGrid(ApplicantId) {
+        debugger;
+        var ApplicantId = $("#ApplicantId").val();
+        var JobPostingId = $("#JobPostingId").val();
+        $.ajax({
+            type: "GET",
+            url: '../ApprovedApplicants/getSkillsInfoList',
+            data: {
+                A_iApplicantId: ApplicantId,
+                A_iJobPostingId: JobPostingId
+            },
+            success: function (data) {
+                $("#SkillsInfoList").html(data);
+            }
+        });
+    }
+
+    function RejectApplicant() {
+        debugger;
+        var str = "";
+        if ($("#CommunicationSkills").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Communication Skill is Required. <br/>"; }
+        if ($("#ExperienceId").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Experience is Required. <br/>"; }
+        if ($("#Year").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Year is Required. <br/>"; }
+        if ($("#Month").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Month is Required. <br/>"; }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields...." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var ApplicantId = $("#ApplicantId").val();
+            var JobPostingId = $("#JobPostingId").val();
+            var DonorProgramId = $("#DonorProgramId").val();
+            var HighestQualification = $("#HighestQualification").val();
+            var CommunicationSkill = $("#CommunicationSkills").val();
+            var ApplicantExperience = $("#ExperienceId").val();
+            var Year = $("#Year").val();
+            var Month = $("#Month").val();
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "JobPostingId": JobPostingId,
+                "DonorProgramId": DonorProgramId,
+                "HighestQualification": HighestQualification,
+                "CommunicationSkillsId": CommunicationSkill,
+                "ExperienceId": ApplicantExperience,
+                "YearId": Year,
+                "MonthId": Month,
+            }
+            SaveRejectedApplicant(Data);
+        }
+
+    }
+
+    function SaveRejectedApplicant(Data) {
+        debugger;
+        $.ajax({
+            url: '../ApprovedApplicants/SaveRejectedApplicant',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "Record Submitted Successfully !!", 'top-right', '#5ba035', 'success');
+                    Cancel();
+                    //notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Submitted Successfully");
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Record Already Exists", 'top-right', '#da8609', 'warning');
+                    // notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Already Exists");
+                }
+                else if (data == "FAIL") {
+                    notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Error in Record Submission");
+                }
+            }
+        });
+    }
+
+    function OnsubmitSkillInfo() {
+        debugger;
+        var str = "";
+        if ($("#Skill").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Skill is Required. <br/>"; }
+        //if ($("#Rating").val() == "")
+        //{ str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Rating is Required. <br/>"; }
+        if ($("#EvaluationComments").val() == "")
+        { str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Comments  is Required. <br/>"; }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields...." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var ApplicantSkillId = $("#ApplicantSkillId").val();
+            var JobPostingId = $("#JobPostingId").val();
+            var ApplicantId = $("#ApplicantId").val();
+            var Skill = $("#Skill").val();
+            var RatingId = $("#Rating").val();
+            var EvaluationComments = $("#EvaluationComments").val();
+
+            var SkillsData = {
+                "ApplicantSkillId": ApplicantSkillId,
+                "JobPostingId": JobPostingId,
+                "ApplicantId": ApplicantId,
+                "Skill": Skill,
+                "RatingId": RatingId,
+                "EvaluationComments": EvaluationComments,
+
+            }
+            Save(SkillsData);
+        }
+    }
+
+    function Save(SkillsData) {
+        debugger;
+        $.ajax({
+            url: '../ApprovedApplicants/SaveSkillInfo',
+            data: JSON.stringify(SkillsData),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    ClearSkillInfo();
+                    $.NotificationApp.send("Success!", "Record Submitted Successfully !!", 'top-right', '#5ba035', 'success');
+                    //notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Submitted Successfully");
+                    LoadSkillInfoGrid(ApplicantId);
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Record Already Exists", 'top-right', '#da8609', 'warning');
+                    // notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Record Already Exists");
+                }
+                else if (data == "FAIL") {
+                    notification("topright", "info", "fa fa-info-circle vd_blue", "Info Notification", "Error in Record Submission");
+                }
+            }
+        });
+    }
+
+    function ClearSkillInfo() {
+        $("#Skill").val("");
+        $("#Rating").val("");
+        $("#EvaluationComments").val("");
+    }
+
+    function DeleteApplicantSkill(ApplicantSkillId) {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: '../ApprovedApplicants/DeleteSkillList',
+            data: {
+                A_iApplicantSkillId: ApplicantSkillId,
+            },
+            success: function (data) {
+                if (data == "DELETED") {
+                    $.NotificationApp.send("info!", "Record Deleted Successfully", 'top-right', '#5ba035', 'Info Notification');
+                    LoadSkillInfoGrid(ApplicantId);
+                }
+            }
+        });
+    }
+
+
+    //function SkillAddMore() {
+    //    var Skill = $("#Skill").val();
+    //    var Rating = $("#Rating :selected").text().trim();
+    //    var RatingId = $("#Rating").val();
+    //    var EvaluationComments = $("#EvaluationComments").val();
+
+    //    if ($.trim($("#SkillsList").html()) == '') {
+    //        $("#SkillsList").html("<div class='col-xs-12'><hr class='pd-10'><h4 class='vd_green'>Skills</h4><table class='table table-bordered table-stripped'>" +
+    //                "<thead><tr class='vd_blue'><th>Skill</th><th>Rating</th><th>Comments</th><th></tr></thead>" +
+    //                "<tr><td>" +
+    //                Skill + "</td><td>" +
+    //                Rating + " <input type='hidden' id='hFldRating" + kInx + "' value =" + RatingId + " > </td><td>" +
+    //                EvaluationComments +
+    //                "<td style='cursor:pointer'><i class='fa fa-trash vd_red' onclick=DeleteSkill(" + kInx + ")></i></td></tr></table></div>");
+    //    }
+    //    else {
+    //        $("#SkillsList").find("tbody tr").last().after("<tr><td>" +
+    //         Skill + "</td><td>" +
+    //         Rating + " <input type='hidden' id='hFldRating" + kInx + "' value =" + RatingId + "> </td><td>" +
+    //         EvaluationComments +
+    //        "<td style='cursor:pointer'><i class='mdi mdi-delete vd_red' onclick=DeleteSkill(" + kInx + ")></i></td></tr></table></div>");
+    //    }
+    //    kInx = kInx + 1;
+
+    //    $("#Skill").val("");
+    //    $("#Rating").prop('selectedIndex', 0);
+    //    $("#EvaluationComments").val("");
+    //    $("#loaderRole").hide("");
+    //}
+
+    //function MonthsList(obj) {
+    //    $("#Month").html("");
+    //    $("#Month").append("<option value='' Selected> Select Month</option>");
+    //    var ApplicantId = $("#ExperienceId :selected").val();
+    //    $.ajax({
+    //        type: "GET",
+    //        url: '../ApprovedApplicants/getMonthList',
+    //        data: {
+    //            ApplicantExprienceId: ApplicantId,
+    //        },
+    //        success: function (data) {
+    //            $.each(data, function () {
+    //                $("#Month").append("<option value=" + this.Id + ">" + this.Value + "</option>");
+    //            });
+    //        }
+    //    });
+    //}
+
+
+    //function SelectApplicant() {
+    //    debugger;
+    //    alert("test");
+    //    var ApplicantEvaluationId = $("#hfApplicantEvaluationId").val();
+    //    var CommunicationSkill = $("#CommunicationSkills").val();
+    //    var ApplicantExperience = $("#ExperienceId").val();
+    //    var ApplicantSkillId = $("ApplicantSkillId").val();
+    //    var Year = $("#Year").val();
+    //    var Month = $("#Month").val();
+    //    var IsActive = $("#IsActive").is(':checked');
+
+    //    var objEvaluationFormBO = new Object();
+    //    objEvaluationFormBO.ApplicantSkillDetails = new Array();
+    //    var k = 0;
+
+    //    $("#SkillsList").find("table  > tbody > tr").each(function () {
+    //        objEvaluationFormBO.ApplicantSkillDetails[k] = new Object({
+    //            Skill: $(this).find("td:eq(0)").text(),
+    //            RatingId: $(this).find("td:eq(1) input[type='hidden']").val(),
+    //            Rating: $(this).find("td:eq(2)").text(),
+    //            EvaluationComments: $(this).find("td:eq(3)").text(),
+    //        });
+    //        k = k + 1;
+    //    });
+
+    //    var Data = {
+    //        "ApplicantEvaluationId": ApplicantEvaluationId,
+    //        "CommunicationSkill": CommunicationSkill,
+    //        "ApplicantExperience": ApplicantExperience,
+    //        "ApplicantSkillId": ApplicantSkillId,
+    //        "Year": Year,
+    //        "Month": Month,
+    //        "IsActive": IsActive,
+    //    }
+    //    alert("debugger");
+    //    for (var key in Data) {
+    //        data.append(key, Data[key]);
+    //    }
+    //    debugger;
+
+    //    if (objEvaluationFormBO.ApplicantSkillDetails != null && objEvaluationFormBO.ApplicantSkillDetails.length > 0) {
+    //        for (var i = 0; i < objEvaluationFormBO.ApplicantSkillDetails.length; i++) {
+    //            data.append('ApplicantSkillDetails[' + i + '].Skill', (objEvaluationFormBO.ApplicantSkillDetails[i].Skill == "") ? '' : objEvaluationFormBO.ApplicantSkillDetails[i].Skill);
+    //            data.append('ApplicantSkillDetails[' + i + '].RatingId', (objEvaluationFormBO.ApplicantSkillDetails[i].RatingId == "") ? '' : objEvaluationFormBO.ApplicantSkillDetails[i].RatingId);
+    //            data.append('ApplicantSkillDetails[' + i + '].Rating', (objEvaluationFormBO.ApplicantSkillDetails[i].Rating == "") ? '' : objEvaluationFormBO.ApplicantSkillDetails[i].Rating);
+    //            data.append('ApplicantSkillDetails[' + i + '].EvaluationComments', (objEvaluationFormBO.ApplicantSkillDetails[i].EvaluationComments == "") ? '' : objEvaluationFormBO.ApplicantSkillDetails[i].EvaluationComments);
+    //        }
+    //    }
+    //    debugger;
+    //    SaveSelectedApplicant();
+
+    //    function SaveSelectedApplicant() {
+    //        debugger;
+    //        ShowLoader();
+    //        $.ajax({
+    //            type: "POST",
+    //            url: '../ApprovedApplicants/SaveSelectApplicant',
+    //            data: data,
+    //            contentType: false,
+    //            dataType: 'json',
+    //            encode: true,
+    //            processData: false,
+    //            cache: false,
+    //            success: function (data) {
+    //                if (data == "SUCCESS") {
+    //                    $.NotificationApp.send("Success!", "Applicant Selected successfully !!", 'top-right', '#5ba035', 'success');
+    //                    GoMenu();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //                else if (data == "ALREADY_EXISTS") {
+    //                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+    //                    alreadyexists();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //                else if (data == "FAIL") {
+    //                    fail();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //            }
+    //        });
+    //    }
+    //}
+
+    //function RejectApplicant() {
+    //    ShowLoader();
+    //    var str = "";
+    //    if ($("#Comments").val() == "") {
+    //        str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp;Comments is Required. <br/>";
+    //    }
+    //    if (str != "") {
+    //        $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+    //    }
+    //    else {
+    //        var ApplicantEvaluationId = $("#hfApplicantEvaluationId").val();
+    //        var CommunicationSkill = $("#CommunicationSkills").val();
+    //        var ApplicantExperience = $("#ExperienceId").val();
+    //        var Year = $("#Year").val();
+    //        var Month = $("#Month").val();
+    //        var IsActive = $("#IsActive").is(':checked');
+
+    //        var objApplicantSkills = new Object();
+    //        objApplicantSkills.ApplicantSkillDetails = new Array();
+    //        var k = 0;
+
+    //        $("#SkillsList").find("table  > tbody > tr").each(function () {
+    //            objApplicantSkills.ApplicantSkillDetails[k] = new Object({
+    //                Skill: $(this).find("td:eq(0)").text(),
+    //                RatingId: $(this).find("td:eq(1) input[type='hidden']").val(),
+    //                Rating: $(this).find("td:eq(2)").text(),
+    //                EvaluationComments: $(this).find("td:eq(3)").text(),
+    //            });
+    //            k = k + 1;
+    //        });
+
+    //        var Data = {
+    //            "ApplicantEvaluationId": ApplicantEvaluationId,
+    //            "CommunicationSkill": CommunicationSkill,
+    //            "ApplicantExperience": ApplicantExperience,
+    //            "Year": Year,
+    //            "Month": Month,
+    //            "IsActive": IsActive,
+    //        }
+
+    //        alert("debugger");
+    //        for (var key in Data) {
+    //            data.append(key, Data[key]);
+    //        }
+    //        debugger;
+
+    //        if (objApplicantSkills.ApplicantSkillDetails != null && objApplicantSkills.ApplicantSkillDetails.length > 0) {
+    //            for (var i = 0; i < objApplicantSkills.ApplicantSkillDetails.length; i++) {
+    //                data.append('ApplicantSkillDetails[' + i + '].Skill.', (objApplicantSkills.ApplicantSkillDetails[i].Skill == "") ? '0' : objApplicantSkills.ApplicantSkillDetails[i].Skill);
+    //                data.append('ApplicantSkillDetails[' + i + '].RatingId', (objApplicantSkills.ApplicantSkillDetails[i].RatingId == "") ? '' : objApplicantSkills.ApplicantSkillDetails[i].RatingId);
+    //                data.append('ApplicantSkillDetails[' + i + '].Rating', (objApplicantSkills.ApplicantSkillDetails[i].Rating == "") ? '' : objApplicantSkills.ApplicantSkillDetails[i].Rating);
+    //                data.append('ApplicantSkillDetails[' + i + '].EvaluationComments', (objApplicantSkills.ApplicantSkillDetails[i].EvaluationComments == "") ? '' : objApplicantSkills.ApplicantSkillDetails[i].EvaluationComments);
+    //            }
+    //        }
+
+    //        debugger;
+
+    //        SaveRejectedApplicant(Data);
+    //    }
+
+
+
+    //    function SaveRejectedApplicant(Data) {
+    //        ShowLoader();
+    //        $.ajax({
+    //            type: "POST",
+    //            url: '../ApprovedApplicants/SaveRejectedApplicant',
+    //            data: data,
+    //            contentType: false,
+    //            dataType: 'json',
+    //            encode: true,
+    //            processData: false,
+    //            cache: false,
+    //            success: function (data) {
+    //                if (data == "SUCCESS") {
+    //                    $.NotificationApp.send("Success!", "Shortlisted Applicants created successfully !!", 'top-right', '#5ba035', 'success');
+    //                    //   GoMenu();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //                else if (data == "ALREADY_EXISTS") {
+    //                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+    //                    alreadyexists();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //                else if (data == "FAIL") {
+    //                    fail();
+    //                    setTimeout(function () {
+    //                        HideLoader();
+    //                    }, 500);
+    //                }
+    //            }
+    //        });
+    //    }
+    //}
+
+
+</script>

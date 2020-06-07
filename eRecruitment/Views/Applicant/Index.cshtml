@@ -1,0 +1,88 @@
+﻿@model Models.ApplicantBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper">
+    <div class="container-fluid">
+
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+                <li class="breadcrumb-item active">Applicant</li>
+
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account" style="color:black;"></i>Applicant</h4>
+        </div>
+    </div>
+
+    <ul class="nav nav-pills navtab-bg nav-justified">
+        <li class="nav-item active">
+            <a href="#Applications" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                Applications
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Messages" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                Messages
+            </a>
+        </li>
+    </ul>
+    <div class="col-lg-12">
+        <div class="card-box">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Applications">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Application Id<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Job Title<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="Messages">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                S.No<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Message Subject<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Description<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Message From<br>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+           </div><!-- end of card box -->
+       </div>
+  </div>
+
+

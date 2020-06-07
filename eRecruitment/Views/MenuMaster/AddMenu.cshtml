@@ -1,0 +1,314 @@
+﻿@model Models.MenuMasterBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<style>
+        #pswd_info {
+            position: absolute;
+            top: -60px;
+            left: 210px;
+            width: 350px;
+            padding: 10px;
+            background: #fefefe;
+            font-size: .875em;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px #ccc;
+            border: 1px solid #ddd;
+        }
+
+            #pswd_info h4 {
+                margin: 0 0 5px 0;
+                padding: 0;
+                font-weight: normal;
+            }
+
+            #pswd_info::before {
+                content: "\25B2";
+                position: absolute;
+                top: -12px;
+                left: 45%;
+                font-size: 14px;
+                line-height: 14px;
+                color: #ddd;
+                text-shadow: none;
+                display: block;
+            }
+
+        .invalid {
+            background: url('../../Images/Validation/invalid (2).png') no-repeat 0 50%;
+            padding-left: 22px;
+            line-height: 24px;
+            color: #ec3f41;
+        }
+
+        .valid {
+            background: url('../../Images/Validation/valid.png') no-repeat 0 50%;
+            padding-left: 22px;
+            line-height: 24px;
+            color: #3a7d34;
+        }
+
+        #pswd_info {
+            display: none;
+        }
+    </style>*@
+
+<div class="wrapper">
+  
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+                <li class="breadcrumb-item active">Menu Master</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-dots-vertical"></i>Menu Master</h4>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="form-group row col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-rounded w-md" onclick="OnSubmitMenu();">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+                </div>
+            </div>
+        </div>
+  
+            <div class="card-box">
+                @Html.HiddenFor(m => m.MenuId)
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Menu Name<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.MenuName, new { Placeholder = "Menu Name", @class = "form-control", id = "MenuName", @maxLength = "30" })
+                                </div>
+                            </div><br />
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Parent MenuName<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.ParentMenuId, new { Placeholder = "Parent MenuName", @class = "form-control", id = "ParentMenuId" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Display Order<span class="text-danger">*</span></label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.DisplayOrder, new { Placeholder = "Display Order", @class = "form-control", id = "DisplayOrder" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">PageURL</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.PageURL, new { Placeholder = "Page URL", @class = "form-control", id = "PageURL", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Image URL</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.ImageURL, new { Placeholder = "Image URL", @class = "form-control", id = "ImageURL", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Menu GroupId</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.MenuGroupId, new { Placeholder = "Menu GroupId", @class = "form-control", id = "MenuGroupIds" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Menu Key</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.MenuKey, new { Placeholder = "Menu Key", @class = "form-control", id = "MenuKey", @maxLength = "500" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">faIcon</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.faIcon, new { Placeholder = "faIcon", @class = "form-control", id = "faIcon", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Help URL</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.HelpURL, new { Placeholder = "Help URL", @class = "form-control", id = "HelpURL" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Help DocURL</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.HelpDocURL, new { Placeholder = "Help DocURL", @class = "form-control", id = "HelpDocURL" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Local Video</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.LocalVideo, new { Placeholder = "Local Video", @class = "form-control", id = "LocalVideo", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">Local Document</label>
+                                <div class="col-sm-7">
+                                    @Html.TextBoxFor(model => model.LocalDocument, new { Placeholder = "Local Document", @class = "form-control", id = "LocalDocument", @maxLength = "50" })
+                                </div>
+                            </div><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row mgbt-sm-0">
+                                <label class="col-sm-5">IsActive</label>
+                                <div class="col-sm-6" id="IsActive">
+                                    @Html.CheckBoxFor(model => model.IsActive)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+    });
+
+    function OnSubmitMenu() {
+        var str = "";
+
+        if ($("#MenuName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Menu Name is Required. <br/>";
+        }
+        if ($("#ParentMenuName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Parent MenuName is Required. <br/>";
+        }
+        if ($("#DisplayOrder").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Display Order is Required. <br/>";
+        }
+
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var MenuId = $("#MenuId").val();
+            var MenuName = $("#MenuName").val();
+            var ParentMenuId = $("#ParentMenuId").val();
+            var DisplayOrder = $("#DisplayOrder").val();
+            var PageURL = $("#PageURL").val();
+            var ImageURL = $("#ImageURL").val();
+            var MenuGroupId = $("#MenuGroupIds").val();
+            var MenuKey = $("#MenuKey").val();
+            var faIcon = $("#faIcon").val();
+            var HelpURL = $("#HelpURL").val();
+            var HelpDocURL = $("#HelpDocURL").val();
+            var LocalVideo = $("#LocalVideo").val();
+            var LocalDocument = $("#LocalDocument").val();
+            var IsActive = $("#IsActive").val();
+
+            var Data = {
+                "MenuId": MenuId,
+                "MenuName": MenuName,
+                "ParentMenuId": ParentMenuId,
+                "DisplayOrder": DisplayOrder,
+                "PageURL": PageURL,
+                "ImageURL": ImageURL,
+                "MenuGroupIds": MenuGroupId,
+                "MenuKey": MenuKey,
+                "faIcon": faIcon,
+                "HelpURL": HelpURL,
+                "HelpDocURL": HelpDocURL,
+                "LocalVideo": LocalVideo,
+                "LocalDocument": LocalDocument,
+                "IsActive": IsActive,
+            }
+            Save(Data);
+        }
+
+        function Save(Data) {
+            ShowLoader();
+            $.ajax({
+                url: '../MenuMaster/saveMenuMaster',
+                data: JSON.stringify(Data),
+                type: 'POST',
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        $.NotificationApp.send("Success!", "MenuMaster created successfully !!", 'top-right', '#5ba035', 'success');
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                        alreadyexists();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                    else if (data == "FAIL") {
+                        fail();
+                        setTimeout(function () {
+                            HideLoader();
+                        }, 500);
+                    }
+                }
+            });
+        }
+    }
+
+    function Clear() {
+        $("#MenuName").val("");
+        $("#ParentMenuId").val("");
+        $("#DisplayOrder").val("");
+        $("#PageURL").val("");
+        $("#ImageURL").val("");
+        $("#MenuGroupIds").val("");
+        $("#MenuKey").val("");
+        $("#faIcon").val("");
+        $("#HelpURL").val("");
+        $("#HelpDocURL").val("");
+        $("#LocalVideo").val("");
+        $("#LocalDocument").val("");
+        $("#IsActive").val("");
+    }
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "MenuMaster")';
+        window.location.href = url;
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "MenuMaster")';
+        window.location.href = url;
+    }
+    
+    </script>

@@ -1,0 +1,199 @@
+﻿@model Models.DonorProgramBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">Donor</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-bookmark" style="color:olive;"></i>Donor Program</h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="card-box">
+                    <div class="panel widget">
+                        <div class="form-group">
+                            <div style="width:99%;" align="right">
+                                <button type="button" class="btn btn-success btn-rounded w-md" id="Add" onclick="AddDonor();"><b>Add</b></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="table table-bordered table-striped" id="DonorList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" id="FormPanel">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HideLoader();
+        LoadGrid();
+    });
+
+    function LoadGrid() {
+        ShowLoader();
+        $.ajax({
+            type: "GET",
+            url: '../DonorProgram/GetDonorList',
+            data: {
+            },
+            success: function (data) {
+                $("#DonorList").html(data);
+                $('#DonorGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+
+    function AddDonor() {
+        ShowLoader();
+        $.ajax({
+            url: '../DonorProgram/AddDonor',
+            success: function (data) {
+                $("#FormPanel").html(data);
+                setTimeout(function () {
+                    HideLoader()
+                }, 500);
+            }
+        });
+        $("#FormPanel").show();
+        $('#FormPanel').attr("autofocus", "");
+        setTimeout(function () {
+            $('#FormPanel').focus()
+        }, 500);
+        $("#tbodyDonor").find("tr").each(function () {
+            var thisid = $(this).attr("id");
+            $("#" + thisid + "").removeClass("danger");
+        });
+
+    }
+
+
+
+    function OnSubmitDonor() {
+        var str = "";
+        if ($("#DonorProgram").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Organisation Name is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var DonorProgramId = $("#DonorProgramId").val();
+            var DonorProgram = $("#DonorProgram").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+                "DonorProgramId": DonorProgramId,
+                "DonorProgram": DonorProgram,
+                "IsActive": IsActive,
+            }
+
+            Save(Data);
+        }
+    }
+
+    function Save(Data) {
+        ShowLoader();
+        $.ajax({
+            url: '../DonorProgram/SaveDonor',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "Donor created successfully !!", 'top-right', '#5ba035', 'success');
+                    Clear();
+                    LoadGrid();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    alreadyexists();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "FAIL") {
+                    fail();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+            }
+        });
+    }
+
+
+
+    function Edit(Id) {
+        $.ajax({
+            url: '../DonorProgram/EditDonor?iDonorProgramId=' + Id,
+            success: function (data) {
+                $("#FormPanel").html(data);
+            }
+        });
+        $("#FormPanel").show();
+        $('#FormPanel').attr("autofocus", "");
+        setTimeout(function () {
+            $('#FormPanel').focus()
+        }, 500);
+        $("#tbodyDonor").find("tr").each(function () {
+            var thisid = $(this).attr("id");
+            $("#" + thisid + "").removeClass("danger");
+        });
+    }
+
+
+    function deleteDonor(Id) {
+        $.ajax({
+            type: "POST",
+            url: '../DonorProgram/deleteDonor',
+            data: {
+                iDonorProgramId: Id,
+            },
+            success: function (data) {
+                if (data == "DELETED") {
+                    $.NotificationApp.send("info!", "Donor Deleted Successfully", 'top-right', '#5ba035', 'Info Notification');
+                    LoadGrid();
+                }
+            }
+        });
+    }
+
+    function Clear() {
+        $("#DonorProgram").val("");
+        $("#IsActive").prop("checked", false);
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "DonorProgram")';
+        window.location.href = url;
+    }
+
+
+</script>

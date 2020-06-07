@@ -1,0 +1,177 @@
+﻿@model eRecruitment.Controllers.ViewModels.AccountViewModel
+@using BusinessLayer
+@using Models
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>E-Recruitment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="Windle E-Recruitment" name="description" />
+    <meta content="Windle E-Recruitment" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+
+    <!-- Icons css -->
+    <link href="~/assets/libs/mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/dripicons/webfont/webfont.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <!-- build:css -->
+    <link href="~/assets/css/app.css" rel="stylesheet" type="text/css" />
+    <!-- endbuild -->
+
+    <script src="~/Scripts/Encryption.js"></script>
+    <script type="text/javascript">
+        function encrypt() {
+            debugger;
+            var str = "";
+            if ($("#UserName").val() == "")
+            { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Email address is Required. <br/>"; }
+            if ($("#Password").val() == "")
+            { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Password is Required. <br/>"; }
+            if (str != "") {
+                $.NotificationApp.send("Warning!", "Fields Required" + str + "", 'top-right', '#da8609', 'warning');
+            }
+            else {
+                var OpwdObj = document.getElementById('Password');
+                var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+                hashObj.update(OpwdObj.value);
+
+                var OPhash = hashObj.getHash("HEX");
+                OpwdObj.value = OPhash;
+                debugger;
+                var EmailAddress = $("#UserName").val();
+                var Password = OpwdObj.value;
+
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetPasswordData", "Accounts")",
+                    data: {
+                        A_strEmailAddress: EmailAddress,
+                        A_strPassword: Password
+                    },
+                    success: function (data) {
+                        debugger;
+                        if (data == "FAIL") {
+                            $("#Msgpannel").show();
+                            $("#Msgpannel").html(alert("Invalid Email address or Password"));
+                            $("#UserName").val("");
+                            $("#Password").val("");
+                        }
+                        else {
+                            //$("#Msgpannel").show();
+                            //$("#Msgpannel").html(alert("Valid EmailAddress And Password"));
+                        }
+                    }
+                });
+            }
+        }
+        //function encrypt() {
+        //    debugger;
+        //    var str = "";
+        //    if ($("#Password").val() == "")
+        //    { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Password is Required. <br/>"; }
+        //    if (str != "") {
+        //        $.NotificationApp.send("Warning!", "Fields Required" + str + "", 'top-right', '#da8609', 'warning');
+        //    }
+        //    else {
+        //        var OpwdObj = document.getElementById('Password');
+        //        var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+        //        hashObj.update(OpwdObj.value);
+
+        //        var OPhash = hashObj.getHash("HEX");
+        //        OpwdObj.value = OPhash;
+        //    }
+        //}
+
+    </script>
+
+</head>
+
+<body class="bg-account-pages">
+
+    <!-- Login -->
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    @using (Html.BeginForm("LogOn", "Accounts", FormMethod.Post, new { id = "LoginForm" }))
+                    {
+                        <div class="wrapper-page">
+                            <div class="account-pages">
+                                <div class="account-box">
+                                    <!-- Logo box-->
+                                    <div class="account-logo-box">
+                                        <h2 class="text-uppercase text-center">
+                                            <a href="#" class="text-success">
+                                                <span><img src="@Url.Content("~/assets/images/windle_trust.jpg")" alt="" height="70" width="240"></span>
+                                            </a>
+                                        </h2>
+                                    </div>
+
+                                    <div class="account-content">
+                                        <form>
+                                            <div class="form-group mb-3">
+                                                <label for="emailaddress" class="font-weight-medium">Email address</label>
+                                                <input class="form-control" type="email" id="UserName" name="UserName" required="required" placeholder="Enter your email">
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                <a href="@Url.Action("Index", "PasswordRecovery")" class="text-muted float-right"><small>Forgot your password?</small></a>
+                                                <label for="password" class="font-weight-medium">Password</label>
+                                                <input class="form-control" type="password" required="required" id="Password" name="Password" placeholder="Enter your password">
+                                            </div>
+
+                                            <div class="form-group mb-3">
+                                                @Html.CheckBox("rememberMe") <label for="rememberMe" style="float: none;">Remember me on this device</label>
+                                                @*<input type="checkbox" id="rememberMe" name="rememberMe" />*@
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <div style="color:red;font-weight:bold;font-size:14px;" id="Msgpannel">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row text-center">
+                                                <div class="col-12">
+                                                    <input type="submit" id="btnLogOn" name="btnLogon" onclick="encrypt();" class="btn btn-block btn-success waves-effect waves-light" value="Sign In" />
+                                                </div>
+                                            </div>
+                                        </form> <!-- end form -->
+
+                                        <div class="row mt-3">
+                                            <div class="col-12 text-center">
+                                                <p class="text-muted">Don't have an account? <a href="@Url.Action("Index", "ApplicantRegister")" class="text-blue m-l-5"><b>Sign Up</b></a></p>
+                                                @*<p class="text-muted">Don't have an account? <a href="@Url.Action("Index", "ApplicantEnrolment")" class="text-blue m-l-5"><b>Sign Up</b></a></p>*@
+                                            </div>
+                                        </div> <!-- end row-->
+                                    </div> <!-- end account-content -->
+
+                                </div> <!-- end account-box -->
+                            </div>
+                            <!-- end account-page-->
+                        </div>
+                    <!-- end wrapper-page -->
+                    }
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
+    <!-- END HOME -->
+    <!-- jQuery  -->
+
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/jquery.core.js"></script>
+    <script src="~/assets/js/jquery.app.js"></script>
+
+</body>
+</html>

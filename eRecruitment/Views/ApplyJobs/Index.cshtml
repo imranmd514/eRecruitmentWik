@@ -1,0 +1,136 @@
+﻿@model Models.ApplyJobsBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .modal-header {
+        padding: 12px 12px;
+        background-color: #259dd1;
+    }
+
+        .modal-header .close {
+            margin-top: 2px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            line-height: 20px;
+        }
+</style>
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Jobs</a></li>
+                <li class="breadcrumb-item active">Apply Jobs</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i>Apply Jobs</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <div class="table table-bordered table-striped" id="ApplyJobsList">
+
+                            </div>
+                        </div>
+                    </div><!-- end row -->
+                </div>
+            </div> <!-- end card-box -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div>
+            <!-- sample modal content -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="color:white;" class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i><b> Apply Jobs Details</b></h4>
+                            @*<button type="button" style="color:white" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+                        </div>
+                        <div class="modal-body" id="ApplyJobDetails">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-rounded " data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--  Modal content for the above example -->
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CheckApplicantExist();
+        GetApplyJobsList();
+    });
+
+    function CheckApplicantExist() {
+        debugger;
+        $.ajax({
+            type: "GET",
+            url: '../ApplyJobs/CheckApplicantExist',
+            data: {
+            },
+            success: function (data) {
+                if (data != "") {
+                    alert(data);
+                    GO();
+                    //$.NotificationApp.send("Information!", "Check below fields please " + data, 'top-right', '#da8609', 'warning');
+                    //alert(data);
+                }
+            }
+        });
+    }
+    function GO() {
+        var url = '@Url.Action("Index", "UpdateProfile")';
+        window.location.href = url;
+    }
+    function GetApplyJobsList() {
+        $.ajax({
+            type: "GET",
+            url: '../ApplyJobs/getAppliedJobsList',
+            data: {
+            },
+            success: function (data) {
+                $("#ApplyJobsList").html(data);
+                $('#ApplyJobGrid').DataTable();
+            }
+        });
+    }
+
+
+    function ViewApplyJob(iJobPostingId) {
+        debugger;
+        var Id = iJobPostingId;
+        $.ajax({
+            type: "GET",
+            url: '../ApplyJobs/ViewApplyJob',
+            data: {
+                iJobPostingId: Id,
+            },
+            success: function (data) {
+                $("#ApplyJobDetails").html(data);
+                Hide();
+            }
+        });
+    }
+
+</script>

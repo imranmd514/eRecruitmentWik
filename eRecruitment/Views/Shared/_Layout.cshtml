@@ -1,0 +1,199 @@
+﻿@using Models
+@using BusinessLayer
+
+@{
+    MainMenuBAL objMainMenuBal = new MainMenuBAL();
+    List<MainMenuBO> MenuDetailsListBo = null;
+    if (ViewData["LoginUserId"] != null && ViewData["LoginUserId"].ToString() != "")
+    {
+        MenuDetailsListBo = objMainMenuBal.getUserMenuList(Convert.ToInt32(ViewData["LoginUserId"]));
+    }
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>WIK e-Recruitment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.ico">
+    <!-- Custom box css -->
+    <link href="~/assets/libs/custombox/custombox.min.css" rel="stylesheet">
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+
+    <!-- Toastr css -->
+    <link href="~/assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" />
+
+
+    <!-- Icons css -->
+    <link href="~/assets/libs/mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/dripicons/webfont/webfont.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <!-- build:css -->
+    <link href="~/assets/css/app.css" rel="stylesheet" type="text/css" />
+    @*End*@
+
+    <link href="~/assets/css/app.css" rel="stylesheet" type="text/css" />
+    <!-- endbuild -->
+    <!-- Icons css -->
+
+    <script src="~/AppJS/Masters.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    <script src="~/assets/jquery-ui.js"></script>
+    <link href="~/assets/jquery-ui.css" rel="stylesheet" />
+
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar-->
+    <header id="topnav">
+        <div class="topbar-menu">
+            <div class="container-fluid">
+                <div id="navigation">
+                    <!-- Navigation Menu-->
+                    <ul class="navigation-menu">
+                        <li class="float-left">
+                            <a href="#" class="logo">
+                                <span class="logo-lg">
+                                    <img src="~/assets/images/windle_trust.jpg" height="45" />
+                                </span>
+
+                            </a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-account-group"></i>Dashboard</a>
+                            <ul class="submenu">
+                                <li><a href="@Url.Action("Index", "Home")"><i class="mdi mdi-account"></i> Dashboard</a></li>
+                            </ul>
+                        </li>
+                        @if (MenuDetailsListBo != null)
+                        {
+                            int iMenuId = 0;
+                            foreach (var menuItem in MenuDetailsListBo)
+                            {
+                                if (menuItem.ParentMenuId == 0)
+                                {
+                                    <li class="has-submenu">
+                                        @{
+                                            iMenuId = menuItem.MenuId;
+                                        }
+                                        @if (menuItem.PageURL != null && menuItem.PageURL != "")
+                                        {
+                                            <a href="@Url.Content(menuItem.PageURL)"><i class='@menuItem.faIcon'></i>@menuItem.MenuName</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#"><i class='@menuItem.faIcon'></i>@menuItem.MenuName</a>
+                                        }
+                                        <ul class="submenu">
+                                            @foreach (var subMenuItem in MenuDetailsListBo)
+                                            {
+                                                if (iMenuId == subMenuItem.ParentMenuId)
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Content(subMenuItem.PageURL)">
+                                                            <i class='@subMenuItem.faIcon'></i> @subMenuItem.MenuName
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                                    }
+                                                }
+                                            }
+
+                        <li class="has-submenu">
+                            <a href="#"><i class="mdi mdi-account-group"></i>Profile</a>
+                            <ul class="submenu">
+                                <li><a href="@Url.Action("Index", "Profile")"><i class="mdi mdi-account"></i> Profile</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="@Url.Action("LogOff", "Accounts")"><i class="mdi mdi-account-group"></i>Logoff</a>
+                        </li>
+
+                    </ul>
+                    <!-- End navigation menu -->
+
+                    <div class="clearfix"></div>
+                </div> <!-- end #navigation -->
+            </div> <!-- end container -->
+        </div> <!-- end navbar-custom -->
+    </header>
+    <!-- End Navigation Bar-->
+
+    <div class="blockUI" style="display:none">
+    </div>
+    <div class="blockUI blockOverlay" style="display:none; z-index:1000;border:none;margin:0px;padding:0px;width:100%;height:100%;top:0px;left:0px;cursor:wait;position:absolute;background-color:white;">
+
+    </div>
+    <div class="blockUI blockMsg blockElement" style="display:none; z-index:1100;position:absolute;padding:15px;margin:0px;width:100%;top:0px;text-align:center;height:100%;left:0px;text-align:center;color:rgb(0,0,0);border:none;cursor:wait;background:none">
+        <div style="padding-top:100px;padding-bottom:50px">           
+            <br />
+            <label class="label vd_bg-black vd_yellow" style="font-size:22px;font-family:'Palatino Linotype' "><b> <i class="fa fa-spinner fa-spin append-icon"></i> Loading....</b></label>
+        </div>
+    </div>
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center">
+                    2019 © Windle Intl.Kenya –WIK
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    <!-- Right Sidebar -->
+    <!-- /Right-bar -->
+    <!-- jQuery  -->
+
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Modal-Effect -->
+    <script src="~/assets/libs/custombox/custombox.min.js"></script>
+    <!-- Toastr js -->
+    <script src="~/assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
+    <script src="~/assets/js/jquery.toastr.js"></script>
+
+    <!-- App js -->
+    <script src="~/assets/js/jquery.core.js"></script>
+    <script src="~/assets/js/jquery.app.js"></script>
+
+
+
+
+</body>
+
+</html>

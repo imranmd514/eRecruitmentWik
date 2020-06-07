@@ -1,0 +1,611 @@
+﻿@model Models.ApplicantRegistrationBO
+@{
+    Layout = "~/Views/Shared/_WithoutMenu.cshtml";
+}
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicant</a></li>
+                <li class="breadcrumb-item active">Applicant Registration</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account-multiple" style="color:black;"></i> Applicant Registration</h4>
+        </div>
+        <div class="col-lg-12">
+            <div style="width:100%;" align="right">
+                <button type="button" class="btn btn-success btn-xs btn-rounded w-md" onclick="OnSubmitApplicant();">Save</button>
+                <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+            </div>
+        </div>
+    </div>
+    &nbsp;
+    @*<div class="col-sm-12">
+        <div class="card-box">
+            <div class="tab-content">
+                <div class="col-sm-12">*@
+                    <div class="card-box">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <form id="basic-form" action="#">
+                                    <div>
+                                        <section>
+                                            @Html.HiddenFor(m => m.ApplicantId)
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group margin-m-b-20">
+                                                            <div style="padding:20px;">
+                                                                <div class="panel widget light-widget panel-bd-top">
+                                                                    <div class="panel-heading no-title"></div>
+                                                                    <div class="panel-body" style="border:thin">
+                                                                        <div class="text-center vd_info-parent">
+                                                                            <img src="@ViewBag.ImagePath" class="thumb" id="image" style="width:190px;height:220px;" />
+                                                                            <label class="col-sm-2"></label>
+                                                                            <input type="file" name="Photo" id="Photo" onchange="showMyImage(this)" style="padding-top:5px;margin-left:50px;" new { enctype="multipart/form-data" accept=".png,.jpg,.jpeg,.gif" } />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0" style="margin-top:20px;">
+                                                                    <label class="col-sm-5">Title<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(m => m.Title, new SelectList(Model.TitleList, "Id", "Value"), "Select Title", new { @class = "form-control", id = "Title" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">First Name<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "First Name", @class = "form-control", id = "FirstName" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Middle Name<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.MiddleName, new { @placeholder = "Middle Name", @class = "form-control", id = "MiddleName" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Last Name<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Last Name", @class = "form-control", id = "LastName" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Date Of Birth<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.DateOfBirth, new { @placeholder = "Date Of Birth", @class = "form-control", id = "DateOfBirth" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Gender<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(m => m.GenderId, new SelectList(Model.GenderList, "Id", "Value"), "Select Gender", new { @class = "form-control", id = "Gender" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Id Type<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(m => m.IdTypeMasterId, new SelectList(Model.IdTypeList, "Id", "Value"), "Select Id Type", new { @class = "form-control", id = "Citizenship" })
+                                                                        @*@Html.TextBoxFor(model => model.Citizenship, new { @placeholder = "Citizenship", @class = "form-control", id = "Citizenship" })*@
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Id Type Copy<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="file" class="form-control" id="CitizenShipIdCopy" new { enctype="multipart/form-data" accept=".png,.jpg,.jpeg,.gif,.pdf,.docx,.doc" }>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Country<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.DropDownListFor(m => m.CountryId, new SelectList(Model.CountriesList, "Id", "Value"), "Select Country", new { @class = "form-control", id = "CountryId" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    @*<label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                                                        <div class="col-sm-7">
+                                                            <input type="email" class="form-control" required parsley-type="email" placeholder="Enter a valid e-mail" />
+                                                        </div>*@
+                                                                    <label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = "Email Address", @class = "form-control", id = "EmailAddress" })
+                                                                        @Html.ValidationMessageFor(model => model.EmailAddress)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Phone Number<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @placeholder = "Phone Number", @class = "form-control", id = "PhoneNumber", onkeypress = "return isNumberKey(event)" })
+                                                                        @Html.ValidationMessageFor(model => model.PhoneNumber)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Alternative PhoneNumber</label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.AlternativePhoneNumber, new { @placeholder = "Alternative PhoneNumber", @class = "form-control", id = "AlternativePhoneNumber", onkeypress = "return isNumberKey(event)" })
+                                                                        @Html.ValidationMessageFor(model => model.AlternativePhoneNumber)
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Mother Tongue<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.MotherTongue, new { @placeholder = "Mother Tongue", @class = "form-control", id = "MotherTongue" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Nationality<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.Nationality, new { @placeholder = "Nationality", @class = "form-control", id = "Nationality" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5"> Application Letter<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="file" class="form-control" id="ApplicationLetter" new { enctype="multipart/form-data" accept=".png,.jpg,.jpeg,.gif,.pdf,.docx,.doc" }>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5"> C.V<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        <input type="file" class="form-control" id="Resume" new { enctype="multipart/form-data" accept=".docx,.doc" }>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Address<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.Address, new { @placeholder = "Address", @class = "form-control", id = "Address" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">County<span class="text-danger">*</span></label>
+                                                                    <div class="col-sm-7">
+                                                                        @Html.TextBoxFor(model => model.County, new { @placeholder = "County ", @class = "form-control", id = "County" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-6">
+                                                                <div class="row mgbt-sm-0">
+                                                                    <label class="col-sm-5">Special Need</label>
+                                                                    <div class="col-sm-7">
+                                                                        <select id="SpecialNeed" class="form-control">
+                                                                            <option value="1">Yes</option>
+                                                                            <option value="2" selected="selected">No</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-sm-12">
+                                                                        @Html.TextBoxFor(model => model.SpecialNeedDetails, new { @placeholder = "Special Need", @class = "form-control", id = "SpecialNeedDetails" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @*</div>
+            </div>
+        </div>
+    </div>*@
+  
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#DateOfBirth").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-0d'
+        });
+        $("#QuaStartDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-0d'
+        });
+        $("#QuaEndDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-0d'
+        });
+        $("#EmpStartDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-0d'
+        });
+        $("#EmpEndDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '-100y:c+nn',
+            maxDate: '-0d'
+        });
+
+    });
+
+    var data = new FormData();
+    function OnSubmitApplicant() {
+        debugger;
+        var str = "";
+
+        if ($("#Title").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Title is Required. <br/>";
+        }
+        if ($("#FirstName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; FirstName is Required. <br/>";
+        }
+        if ($("#MiddleName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; MiddleName is Required. <br/>";
+        }
+        if ($("#LastName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; LastName is Required. <br/>";
+        }
+        if ($("#DateOfBirth").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; DateOfBirth is Required. <br/>";
+        }
+        if ($("#Gender").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Gender is Required. <br/>";
+        }
+        if ($("#Citizenship").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Id Type is Required. <br/>";
+        }
+        if ($("#CitizenShipIdCopy").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Id Type Copy is Required. <br/>";
+        }
+        if ($("#CountryId").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Country is Required. <br/>";
+        }
+        if ($("#PhoneNumber").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; PhoneNumber is Required. <br/>";
+        }
+        if ($("#EmailAddress").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; EmailAddress is Required. <br/>";
+        }
+        if ($("#MotherTongue").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Mother Tongue is Required. <br/>";
+        }
+        if ($("#Nationality").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Nationality is Required. <br/>";
+        }
+        if ($("#ApplicationLetter").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; ApplicationLetter is Required. <br/>";
+        }
+        if ($("#Resume").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Resume is Required. <br/>";
+        }
+        if ($("#Address").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; Address is Required. <br/>";
+        }
+        if ($("#County").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_yellow'></i> &nbsp; County is Required. <br/>";
+        }
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+
+            data = new FormData();
+            var ApplicantId = $("#ApplicantId").val();
+            var TitleId = $("#Title").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var DateOfBirth = $("#DateOfBirth").val();
+            var Citizenship = $("#Citizenship").val();
+            var CitizenShipIdCopy = $("#CitizenShipIdCopy").val();
+            var GenderId = $("#Gender").val();
+            var Address = $("#Address").val();
+            var CountryId = $("#CountryId").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var PhoneNumber = $("#PhoneNumber").val();
+            var AlternativePhoneNumber = $("#AlternativePhoneNumber").val();
+            var MotherTongue = $("#MotherTongue").val();
+            var OtherLanguages = $("#OtherLanguages").val();
+            var Nationality = $("#Nationality").val();
+            var ApplicationLetter = $("#ApplicationLetter").val();
+            var Resume = $("#Resume").val();
+            var Photo = $("#Photo").val();
+            var SpecialNeed = $("#SpecialNeed").val();
+            var SpecialNeedDetails = $("#SpecialNeedDetails").val();
+            var County = $("#County").val();
+
+            // Resume
+
+            var FileName = "";
+            debugger;
+            var files = $("#Photo").get(0).files;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i], "PHOTO_" + files[i].name);
+                    FileName = "PHOTO_" + files[i].name;
+                }
+            }
+
+            var Photo = FileName;
+
+            FileName = "";
+
+            files = $("#Resume").get(0).files;
+            if (files.length > 0) {
+                for (var i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i], "RESUME_" + files[i].name);
+                    FileName = "RESUME_" + files[i].name;
+                }
+            }
+
+            var Resume = FileName;
+
+
+            FileName = "";
+
+            files = $("#CitizenShipIdCopy").get(0).files;
+            if (files.length > 0) {
+                for (var j = 0; j < files.length; j++) {
+                    data.append(files[j].name, files[j], "IDCOPY_" + files[j].name);
+                    FileName = "IDCOPY_" + files[j].name;
+                }
+            }
+
+            var CitizenShipIdCopy = FileName;
+
+            FileName = "";
+
+            files = $("#ApplicationLetter").get(0).files;
+            if (files.length > 0) {
+                for (var j = 0; j < files.length; j++) {
+                    data.append(files[j].name, files[j], "APPLICATIONLETTER_" + files[j].name);
+                    FileName = "APPLICATIONLETTER_" + files[j].name;
+                }
+            }
+
+            var ApplicationLetter = FileName;
+
+            var Data = {
+                "ApplicantId": ApplicantId,
+                "TitleId": TitleId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "DateOfBirth": DateOfBirth,
+                "IdTypeMasterId": Citizenship,
+                "CitizenShipIdCopy": CitizenShipIdCopy,
+                "GenderId": GenderId,
+                "Address": Address,
+                "CountryId": CountryId,
+                "EmailAddress": EmailAddress,
+                "PhoneNumber": PhoneNumber,
+                "AlternativePhoneNumber": AlternativePhoneNumber,
+                "MotherTongue": MotherTongue,
+                "OtherLanguages": OtherLanguages,
+                "Nationality": Nationality,
+                "ApplicationLetter": ApplicationLetter,
+                "CV": Resume,
+                "Photo": Photo,
+                "SpecialNeed": SpecialNeed,
+                "SpecialNeedDetails": SpecialNeedDetails,
+                "County": County,
+            }
+
+            debugger;
+            for (var key in Data) {
+
+                data.append(key, Data[key]);
+            }
+            if (data != null) {
+                Save();
+            }
+        }
+
+        function Save() {
+            $.ajax({
+                url: '../ApplicantEnrolment/SaveApplicantRegistration',
+                data: data,
+                type: 'POST',
+                contentType: false,
+                dataType: 'json',
+                encode: true,
+                processData: false,
+                cache: false,
+                success: function (data) {
+                    if (data == "SUCCESS") {
+                        alert("Success!!!\r\nYou Have Successfully Registered, Please check your Email in 5 min for your Login Credentials.. !!");
+                        //$.NotificationApp.send("Success!", "Applicant Registration created successfully !!", 'top-right', '#5ba035', 'success');
+                        GoMenu();
+                    }
+                    else if (data == "ALREADY_EXISTS") {
+                        $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    }
+
+                    else if (data == "Failed") {
+                        fail();
+                    }
+                    else {
+                        $.NotificationApp.send("Information!", "Check below fields please " + data, 'top-right', '#da8609', 'warning');
+                    }
+                }
+            });
+        }
+    }
+
+    function showMyImage(fileInput) {
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img = document.getElementById("image");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
+
+
+
+    function Clear() {
+        $("#Title")[0].selectedIndex = 0;
+        $("#FirstName").val("");
+        $("#MiddleName").val("");
+        $("#LastName").val("");
+        $("#DateOfBirth").val("");
+        $("#Gender")[0].selectedIndex = 0;
+        $("#Citizenship")[0].selectedIndex = 0;
+        $("#CitizenShipIdCopy").val("");
+        $("#CountryId")[0].selectedIndex = 0;
+        $("#PhoneNumber").val("");
+        $("#AlternativePhoneNumber").val("");
+        $("#EmailAddress").val("");
+        $("#LanguageSpoken").val("");
+        $("#Nationality").val("");
+        $("#ApplicationLetter").val("");
+        $("#Resume").val("");
+        $("#Address").val("");
+        $("#SpecialNeed")[0].selectedIndex = 0;
+        $("#County").val("");
+        $("#Photo").val("");
+        $("#English").prop("checked", false);
+        $("#Kiswahili").prop("checked", false);
+        $("#MotherTongue").val("");
+        $("#OtherLanguages").val("");
+        $("#SpecialNeedDetails").val("");
+
+        //$("#Bachelors").val("");
+        //$("#Diploma").val("");
+        //$("#MSC").val("");
+        //$("#PHD").val("");
+        //$("#QuaEndDate").val("");
+        //$("#QuaStartDate").val("");
+        //$("#Discipline").val("");
+        //$("#University").val("");
+        //$("#QuaNationality").val("");
+        //$("#Degree").val("");
+        //$("#Class").val("");
+        //$("#EmployerName").val("");
+        //$("#TypeOfIndustry").val("");
+        //$("#TelephoneNumber").val("");
+        //$("#TitleOfSupervisor").val("");
+        //$("#JobTitle").val("");
+        //$("#City").val("");
+        //$("#EmpStartDate").val("");
+        //$("#EmpEndDate").val("");
+        //$("#Responsibility").val("");
+        //$("#MonthlySalary").val("");
+        //$("#NoticePeriod").val("");
+        //$("#EmpAddress").val("");
+        //$("#JobDescription").val("");
+
+
+        //$("#EmpFirstName").val("");
+        //$("#SecondName").val("");
+        //$("#Position").val("");
+        //$("#RelationshipTOApplicant").val("");
+        //$("#NameOfTheOrganization").val("");
+        //$("#TelephoneContact").val("");
+        //$("#EmpEmailAddress").val("");
+        //$("#JobDescription").val("");
+        //$("#Referer").val("");
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("LogOn", "Accounts")';
+        window.location.href = url;
+    }
+    function GoMenu() {
+        var url = '@Url.Action("LogOn", "Accounts")';
+        window.location.href = url;
+    }
+
+    function isNumberKey(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]/;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+</script>
+<!--Form Wizard-->
+<script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+
+<!--wizard initialization-->
+<script src="~/assets/js/jquery.wizard.js"></script>

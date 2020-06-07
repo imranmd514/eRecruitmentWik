@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Models.JobMarketingListBO>
+
+<table class="table" id="JobMarketingGrid">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Job Name
+            </th>
+            <th style="text-align:center">
+                Job Description
+            </th>
+            <th style="text-align:center">
+                No Of Postions
+            </th>
+            <th style="text-align:center">
+              Job Location
+            </th>
+            <th style="text-align:center">
+                Status
+            </th>
+
+            <th style="text-align:center">
+                Marketing Status
+            </th>
+            <th style="text-align:center">
+                Marketed By
+            </th>
+            <th style="text-align:center">
+                Marketing Comments
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyMarketing">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="text-align:center">
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center">@item.JobName</td>
+                <td style="text-align:center">@item.JobDescription</td>
+                <td style="text-align:center">@item.NoOfPositions</td>
+                <td style="text-align:center">@item.JobLocation</td>
+                <td style="text-align:center">@item.Status</td>
+                <td style="text-align:center">@item.MarketingStatus</td>
+                <td style="text-align:center">@item.MarketedBy</td>
+                <td style="text-align:center">@item.MarketingComments</td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+

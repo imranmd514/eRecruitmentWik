@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Models.LanguageSpokenBO>
+
+<table class="table" id="ApplicantLanguageDetailsGrid">
+    <thead>
+        <tr class="TableHeader">
+            <th style="width:50px;vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Language
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Read
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Write
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Speak
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Understand
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbody">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="cursor:pointer">@item.Language</td>
+                <td>@item.LanguageRead</td>
+                <td>@item.Write</td>
+                <td>@item.Speak</td>
+                <td>@item.Understand</td>
+                <td>@item.IsActive</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditLanguageData(@item.LanguageSpokenId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteLanguageData(@item.LanguageSpokenId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+

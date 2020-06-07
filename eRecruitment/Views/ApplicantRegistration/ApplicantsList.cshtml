@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Models.ApplicantRegistrationBO>
+
+<table class="table" id="ApplicantGrid" align="center">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Applicant Name
+            </th>
+            <th style="text-align:center">
+                Email Address
+            </th>
+            <th style="text-align:center">
+                Mobile Number
+            </th>
+            <th style="text-align:center">
+                Address
+            </th>
+            <th style="text-align:center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyApplicant">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="text-align:center" id='@item.ApplicantId'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-warning'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center"cursor:pointer" onclick="EditApplicant(@item.ApplicantId);">@item.FirstName</td>
+                <td style="text-align:center">@item.EmailAddress</td>
+                <td style="text-align:center">@item.PhoneNumber</td>
+                <td style="text-align:center">@item.Address</td>
+                <td style='width:110px; text-align:center;' class='menu-action'>
+                    <a href='#custom-modal' data-animation='corner' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewApplicant(@item.ApplicantId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditApplicant(@item.ApplicantId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteApplicant(@item.ApplicantId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

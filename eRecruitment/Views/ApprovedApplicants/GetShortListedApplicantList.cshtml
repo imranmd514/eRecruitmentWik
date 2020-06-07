@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Models.ApprovedApplicantsBO>
+
+
+<style>
+    .table {
+        width: 95%;
+        height: 120px;
+        margin-left: 30px;
+    }
+</style>
+
+
+<table class="table" id="ApprovedApplicantsGrid">
+    <thead>
+        <tr class="TableHeader" style="background-color:darkgrey">
+            <th style="text-align:center">
+                #
+            </th>
+            <th style="text-align:center">
+                Applicant Name
+            </th>
+            <th style="text-align:center">
+                Gender
+            </th>
+            <th style="text-align:center">
+                Date Of Birth
+            </th>
+            <th style="text-align:center">
+                Phone Number
+            </th>
+            <th style="text-align:center">
+                Job Name
+            </th>
+            <th style="text-align:center">
+                Status
+            </th>
+            <th style="text-align:center">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyUser">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style="text-align:center" id='@item.AppliedJobId'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center" cursor:pointer" onclick="ViewApprovedApplicant(@item.AppliedJobId);">@item.FirstName</td>
+                <td style="text-align:center">@item.Gender</td>
+                <td style="text-align:center">@item.DateOfBirth</td>
+                <td style="text-align:center">@item.PhoneNumber</td>
+                <td style="text-align:center">@item.JobName</td>
+                <td style="text-align:center">@item.Status</td>
+                <td style='width:100px;text-align:center;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewApprovedApplicant(@item.AppliedJobId,@item.ApplicantId);'></i> </a>&nbsp;
+                    <a href='#custom-modal' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditShortListed(@item.AppliedJobId,@item.ApplicantId);'></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

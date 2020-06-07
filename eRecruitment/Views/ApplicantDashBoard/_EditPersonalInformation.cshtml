@@ -1,0 +1,212 @@
+﻿@model Models.ApplicantPersonalInformationBO
+
+<section>
+    <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>&nbsp;<i class="mdi mdi-account-multiple"></i> Personal Information</h3>
+    </div>
+    <hr class="pd-10" />
+    @Html.HiddenFor(m => m.ApplicantId)
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group row">
+                <div class="form-group row col-sm-12">
+                    <div style="width:99%;" align="right">
+                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light w-md" onclick="OnSubmitPersonal();">Submit</button>
+                        <button type="button" class="btn btn-primary btn-rounded w-md" onclick="EditPersonal();">Edit</button>
+                        <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="CancelPersonal();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group margin-m-b-20">
+                    <div style="padding:20px;">
+                        <div class="panel widget light-widget panel-bd-top">
+                            <div class="panel-heading no-title"></div>
+                            <div class="panel-body" style="border:thin">
+                                <div class="text-center vd_info-parent">
+                                    <img src="@ViewBag.ImagePath" id="image" style="width:190px;height:220px;" />
+                                    <label class="col-sm-2"></label>
+                                    <input type="file" name="Photo" id="Photo" onchange="showMyImage(this)" style="padding-top:5px;margin-left:50px;" />
+                                </div><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="panel widget light-widget panel-bd-top">
+                    <div class="panel-heading no-title"></div>
+                    <div class="panel-body" style="border:thin">
+                        <div class="text-center vd_info-parent">
+                            <img src="@ViewBag.ImagePath" id="image" style="width:180px;height:200px" />
+                            <label class="col-sm-2"></label>
+                            <input type="file" name="Photo" id="Photo" onchange="showMyImage(this)" style="padding-top:5px;margin-right:50px;" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0" style="margin-top:20px;">
+                            <label class="col-sm-5">Title<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.DropDownListFor(m => m.Title, new SelectList(Model.TitleList, "Id", "Value"), "Select Title", new { @class = "form-control", id = "Title", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">First Name<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "First Name", @class = "form-control", id = "FirstName", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Middle Name<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.MiddleName, new { @placeholder = "Middle Name", @class = "form-control", id = "MiddleName", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Last Name<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Last Name", @class = "form-control", id = "LastName", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Date Of Birth<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.DateOfBirth, new { @placeholder = "Date Of Birth", @class = "form-control", id = "DateOfBirth", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Gender<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.DropDownListFor(m => m.Gender, new SelectList(Model.GenderList, "Id", "Value"), "Select Gender", new { @class = "form-control", id = "Gender", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Citizenship<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Citizenship, new { @placeholder = "Citizenship", @class = "form-control", id = "Citizenship", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Country<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+
+                                @Html.DropDownListFor(m => m.Country, new SelectList(Model.CountriesList, "Id", "Value"), "Select Country", new { @class = "form-control", id = "CountryId", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Alternative PhoneNumber<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.AlternativePhoneNumber, new { @placeholder = "Alternative PhoneNumber", @class = "form-control", id = "AlternativePhoneNumber", @readonly = "readonly" })
+                            </div>
+                        </div><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Phone Number<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.PhoneNumber, new { @placeholder = "Phone Number", @class = "form-control", id = "PhoneNumber", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Language</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.LanguageSpoken, new { @placeholder = "Language Spoken", @class = "form-control", id = "LanguageSpoken", @readonly = "readonly" })
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = "Email Address", @class = "form-control", id = "EmailAddress", @readonly = "readonly" })
+                            </div>
+                        </div><br>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Nationality</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Nationality, new { @placeholder = "Nationality", @class = "form-control", id = "Nationality", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5"> Application Letter<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="file" class="form-control" id="ApplicationLetter">
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5"> Resume<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                <input type="file" class="form-control" id="Resume">
+                            </div>
+                        </div><br />
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Appplication Letter</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ApplicationLetter, new { @placeholder = "Application Letter", @class = "form-control", id = "ApplicationLetter", @readonly = "readonly" })
+                            </div>
+                        </div><br>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-xs-0">
+                            <label class="col-sm-5">Resume</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Resume, new { @placeholder = "Resume", @class = "form-control", id = "Resume", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-5">Address</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.Address, new { @placeholder = "Address", @class = "form-control", id = "Address", @readonly = "readonly" })
+                            </div>
+                        </div><br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

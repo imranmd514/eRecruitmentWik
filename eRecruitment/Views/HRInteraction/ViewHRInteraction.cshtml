@@ -1,0 +1,74 @@
+﻿@model Models.HRInteractionBO
+
+<div class="vd_content-section clearfix">
+    <div class="custom-modal-text">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Applicant Name  :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.ApplicantName)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Email Id  :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.EmailId)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Subject  :</b></label>
+                    <div class="col-sm-6">
+                        @Html.DisplayFor(model => model.Subject)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b> Description  :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Description)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-s-0">
+                    <label class="col-sm-6"><b>Requested Date :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.RequestDate)
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Response Date :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.ResponseDate)
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Comments :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Comments)
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+

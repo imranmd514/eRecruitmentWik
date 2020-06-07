@@ -1,0 +1,198 @@
+﻿@model Models.ApprovedJobsBO
+
+
+<div class="vd_content-section clearfix">
+
+    <div class="custom-modal-text">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Name :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobName)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Code :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobCode)
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Description :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobDescription)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Description File :</b></label>
+                    <div class="col-sm-6 controls">
+                        @if (Model != null)
+                        {
+                            if (Model.JobDescriptionFileSavedName != null && Model.JobDescriptionFileSavedName != "" && Model.JobDescriptionFile != null && Model.JobDescriptionFile != "")
+                            {
+                                @Html.ActionLink(Model.JobDescriptionFile, "DownloadAttachment", new { fileSavedName = Model.JobDescriptionFileSavedName, fileActualName = Model.JobDescriptionFile })
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+         
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>No Of Positions :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.NoOfPositions)
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Location :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobLocation)
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Timings :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobTimings)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Job Duration :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.JobDuration)
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Donor Program  :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.DonorProgram)
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Qualification :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Qualification)
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Experience :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Experience)
+                    </div>
+                </div>
+            </div>
+           
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Skills :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Skills)
+                    </div>
+                </div>
+            </div>
+         
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-6"><b>Status :</b></label>
+                    <div class="col-sm-6 controls">
+                        @Html.DisplayFor(model => model.Status)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>HOD Comments  :</b></label>
+                    <div class="col-sm-9">
+                        @Html.DisplayTextFor(model => model.HOD_Comments)
+                        <b>@Html.DisplayFor(model => model.HOD_Date)</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>HROffice Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.HROffice_Comments)
+                        <b>@Html.DisplayFor(model => model.HROffice_Date)</b>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>HOP Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.HOP_Comments)
+                        <b>@Html.DisplayFor(model => model.HOP_Date)</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>PM Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.PM_Comments)
+                        <b>@Html.DisplayFor(model => model.PM_Date)</b>
+                    </div>
+                </div>
+            </div>
+         
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>HAF Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.HAF_Comments)
+                        <b>@Html.DisplayFor(model => model.HAF_Date)</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>ED Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.Admin_Comments)
+                        <b>@Html.DisplayFor(model => model.Admin_Date)</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-3"><b>Marketing Comments  :</b></label>
+                    <div class="col-sm-9 controls">
+                        @Html.DisplayTextFor(model => model.MarketingComments)
+                        <b>@Html.DisplayFor(model => model.MarketedDate)</b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end wrapper -->

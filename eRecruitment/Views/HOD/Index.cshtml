@@ -1,0 +1,79 @@
+﻿@model Models.HODModelBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="wrapper">
+<div class="container-fluid">
+
+    <!-- Page title box -->
+    <div class="page-title-alt-bg"></div>
+    <div class="page-title-box">
+        <ol class="breadcrumb float-right">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+            <li class="breadcrumb-item active">HOD View </li>
+
+        </ol>
+        <h4 class="page-title"><i class="mdi mdi-account" style="color:black;"></i>HOD View</h4>
+      </div>
+    <div class="col-lg-12">
+        <div class="card-box">
+            <div class="tab-content">
+                <div class="tab-pane active" id="Add">
+                    <div class="row">
+                        <div class="form-group row">
+                            <div class="top-right" style="margin-left:20px;">
+                                <div class="col-sm-7">
+                                    <button type="button" class="btn btn-success btn-rounded w-md">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="row mgbt-sm-2">
+                                    <label class="control-label" for="Search">
+                                    </label>
+                                </div>
+                                <div class="input-group" style="margin-left:450px;">
+                                    <input class="form-control" id="Search" placeholder="Search" type="text">
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            S.No<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Job Id<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Job Type<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Skills<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Experience<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Status<br>
+                                        </th>
+                                        <th class="text-center">
+                                            Action<br>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                          </div>
+                        </div><!-- end row -->
+                     </div>
+                   </div>
+                </div> <!-- end card-box -->
+              </div>
+           </div>
+        </div>
+
+

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Models.BranchMasterBO>
+
+<table class="table" id="BranchGrid">
+    <thead>
+        <tr class="TableHeader" style="text-align:center;">
+            <th style="vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Organization Name
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Description
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Address
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Cell Number
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Email Id
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Website
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbodyBranch">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;text-align:center;' id='@item.BranchId'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td>@item.OrganizationName</td>
+                <td>@item.Details</td>
+                <td>@item.Address</td>
+                <td>@item.CellNumber</td>
+                <td>@item.EmailId</td>
+                <td>@item.Website</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewBranch(@item.BranchId);'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> </a>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='Edit(@item.BranchId);'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i> </a>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='deleteBranch(@item.BranchId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+

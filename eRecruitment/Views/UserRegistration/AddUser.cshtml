@@ -1,0 +1,805 @@
+﻿@model Models.UserRegistrationBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #pswd_info {
+        position: absolute;
+        top: -540px;
+        right: 10px;
+        width: 350px;
+        padding: 15px;
+        background: #fefefe;
+        font-size: .875em;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px #ccc;
+        border: 1px solid #ddd;
+    }
+
+        #pswd_info h4 {
+            margin: 0 0 5px 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        #pswd_info::before {
+            content: "\25B2";
+            position: absolute;
+            top: -12px;
+            left: 45%;
+            font-size: 14px;
+            line-height: 14px;
+            color: #ddd;
+            text-shadow: none;
+            display: block;
+        }
+
+    .invalid {
+        background: url('../../Images/Validation/invalid (2).png') no-repeat 0 50%;
+        padding-left: 22px;
+        line-height: 24px;
+        color: #ec3f41;
+    }
+
+    .valid {
+        background: url('../../Images/Validation/valid.png') no-repeat 0 50%;
+        padding-left: 22px;
+        line-height: 24px;
+        color: #3a7d34;
+    }
+
+    #pswd_info {
+        display: none;
+    }
+</style>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">User Registration</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-account"></i>User Registration</h4>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="form-group row">
+            <div class="form-group row col-sm-12">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-rounded w-md" onclick="OnSubmitUser()">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="Cancel();">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-rounded w-md" onclick="Clear();">Clear</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box">
+            @Html.HiddenFor(m => m.UserId)
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group margin-m-b-20">
+                            <div style="padding:20px;">
+                                <div class="panel widget light-widget panel-bd-top">
+                                    <div class="panel-heading no-title"></div>
+                                    <div class="panel-body" style="border:thin">
+                                        <div class="text-center vd_info-parent">
+                                            <img src="@ViewBag.ImagePath" id="image" style="width:190px;height:220px;" />
+                                            <label class="col-sm-2"></label>
+                                            <input type="file" name="Photo" id="Photo" onchange="showMyImage(this)" style="padding-top:1%;margin-left:9%;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0" style="margin-top:5%;">
+                                    <label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = "EmailAddress", @class = "form-control", id = "EmailAddress", @maxLength = "50" })
+                                        @Html.ValidationMessageFor(model => model.EmailAddress)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Password<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.Password, new { @type = "Password", @placeholder = "Password", @class = "form-control", id = "Password", @maxLength = "50" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Confirm Password<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @type = "Password", @placeholder = "Confirm Password", @class = "form-control", id = "ConfirmPassword", @maxLength = "50" })
+                                    </div>
+                                </div>
+                            </div>
+                            @*@if (@Model.EmailAddress == "NULL")
+                            {
+                                <div class="col-sm-12">
+                                    <div class="row mgbt-sm-0" style="margin-top:5%;">
+                                        <label class="col-sm-5">Email Address<span class="text-danger">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = "EmailAddress", @class = "form-control", id = "EmailAddress", @maxLength = "50" })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">Password<span class="text-danger">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.Password, new { @type = "Password", @placeholder = "Password", @class = "form-control", id = "Password", @maxLength = "50"})
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">Confirm Password<span class="text-danger">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.ConfirmPassword, new { @type = "Password", @placeholder = "Confirm Password", @class = "form-control", id = "ConfirmPassword", @maxLength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-12">
+                                    <div class="row mgbt-sm-0" style="margin-top:5%;">
+                                        <label class="col-sm-5">Email Address</label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.EmailAddress, new { @placeholder = "EmailAddress", @class = "form-control", id = "EmailAddress", @maxLength = "50", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.EmailAddress)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">Password</label>
+                                        <div class="col-sm-7">
+                                            @Html.TextBoxFor(model => model.Password, new { @type = "Password", @placeholder = "Password", @class = "form-control", id = "Password", @maxLength = "50", @readonly = "readonly"})
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="col-sm-12">
+                                        <div class="row mgbt-sm-0">
+                                            <label class="col-sm-5">Confirm Password</label>
+                                            <div class="col-sm-7">
+                                                @Html.TextBoxFor(model => model.ConfirmPassword, new { @type = "Password", @placeholder = "Confirm Password", @class = "form-control", id = "ConfirmPassword", @maxLength = "50", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                            }*@
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">User Role<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.DropDownListFor(model => model.UserRole, new SelectList(Model.RolesList, "Id", "Value"), "Select UserRole", new { @class = "form-control", id = "UserRole" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Donor Program :<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.DropDownListFor(model => model.DonorProgram, new SelectList(Model.DonorProgramList, "Id", "Value"), "Select Donor Program", new { @class = "form-control", id = "DonorProgram" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="dropdown">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-5">Gender<span class="text-danger">*</span></label>
+                                        <div class="col-sm-7">
+                                            @Html.DropDownListFor(model => model.Gender, new SelectList(Model.GenderList, "Id", "Value"), "Select Gender", new { @class = "form-control", id = "Gender" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="row">
+
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">First Name<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.FirstName, new { @placeholder = "First Name", @class = "form-control", id = "FirstName", @maxLength = "100" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Middle Name</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.MiddleName, new { @placeholder = "Middle Name", @class = "form-control", id = "MiddleName", @maxLength = "100" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Last Name<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.LastName, new { @placeholder = "Last Name", @class = "form-control", id = "LastName", @maxLength = "100" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Date Of Birth</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.DateOfBirth, new { @placeholder = "Date Of Birth", @class = "form-control", id = "DateOfBirth" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Mobile Number<span class="text-danger">*</span></label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.MobileNumber, new { @placeholder = "Mobile Number", @class = "form-control", id = "MobileNumber", @maxLength = "20", onkeypress = "return isNumberKey(event)" })
+                                        @Html.ValidationMessageFor(model => model.MobileNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Location</label>
+                                    <div class="col-sm-7">
+                                        @Html.DropDownListFor(model => model.LocationId, new SelectList(Model.LocationList, "Id", "Value"), "Select Location", new { @class = "form-control", id = "LocationId" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Alternate MobileNumber</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.AlternateMobileNumber, new { @placeholder = "Alternate MobileNumber", @class = "form-control", id = "AlternateMobileNumber", @maxLength = "20", onkeypress = "return isNumberKey(event)" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Language Spoken</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.Language, new { @placeholder = "Language", @class = "form-control", id = "Language", @maxLength = "20" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Qualification</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.Qualification, new { @placeholder = "Qualification", @class = "form-control", id = "Qualification", @maxLength = "50" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">College Name</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.College, new { @placeholder = "College Name", @class = "form-control", id = "College", @maxLength = "100" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">University</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.University, new { @placeholder = "University", @class = "form-control", id = "University", @maxLength = "100" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Aggregate Percentage</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.AggregatePercentage, new { @placeholder = "Aggregate Percentage", @class = "form-control", id = "AggregatePercentage", @maxLength = "10" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Joining Date</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.JoiningDate, new { @placeholder = "Joining Date", @class = "form-control", id = "JoiningDate" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Country</label>
+                                    <div class="col-sm-7">
+                                        @Html.DropDownListFor(m => m.CountryId, new SelectList(Model.CountriesList, "Id", "Value"), "Select Country", new { @class = "form-control", id = "CountryId", onchange = "CountryList(this)" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">State</label>
+                                    @Html.HiddenFor(m => m.StateId, new { id = "hdnState" })
+                                    <div class="col-sm-7">
+                                        <select id="StateId" class="form-control" style="width:100%; height:37px;">
+                                            <option>
+                                                Select State
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">City</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.City, new { @placeholder = "City", @class = "form-control", id = "City", @maxLength = "20" })
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">User Type</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.UserType, new { @placeholder = "User Type", @class = "form-control", id = "UserType", @maxLength = "20" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Department</label>
+                                    <div class="col-sm-7">
+                                        @Html.TextBoxFor(model => model.Department, new { @placeholder = "Department", @class = "form-control", id = "Department", @maxLength = "20" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Address</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.Address, new { @placeholder = "Address", @class = "form-control", id = "Address", @maxLength = "100" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-5">Is Active </label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(m => m.IsActive, new { @checked = "checked" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="pswd_info">
+                                    <h5>Password must meet the following requirements:</h5>
+                                    <ul>
+                                        <li id="letter" class="invalid">At least <strong>one letter</strong></li>
+                                        <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+                                        <li id="number" class="invalid">At least <strong>one number</strong></li>
+                                        <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+                                        <li id="SpecialCharacter" class="invalid">Be at least <strong>one SpecialCharacter</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Encryption.js"></script>
+<script type="text/javascript">
+
+    var data = new FormData();
+
+    $(document).ready(function () {
+        CountryList(this);
+        debugger;
+        $(function () {
+            $("#Password").keyup(function () {
+                var pswd = $(this).val();
+                if (pswd.length < 8) {
+                    $('#length').removeClass('valid').addClass('invalid');
+                } else {
+                    $('#length').removeClass('invalid').addClass('valid');
+                }
+                //validate letter
+                if (pswd.match(/[A-z]/)) {
+                    $('#letter').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#letter').removeClass('valid').addClass('invalid');
+                }
+
+                //validate capital letter
+                if (pswd.match(/[A-Z]/)) {
+                    $('#capital').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#capital').removeClass('valid').addClass('invalid');
+                }
+
+                //validate number
+                if (pswd.match(/\d/)) {
+                    $('#number').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#number').removeClass('valid').addClass('invalid');
+                }
+                //validate special Character
+                if (pswd.match(/[^a-zA-Z0-9]/)) {
+                    $('#SpecialCharacter').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#SpecialCharacter').removeClass('valid').addClass('invalid');
+                }
+            }).focus(function () {
+                $('#pswd_info').show();
+            }).blur(function () {
+                $('#pswd_info').hide();
+            });
+        });
+    });
+
+    $("#DateOfBirth").datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-100y:c+nn',
+        maxDate: '-0d'
+    });
+
+
+    $("#JoiningDate").datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '-100y:c+nn',
+        maxDate: '-0d'
+    });
+    function showMyImage(fileInput) {
+
+        var files = fileInput.files;
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var imageType = /image.*/;
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            var img = document.getElementById("image");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function (e) {
+                    aImg.src = e.target.result;
+                };
+            })(img);
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function CountryList(obj) {
+        debugger;
+        $("#StateId").html("");
+        $("#StateId").append("<option value='' Selected>Select State</option>");
+        var iStateId = $("#hdnState").val();
+        var CountryId = $("#CountryId").val();
+        $.ajax({
+            type: "GET",
+            url: '../UserRegistration/stateList',
+            data: {
+                A_iCountryId: CountryId,
+            },
+            success: function (data) {
+                $.each(data, function () {
+                    if (iStateId == this.Id) {
+                        $("#StateId").append("<option selected value=" + this.Id + ">" + this.Value + "</option>");
+                    }
+                    else {
+                        $("#StateId").append("<option value=" + this.Id + ">" + this.Value + "</option>");
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    function DonorList(obj) {
+        $("#DonorProgram").html("");
+        $("#DonorProgram").append("<option value='' Selected> Select Donor</option>");
+        var UserId = $("#UserRole :selected").val();
+        $.ajax({
+            type: "GET",
+            url: '../UserRegistration/getDonorProgramList',
+            data: {
+                iUserId: UserId,
+            },
+            success: function (data) {
+                $.each(data, function () {
+                    $("#DonorProgram").append("<option value=" + this.Id + ">" + this.Value + "</option>");
+                });
+            }
+        });
+    }
+
+
+    function OnSubmitUser() {
+        debugger;
+        var Password = $('#Password').val();
+        var ConfirmPassword = $("#ConfirmPassword").val();
+
+        var str = "";
+        if ($("#EmailAddress").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i>&nbsp;EmailAddress is Required. <br/>"; }
+        if ($("#Password").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Password is Required. <br/>"; }
+        if ($("#ConfirmPassword").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;ConfirmPassword is Required. <br/>"; }
+        if ($("#FirstName").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;FirstName is Required. <br/>"; }
+        if ($("#LastName").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;LastName is Required. <br/>"; }
+        if ($("#UserRole").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;User Role is Required. <br/>"; }
+        if ($("#DonorProgram").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Donor Program is Required. <br/>"; }
+        if ($("#Gender").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Gender is Required. <br/>"; }
+        //if ($("#DateOfBirth").val() == "")
+        //{ str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;DateOfBirth is Required. <br/>"; }
+        if ($("#MobileNumber").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;MobileNumber is Required. <br/>"; }
+        if ($("#UserRole").val() == 67 || $("#UserRole").val() == 79)
+        {
+            if ($("#LocationId").val() == "")
+            { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Location is Required. <br/>"; }
+        }
+
+        //if ($("#LocationId").val() == "")
+        //{ str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Location is Required. <br/>"; }
+
+
+        var pswd = $("#Password").val();
+        if (pswd.length < 8) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; Password should contain at least 8 characters. <br/>";
+        }
+        //validate letter
+        if (!pswd.match(/[a-z]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; Password should contain at least one letter. <br/>";
+        }
+
+        //validate capital letter
+        if (!pswd.match(/[A-Z]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; Password should contain at least one capital letter. <br/>";
+        }
+
+        //validate number
+        if (!pswd.match(/\d/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; Password should contain at least one number. <br/>";
+        }
+        //validate special Character
+        //if (!pswd.match(/([#?!$%^&*-])/)) {
+        if (!pswd.match(/[^a-zA-Z0-9]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; Password should contain at least one Special Character. <br/>";
+        }
+        if (Password != ConfirmPassword)
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Password Match Required. <br/>"; }
+
+        if (str != "") {
+            $.NotificationApp.send("Warning!", "Fields Required" + str + "", 'top-right', '#da8609', 'warning');
+        }
+        else {
+            debugger;
+            var pwdObj = document.getElementById('Password');
+            var CpwdObj = document.getElementById('ConfirmPassword');
+            var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+            hashObj.update(pwdObj.value);
+            var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+            hashObj.update(CpwdObj.value);
+            var Phash = hashObj.getHash("HEX");
+            pwdObj.value = Phash;
+            var CPhash = hashObj.getHash("HEX");
+            CpwdObj.value = CPhash;
+
+
+            var UserId = $("#UserId").val();
+            var FirstName = $("#FirstName").val();
+            var MiddleName = $("#MiddleName").val();
+            var LastName = $("#LastName").val();
+            var Password = $("#Password").val();
+            var ConfirmPassword = $("#ConfirmPassword").val();
+            var DateOfBirth = $("#DateOfBirth").val();
+            var Gender = $("#Gender").val();
+            var MobileNumber = $("#MobileNumber").val();
+            var AlternateMobileNumber = $("#AlternateMobileNumber").val();
+            var EmailAddress = $("#EmailAddress").val();
+            var Language = $("#Language").val();
+            var Qualification = $("#Qualification").val();
+            var College = $("#College").val();
+            var University = $("#University").val();
+            var AggregatePercentage = $("#AggregatePercentage").val();
+            var JoiningDate = $("#JoiningDate").val();
+            var CountryId = $("#CountryId").val();
+            var StateId = $("#StateId").val();
+            var City = $("#City").val();
+            var UserType = $("#UserType").val();
+            var UserRole = $("#UserRole").val();
+            var DonorProgram = $("#DonorProgram").val();
+            var Department = $("#Department").val();
+            var Address = $("#Address").val();
+            var IsActive = $("#IsActive").is(':checked');
+            var FileAttachment = $("#Photo").val();
+            var LocationId = $("#LocationId").val();
+
+
+
+            var FileName = "";
+
+            var files = $("#Photo").get(0).files;
+            if (files.length > 0) {
+                for (i = 0; i < files.length; i++) {
+                    data.append(files[i].name, files[i]);
+                    FileName = files[i].name;
+                }
+            }
+
+            var Data = {
+                "UserId": UserId,
+                "FirstName": FirstName,
+                "MiddleName": MiddleName,
+                "LastName": LastName,
+                "Password": Password,
+                "ConfirmPassword": ConfirmPassword,
+                "DateOfBirth": DateOfBirth,
+                "Gender": Gender,
+                "MobileNumber": MobileNumber,
+                "AlternateMobileNumber": AlternateMobileNumber,
+                "EmailAddress": EmailAddress,
+                "Language": Language,
+                "Qualification": Qualification,
+                "College": College,
+                "University": University,
+                "AggregatePercentage": AggregatePercentage,
+                "JoiningDate": JoiningDate,
+                "CountryId": CountryId,
+                "StateId": StateId,
+                "City": City,
+                "UserType": UserType,
+                "UserRole": UserRole,
+                "DonorProgram": DonorProgram,
+                "Department": Department,
+                "Address": Address,
+                "IsActive": IsActive,
+                "Photo": FileName,
+                "LocationId": LocationId
+            }
+            for (var key in Data) {
+                data.append(key, Data[key]);
+            }
+
+            Save(Data);
+        }
+
+    }
+
+    function Save(Data) {
+        ShowLoader();
+        $.ajax({
+            url: '../UserRegistration/SaveUserRegistration',
+            data: data,
+            type: 'POST',
+            contentType: false,
+            dataType: 'json',
+            encode: true,
+            processData: false,
+            cache: false,
+            //data: JSON.stringify(Data),
+            //type: 'POST',
+            //async: false,
+            //class: "Close",
+            //contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "User Registration created successfully !!", 'top-right', '#5ba035', 'success');
+                    GoMenu();
+                    setTimeout(function () {
+                        HideLoader();
+                    }, 500);
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    setTimeout(function () {
+                        HideLoader();
+                    }, 500);
+                }
+                else if (data == "FAIL") {
+                    fail();
+                    setTimeout(function () {
+                        HideLoader();
+                    }, 500);
+                }
+            }
+        });
+    }
+
+
+    //function success() {
+    //    notification("Success", "You successfully Created User ", 'top-right', '#5ba035', 'success');
+    //}
+
+    //function alreadyexists() {
+    //    notification("Oh snap!", "Change a few things up and try submitting again.", 'top-right', '#bf441d', 'Warning');
+    //}
+
+    //function fail() {
+    //    notification("Heads up!", "Submission Failed.", 'top-right', '#da8609', 'error!');
+    //}
+
+
+
+    function Clear() {
+
+        $("#FirstName").val("");
+        $("#MiddleName").val("");
+        $("#LastName").val("");
+        $("#Password").val("");
+        $("#ConfirmPassword").val("");
+        $("#DateOfBirth").val("");
+        $("#Gender").val("");
+        $("#MobileNumber").val("");
+        $("#AlternateMobileNumber").val("");
+        $("#EmailAddress").val("");
+        $("#Language").val("");
+        $("#Qualification").val("");
+        $("#College").val("");
+        $("#University").val("");
+        $("#AggregatePercentage").val("");
+        $("#JoiningDate").val("");
+        $("#CountryId").val("");
+        $("#StateId").val("");
+        $("#City").val("");
+        $("#UserType").val("");
+        $("#UserRole").val("");
+        $("#Department").val("");
+        $("#Address").val("");
+        $("#IsActive").prop("checked", false);
+        $("#DonorProgram").val("");
+        $("#LocationId").val("");
+    }
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "UserRegistration")';
+        window.location.href = url;
+    }
+
+
+    function GoMenu() {
+        var url = '@Url.Action("Index", "UserRegistration")';
+        window.location.href = url;
+    }
+
+    function isNumberKey(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]/;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+</script>

@@ -1,0 +1,157 @@
+﻿@model Models.UserRegistrationBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .modal-header {
+        padding: 12px 12px;
+        background-color: #259dd1;
+    }
+
+        .modal-header .close {
+            margin-top: 2px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            line-height: 20px;
+        }
+</style>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+                <li class="breadcrumb-item active">User Registration</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-account"></i> User Registration</h4>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card-box">
+            <div class="form-group row">
+                <div style="width:99%;" align="right">
+                    <button type="button" class="btn btn-success btn-rounded w-md" id="Add" onclick="AddUser();"><b>Add</b></button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <div class="table table-bordered table-striped" id="UsersList">
+
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div> <!-- end card-box -->
+</div>
+
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div>
+            <!-- sample modal content -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" style="width:80%">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="color:white;" class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;&nbsp;<b>User Details</b></h4>
+                            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+                        </div>
+                        <div class="modal-body" id="AddUserDetails">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-rounded w-xs" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--  Modal content for the above example -->
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HideLoader();
+        LoadGrid();
+
+    });
+
+    function LoadGrid() {
+        ShowLoader();
+        $.ajax({
+            type: "GET",
+            url: '../UserRegistration/GetUsersList',
+            data: {
+            },
+            success: function (data) {
+                $("#UsersList").html(data);
+                $('#UserGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+    function AddUser() {
+        ShowLoader();
+        var url = "@Url.Content("~/UserRegistration/CreateUser")";
+        $(location).attr('href', url);
+    }
+
+
+    function ViewUser(iUserId) {
+        ShowLoader();
+        var Id = iUserId;
+        $.ajax({
+            type: "GET",
+            url: '../UserRegistration/ViewUser',
+            data: {
+                iUserId: Id,
+            },
+            success: function (data) {
+                $("#AddUserDetails").html(data);
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+    function Edit(Id) {
+        ShowLoader();
+        var url = '../UserRegistration/EditUser?iUserId=' + Id;
+        $(location).attr('href', url);
+    }
+
+
+    function DeleteUser(Id) {
+        $.ajax({
+            type: "POST",
+            url: '../UserRegistration/DeleteUser',
+            data: {
+                iUserId: Id,
+            },
+            success: function (data) {
+                if (data == "DELETED") {
+                    $.NotificationApp.send("info!", "User Deleted Successfully", 'top-right', '#5ba035', 'Info Notification');
+                    LoadGrid();
+                }
+            }
+        });
+    }
+
+
+
+</script>
+
+

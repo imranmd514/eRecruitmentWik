@@ -1,0 +1,167 @@
+﻿@model Models.HRModelBO
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <div class="wrapper">
+    <div class="container-fluid">
+
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">My Pages</a></li>
+                <li class="breadcrumb-item active">HR View</li>
+
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-account" style="color:black;"></i>HR View</h4>
+        </div>
+    </div>
+    <ul class="nav nav-pills navtab-bg nav-justified">
+        <li class="nav-item">
+            <a href="#Requisitions" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                Requisitions
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Applications" data-toggle="tab" aria-expanded="true" class="nav-link">
+                Applications
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Contact" data-toggle="tab" aria-expanded="false" class="nav-link">
+                Contact
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Messages" data-toggle="tab" aria-expanded="false" class="nav-link">
+                Messages
+            </a>
+        </li>
+    </ul>
+        <div class="col-lg-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="Requisitions">
+                        <div class="row">
+                            <div class="form-group row">
+                                <div class="top-right" style="margin-left:20px;">
+                                    <div class="col-sm-7">
+                                        <button type="button" class="btn btn-success btn-rounded w-md">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                S.No<br>
+                                            </th>
+                                            <th class="text-center">
+                                               Job Title<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Description<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Qualification<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Current Salary<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Expected Salary<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Experience<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Skills<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Action<br>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div><!-- end row -->
+                    </div>
+                    <div class="tab-pane" id="Applications">
+                        <div class="row">
+                            <div class="form-group row">
+                                <div class="top-right" style="margin-left:1100px;">
+                                    <div class="col-sm-7">
+                                        <button type="button" class="btn btn-success btn-rounded w-md">Send Message</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                S.No<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Applications<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Application Status<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Job Id<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Action<br>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="Contact">
+                        <div class="row">
+
+                        </div> <!-- end container -->
+                    </div>
+                    <div class="tab-pane" id="Messages">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                S.No<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Subject<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Message Description<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Message From<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Date<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Time<br>
+                                            </th>
+                                            <th class="text-center">
+                                                Action<br>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div> <!-- end row -->
+                    </div>
+                </div>
+            </div>
+        </div>
+              
+ </div>
+

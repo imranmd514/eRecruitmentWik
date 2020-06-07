@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Models.AllApplicantsBO>
+
+<style>
+    .table {
+        width: 95%;
+        height: 120px;
+        margin-left: 30px;
+    }
+</style>
+
+
+
+<table class="table" id="AllApplicantsGrid" align="center">
+    <thead>
+        <tr class="TableHeader">
+            <th style="text-align:center">
+                #
+            </th>
+            <th  style="text-align:center">
+                Applicant Name
+            </th>
+            <th  style="text-align:center">
+                Mobile Number
+            </th>
+            <th  style="text-align:center">
+                Email Address
+            </th>
+            <th style="text-align:center">
+                Gender
+            </th>
+            <th style="text-align:center">
+                MotherTongue
+            </th>
+            @*<th style="text-align:center">
+                Approved By
+            </th>
+            <th style="text-align:center">
+                Rejected By
+            </th>*@
+            <th  style="text-align:center">
+                Nationality
+            </th>
+            <th  style="text-align:center">
+                Action
+            </th>
+        </tr>       
+    </thead>
+
+    <tbody style="background-color: white" id="ApplicantId">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr  style="text-align:center" id='@item.ApplicantId'>
+                <td style='width:100px;vertical-align:middle;'>
+                    <span class='label label-warning'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="text-align:center"cursor:pointer" onclick="EditApplicant(@item.ApplicantId);">@item.FirstName</td>
+                <td style="text-align:center">@item.PhoneNumber</td>
+                <td style="text-align:center">@item.EmailAddress</td>
+                <td style="text-align:center">@item.Gender</td>
+                <td style="text-align:center">@item.MotherTongue</td>
+                @*<td style="text-align:center">@item.ApprovedBy</td>
+                <td style="text-align:center">@item.RejectedBy</td>*@
+                <td style="text-align:center">@item.Nationality</td>
+                <td style='width:110px;text-align:center;' class='menu-action'>
+                    <a href='#custom-modal' data-toggle="modal" data-target="#myModal"><i class="mdi mdi-eye" onclick='ViewApplicant(@item.ApplicantId);'></i> </a>&nbsp;&nbsp;
+                    @*<a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditApplicant(@item.ApplicantId);'></i></a>&nbsp;&nbsp;*@
+                    @*<a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteApplicant(@item.ApplicantId);'></i> </a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

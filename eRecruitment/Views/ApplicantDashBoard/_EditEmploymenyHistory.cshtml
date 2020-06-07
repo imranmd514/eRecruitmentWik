@@ -1,0 +1,188 @@
+﻿@model Models.ApplicantEmploymentHistoryBO
+
+
+<section>
+    <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>&nbsp;<i class="mdi mdi-account-multiple"></i> Employment History</h3>
+    </div>
+    <hr class="pd-10" />
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group row">
+                <div class="form-group row col-sm-12">
+                    <div style="width:99%;" align="right">
+                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light w-md" onclick="OnSubmitEmployment();">Submit</button>
+                        <button type="button" class="btn btn-primary btn-rounded w-md" onclick="EditEmployment();">Edit</button>
+                        <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="CancelEmployment();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Employer Name <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.EmployerName, new { @placeholder = "EmployerName", @class = "form-control", id = "EmployerName", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Type Of Industry <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.TypeOfIndustry, new { @placeholder = "Type Of Industry", @class = "form-control", id = "TypeOfIndustry", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Telephone Number</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.TelephoneNo, new { @placeholder = "Telephone Number", @class = "form-control", id = "TelephoneNumber", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Title Of Supervisor</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.TitleOfSupervisor, new { @placeholder = "Title Of Supervisor", @class = "form-control", id = "TitleOfSupervisor", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Job Title</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.JobTitle, new { @placeholder = "Job Title", @class = "form-control", id = "JobTitle", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">City <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.City, new { @placeholder = "City", @class = "form-control", id = "City", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Start Date </label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.EmpStartDate, new { @placeholder = "Start Date", @class = "input-border-btm form-control", id = "EmpStartDate", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">End Date</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.EmpEndDate, new { @placeholder = "End Date", @class = "input-border-btm form-control", id = "EmpEndDate", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Responsibility <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.Responsibility, new { @placeholder = "Responsibility", @class = "form-control", id = "Responsibility", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Monthly Salary <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.MonthlySalary, new { @placeholder = "Monthly Salary", @class = "form-control", id = "MonthlySalary", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Notice Period <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.NoticePeriod, new { @placeholder = "Notice Period", @class = "form-control", id = "NoticePeriod", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Address<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            @Html.TextAreaFor(model => model.EmpEmailAddress, new { @placeholder = "Address", @class = "form-control", id = "EmpEmailAddress", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pd-10">
+        <div class="row">
+            <div class="col-lg-9"><h3> &nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i>  Refered By</h3></div>
+            <div class="col-lg-3">
+            </div>
+        </div>
+        <br />
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">First Name <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.EmpFirstName, new { @placeholder = "First Name", @class = "form-control", id = "FirstName", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Second Name <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.SecondName, new { @placeholder = "Second Name", @class = "form-control", id = "SecondName", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Position</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.Position, new { @placeholder = "Position", @class = "form-control", id = "Position", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">RelationShip</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.RelationshipTOApplicant, new { @placeholder = "RelationshipTOApplicant", @class = "form-control", id = "RelationshipTOApplicant", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Organization</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.NameOfTheOrganization, new { @placeholder = "NameOfTheOrganization", @class = "form-control", id = "NameOfTheOrganization", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Telephone Contact <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.TelephoneContact, new { @placeholder = "Telephone Contact", @class = "form-control", id = "TelephoneContact", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Email Address </label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(m => m.EmpEmailAddress, new { @placeholder = "Email Address", @class = "input-border-btm form-control", id = "EmpEmailAddress", @readonly = "readonly" })
+                        </div>
+                    </div><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

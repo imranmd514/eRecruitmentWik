@@ -1,0 +1,113 @@
+﻿@model  Models.ApplicantQualificationBO
+
+
+
+<section>
+    <div class="row">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h3>&nbsp;<i class="mdi mdi-account-multiple"></i> Qualification</h3>
+    </div>
+    <hr class="pd-10" />
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="form-group row">
+                <div class="form-group row col-sm-12">
+                    <div style="width:99%;" align="right">
+                        <button type="submit" class="btn btn-success btn-rounded waves-effect waves-light w-md" onclick="OnSubmitQualification();">Submit</button>
+                        <button type="button" class="btn btn-primary btn-rounded w-md" onclick="EditQualification();">Edit</button>
+                        <button type="button" class="btn btn-secondary btn-rounded w-md" onclick="CancelQualification();">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"> Bachelors<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        <input type="file" class="form-control" id="Bachelors">
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"> Diploma<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        <input type="file" class="form-control" id="Diploma" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"> MSC<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        <input type="file" class="form-control" id="MSC" />
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5"> PHD<span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        <input type="file" class="form-control" id="PHD" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Start Date </label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.QuaStartDate, new { @placeholder = "Start Date", @class = "input-border-btm form-control", id = "QuaStartDate", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">End Date</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.QuaEndDate, new { @placeholder = "End Date", @class = "input-border-btm form-control", id = "QuaEndDate", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Discipline</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.Discipline, new { @placeholder = "Discipline", @class = "form-control", id = "Discipline", @readonly = "readonly" })
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">University <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.University, new { @placeholder = "University", @class = "form-control", id = "University", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="dropdown">
+                    <div class="row mgbt-sm-0">
+                        <label class="col-sm-5">Nationality<span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(model => model.QuaNationality, new { @placeholder = "Nationality", @class = "form-control", id = "QuaNationality", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div><br />
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Degree</label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.Degree, new { @placeholder = "Degree", @class = "form-control", id = "Degree", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row mgbt-sm-0">
+                    <label class="col-sm-5">Credit/Score/Class <span class="text-danger">*</span></label>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(model => model.Class, new { @placeholder = "Credit/Score/Class", @class = "form-control", id = "Class", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

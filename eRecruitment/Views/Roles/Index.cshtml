@@ -1,0 +1,213 @@
+﻿@model Models.RolesBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">Roles</li>
+            </ol>
+            <h4 class="page-title"><i class="mdi mdi-bookmark" style="color:olive;"></i>Roles</h4>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="card-box">
+                    <div class="panel widget">
+                        <div class="form-group">
+                            <div style="width:99%;" align="right">
+                                <button type="button" class="btn btn-success btn-rounded w-md" id="Add" onclick="AddRole();"><b>Add</b></button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <div class="table table-bordered table-striped" id="RolesList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5" id="FormPanel">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        HideLoader();
+        GetRolesList();
+    });
+
+    function GetRolesList() {
+        ShowLoader();
+        $.ajax({
+            type: "GET",
+            url: '../Roles/getRolesList',
+            data: {
+            },
+            success: function (data) {
+                $("#RolesList").html(data);
+                $('#RolesGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+    function AddRole() {
+        ShowLoader();
+        $.ajax({
+            url: '../Roles/AddRole',
+            success: function (data) {
+                $("#FormPanel").html(data);
+                setTimeout(function () {
+                    HideLoader()
+                }, 500);
+            }
+        });
+        $("#FormPanel").show();
+        $('#FormPanel').attr("autofocus", "");
+        setTimeout(function () {
+            $('#FormPanel').focus()
+        }, 500);
+        $("#tbodyRole").find("tr").each(function () {
+            var thisid = $(this).attr("id");
+            $("#" + thisid + "").removeClass("danger");
+        });
+
+    }
+
+
+    function OnSubmitRole() {
+        var str = "";
+        if ($("#RoleName").val() == "") {
+            str = str + "<i class='fa fa-bookmark vd_red'></i> &nbsp;Role Name is Required. <br/>";
+        }
+
+        if (str != "") {
+            $.NotificationApp.send("Information!", "Check below fields please." + str, 'top-right', '#da8609', 'warning');
+        }
+        else {
+
+            var RoleId = $("#RoleId").val();
+            var RoleName = $("#RoleName").val();
+            var Description = $("#Description").val();
+            var IsActive = $("#IsActive").is(':checked');
+
+            var Data = {
+
+                "RoleId": RoleId,
+                "RoleName": RoleName,
+                "Description": Description,
+                "IsActive": IsActive,
+            }
+
+            Save(Data);
+        }
+    }
+
+
+
+    function Save(Data) {
+        ShowLoader();
+        $.ajax({
+            url: '../Roles/saveRole',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $.NotificationApp.send("Success!", "Role created successfully", 'top-right', '#5ba035', 'success');
+                    Clear();
+                    GetRolesList();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    alreadyexists();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "FAIL") {
+                    fail();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+            }
+        });
+    }
+
+
+    function Clear() {
+
+        $("#RoleName").val("");
+        $("#Description").val("");
+        $("#IsActive").val("");
+    }
+
+
+
+    function Cancel() {
+        var url = '@Url.Action("Index", "Roles")';
+        window.location.href = url;
+    }
+
+
+    function EditRole(Id) {
+        ShowLoader();
+        $.ajax({
+            url: '../Roles/EditRole?iRoleId=' + Id,
+            success: function (data) {
+                $("#FormPanel").html(data);
+                setTimeout(function () {
+                    HideLoader()
+                }, 500);
+            }
+        });
+        $("#FormPanel").show();
+        $('#FormPanel').attr("autofocus", "");
+        setTimeout(function () {
+            $('#FormPanel').focus()
+        }, 500);
+        $("#tbodyRole").find("tr").each(function () {
+            var thisid = $(this).attr("id");
+            $("#" + thisid + "").removeClass("danger");
+        });
+
+    }
+
+    function DeleteRole(Id) {
+        $.ajax({
+            type: "POST",
+            url: '../Roles/deleteRole',
+            data: {
+                iRoleId: Id,
+            },
+            success: function (data) {
+                if (data == "DELETED") {
+                    $.NotificationApp.send("info!", "Role Deleted Successfully", 'top-right', '#5ba035', 'Info Notification');
+                    GetRolesList();
+                }
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Models.ApplicantQualificationBO>
+
+<table class="table" id="ApplicantQualificationGrid">
+    <thead>
+        <tr class="TableHeader">
+            <th style="width:50px;vertical-align:middle;padding-left:20px">
+                #
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Academic Qualifications
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Course of Study
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Name of Institution
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Start_Date
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                End_Date
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Attachments
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Credit/Scores/Class
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Status
+            </th>
+            <th style="vertical-align:middle;padding-left:20px">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: white" id="tbody">
+        @{
+            var count = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr style='height:50px;'>
+                <td style='width:20px;vertical-align:middle;'>
+                    <span class='label label-info'>
+                        @(count++)
+                    </span>
+                </td>
+                <td style="cursor:pointer">@item.AcademicQualification</td>
+                <td>@item.Discipline</td>
+                <td>@item.University</td>
+                <td>@item.StartDate</td>
+                <td>@item.EndDate</td>
+                <td>
+                    @if (@item.AcademicQualificationAttachment != null && @item.AcademicQualificationAttachment != "" && @item.AttachmentSavedName != null && @item.AttachmentSavedName != "")
+                    {
+                        @Html.ActionLink(@item.AcademicQualificationAttachment, "DownloadQualificationAttachment", new { fileSavedName = @item.AttachmentSavedName, fileActualName = @item.AcademicQualificationAttachment })
+                    }
+
+                </td>
+                <td>@item.CreditScoreClass</td>
+                <td>@item.IsActive</td>
+                <td style='width:100px;vertical-align:middle;' class='menu-action'>
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-pencil" onclick='EditApplicantQualification(@item.ApplicantQualificationId);'></i> </a>&nbsp;&nbsp;
+                    <a href='#custom-modal' data-animation='corner' data-plugin='custommodal'><i class="mdi mdi-delete" onclick='DeleteApplicantQualification(@item.ApplicantQualificationId);'></i> </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+

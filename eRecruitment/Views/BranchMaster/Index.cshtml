@@ -1,0 +1,151 @@
+﻿@model Models.BranchMasterBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .modal-header {
+        padding: 12px 12px;
+        background-color: #259dd1;
+    }
+
+        .modal-header .close {
+            margin-top: 2px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            line-height: 20px;
+        }
+</style>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">Branch Master</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-home-variant"></i> Branch Master</h4>
+        </div>
+    </div>
+     
+        <div class="col-lg-12">
+            <div class="card-box">
+                        <div class="form-group row">
+                            <div style="width:99%;" align="right">
+                        <button type="button" class="btn btn-success btn-rounded w-md" id="Add" onclick="AddBranch();"><b>Add</b></button>
+                    </div>
+                </div>
+                      <div class="table-responsive">
+                          <div class="table table-bordered table-striped" id="BranchList">
+
+                          </div>
+                      </div>
+                 </div>
+            </div>
+       </div> 
+   <div class="row">
+    <div class="col-12">
+        <div>
+            <!-- sample modal content -->
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 style="color:white;" class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;&nbsp;<b>Branch Details</b></h4>
+                            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+                        </div>
+                        <div class="modal-body" id="AddBranchDetails">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-rounded w-xs" data-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--  Modal content for the above example -->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+     HideLoader();
+     LoadGrid();
+
+    });
+
+
+
+    function LoadGrid() {
+        ShowLoader();
+        $.ajax({
+            type: "GET",
+            url: '../BranchMaster/GetBranchList',
+            data: {
+            },
+            success: function (data) {
+                $("#BranchList").html(data);
+                $('#BranchGrid').DataTable();
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+
+    function AddBranch() {
+        ShowLoader();
+        var url = "@Url.Content("~/BranchMaster/CreateBranch")";
+        $(location).attr('href', url);
+    }
+
+
+
+    function Edit(Id) {
+        ShowLoader();
+        var url = '../BranchMaster/EditBranch?iBranchId=' + Id;
+        $(location).attr('href', url);
+    }
+
+    function ViewBranch(iBranchId) {
+        ShowLoader();
+        var Id = iBranchId;
+        $.ajax({
+            type: "GET",
+            url: '../BranchMaster/ViewBranchMaster',
+            data: {
+                iBranchId: Id,
+            },
+            success: function (data) {
+                $("#AddBranchDetails").html(data);
+                setTimeout(function () {
+                    HideLoader();
+                }, 500);
+            }
+        });
+    }
+
+    function deleteBranch(Id) {
+        $.ajax({
+            type: "POST",
+            url: '../BranchMaster/deleteBranch',
+            data: {
+                iBranchId: Id,
+            },
+            success: function (data) {
+                if (data == "DELETED") {
+                    $.NotificationApp.send("info!", "BranchMaster Deleted Successfully", 'top-right', '#5ba035', 'Info Notification');
+                    LoadGrid();
+                }
+            }
+        });
+    }
+
+</script>
+
+

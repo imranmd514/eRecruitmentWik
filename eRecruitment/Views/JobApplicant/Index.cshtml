@@ -1,0 +1,183 @@
+﻿@model Models.JobApplicantModelBO
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .modal-header {
+        padding: 12px 12px;
+        background-color: #5b6886;
+    }
+
+        .modal-header .close {
+            margin-top: 2px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            line-height: 20px;
+        }
+         .modal-dialog {
+   max-width:80%;
+     }
+
+</style>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Applicant</a></li>
+                <li class="breadcrumb-item active">Job Wise Applicant</li>
+            </ol>
+            <h4 class="page-title"><i style="color:black" class="mdi mdi-account-multiple"></i> Job Wise Applicant</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card-box">
+                <div class="tab-content">
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-3">Job Type<span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(m => m.JobId, new SelectList(Model.JobList, "Id", "Value"), "Select JobType", new { @class = "form-control", id = "JobName", onchange = "JobApplicantList();" })
+                            </div>
+                        </div><br />
+                    </div>
+
+                    <div class="row">
+                        <div class="table-responsive">
+                            <div class="table table-bordered table-striped" id="AllJobsList">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- sample modal content -->
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color:white;" class="modal-title" id="myModalLabel">&nbsp;&nbsp;&nbsp;<i class="mdi mdi-account-multiple"></i><b> Job Applicant Information</b></h4>
+                @*<button type="button" style="color:white" class="close" data-dismiss="modal" aria-hidden="true">×</button>*@
+            </div>
+            <div class="modal-body" id="AllApplicantDetails">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-rounded " data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--  Modal content for the above example -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function JobApplicantList() {
+        var JobId = $("#JobName").val();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetJobApplicantList", "JobApplicant")",
+            data: {
+                A_iJobId: JobId,
+            },
+            success: function (data) {
+                $("#AllJobsList").html(data);
+                $('#AllApplicantsGrid').DataTable();
+            }
+        });
+    }
+
+    function ViewApplicant(ApplicantJobId) {
+        debugger;
+        var iApplicantJobId = ApplicantJobId;
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("ViewJobApplicants", "JobApplicant")',
+            data: {
+                A_iApplicantJobId: iApplicantJobId,
+            },
+            success: function (data) {
+                $("#AllApplicantDetails").html(data);
+                Hide();
+            }
+        })
+    }
+
+    function OnUpdateJobWiseApplicant(ApplicantJobId, ApplicantId) {
+        debugger;
+        var ApplicantJobId = ApplicantJobId;
+        var iApplicantId = ApplicantId;
+        var SelectComments = $("#StatusComments").val();
+
+        var Data = {
+            "ApplicantJobId": ApplicantJobId,
+            "ApplicantId": iApplicantId,
+            "StatusComments": SelectComments
+        }
+        debugger;
+        UpdateJobApplicant(Data);
+    }
+
+    function UpdateJobApplicant(Data) {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("UpdateJobWiseApplicant", "JobApplicant")",
+            data: JSON.stringify(Data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $('#myModal').modal('hide');
+                    JobApplicantList();
+
+                }
+            }
+        });
+    }
+
+    function RejectApplicant(ApplicantJobId, ApplicantId) {
+        debugger;
+        var ApplicantJobId = ApplicantJobId;
+        var iApplicantId = ApplicantId;
+        var RejectComments = $("#StatusComments").val();
+
+        var Data = {
+            "ApplicantJobId": ApplicantJobId,
+            "ApplicantId": iApplicantId,
+            "StatusComments": RejectComments
+        }
+        RejectJobApplicant(Data);
+    }
+
+    function RejectJobApplicant(Data) {
+        debugger;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("RejectJobWiseApplicant", "JobApplicant")",
+            data: JSON.stringify(Data),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    $('#myModal').modal('hide');
+                    JobApplicantList();
+                }
+            }
+        });
+    }
+    function Cancel() {
+        $('#myModal').modal('hide');
+         JobApplicantList();
+    }
+</script>

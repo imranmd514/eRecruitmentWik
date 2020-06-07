@@ -1,0 +1,337 @@
+﻿@model Models.ChangePassWordBO
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    #pswd_info {
+        position: absolute;
+        top: 340px;
+        left: 590px;
+        width: 350px;
+        padding: 15px;
+        background: #fefefe;
+        font-size: .875em;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px #ccc;
+        border: 1px solid #ddd;
+    }
+
+        #pswd_info h4 {
+            margin: 0 0 5px 0;
+            padding: 0;
+            font-weight: normal;
+        }
+
+        #pswd_info::before {
+            content: "\25B2";
+            position: absolute;
+            top: -12px;
+            left: 45%;
+            font-size: 14px;
+            line-height: 14px;
+            color: #ddd;
+            text-shadow: none;
+            display: block;
+        }
+
+    .invalid {
+        background: url('../../Images/Validation/invalid (2).png') no-repeat 0 50%;
+        padding-left: 22px;
+        line-height: 24px;
+        color: #ec3f41;
+    }
+
+    .valid {
+        background: url('../../Images/Validation/valid.png') no-repeat 0 50%;
+        padding-left: 22px;
+        line-height: 24px;
+        color: #3a7d34;
+    }
+
+    #pswd_info {
+        display: none;
+    }
+</style>
+<div class="wrapper">
+    <div class="container-fluid">
+        <!-- Page title box -->
+        <div class="page-title-alt-bg"></div>
+        <div class="page-title-box">
+            <ol class="breadcrumb float-right">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Security</a></li>
+                <li class="breadcrumb-item active">Change Password</li>
+            </ol>
+            <h4 class="page-title"><i style="color:olive;" class="mdi mdi-account"></i> Change Password</h4>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <div class="row">
+            <div class="col-sm-12">
+                <div align="center">
+                    <div class="col-sm-6">
+                        @Html.HiddenFor(m => m.UserId)
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-4">Email Address<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.EmailAddress, new
+                           {
+                               @placeholder = "Enter Email Address",
+                               @class = "form-control",
+                               id = "EmailAddress",
+                               @maxLength = "50", @readonly = "readonly"})
+                                @Html.ValidationMessageFor(model => model.EmailAddress)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-4">OldPassword<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.OldPassword, new
+                           {
+                               @type = "Password",
+                               @placeholder = "Enter Old Password",
+                               @class = "form-control",
+                               id = "OldPassword",
+                               @maxLength = "50" @*, @readonly = true*@ })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-4">NewPassword<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.NewPassword, new
+                           {
+                               @type = "Password",
+                               @placeholder = "Enter New Password",
+                               @class = "form-control",
+                               id = "NewPassword",
+                               @maxLength = "50"@*, @readonly = true*@ })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row mgbt-sm-0">
+                            <label class="col-sm-4">Confirm Password<span class="text-danger">*</span></label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(model => model.ConfirmPassword, new
+                           {
+                               @type = "Password",
+                               @placeholder = "Confirm Password",
+                               @class = "form-control",
+                               id = "ConfirmPassword",
+                               @maxLength = "50"@*, @readonly = true*@ })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div align="center">
+                        <button type="button" class="btn btn-success btn-rounded w-md" onclick="OnSubmit()">Submit</button>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-sm-12">
+                   <div class="col-sm-8"></div>
+                    <div>
+                        <button type="button"class="btn btn-success btn-rounded w-md" onclick="OnSubmit()">Submit</button>
+                    </div>
+                @*</div>*@
+
+            <div id="pswd_info">
+                <h5>Password must meet the following requirements:</h5>
+                <ul>
+                    <li id="letter" class="invalid">At least <strong>one letter</strong></li>
+                    <li id="capital" class="invalid">At least <strong>one capital letter</strong></li>
+                    <li id="number" class="invalid">At least <strong>one number</strong></li>
+                    <li id="length" class="invalid">Be at least <strong>8 characters</strong></li>
+                    <li id="SpecialCharacter" class="invalid">Be at least <strong>one SpecialCharacter</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Encryption.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        @*$("#EmailAddress").val(@ViewData["EmailAddress"]);
+        var strEmailId = $("#EmailAddress").val();*@
+        ShowLoader();
+        $(function () {
+            $("#NewPassword").keyup(function () {
+                var pswd = $(this).val();
+                if (pswd.length < 8) {
+                    $('#length').removeClass('valid').addClass('invalid');
+                } else {
+                    $('#length').removeClass('invalid').addClass('valid');
+                }
+                //validate letter
+                if (pswd.match(/[a-z]/)) {
+                    $('#letter').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#letter').removeClass('valid').addClass('invalid');
+                }
+
+                //validate capital letter
+                if (pswd.match(/[A-Z]/)) {
+                    $('#capital').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#capital').removeClass('valid').addClass('invalid');
+                }
+
+                //validate number
+                if (pswd.match(/\d/)) {
+                    $('#number').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#number').removeClass('valid').addClass('invalid');
+                }
+                //validate special Character
+                if (pswd.match(/[^a-zA-Z0-9]/)) {
+                    $('#SpecialCharacter').removeClass('invalid').addClass('valid');
+                } else {
+                    $('#SpecialCharacter').removeClass('valid').addClass('invalid');
+                }
+            }).focus(function () {
+                $('#pswd_info').show();
+            }).blur(function () {
+                $('#pswd_info').hide();
+            });
+        });
+        setTimeout(function () {
+            HideLoader()
+        }, 500);
+    });
+
+    function OnSubmit() {
+        debugger;
+        var NewPassword = $('#NewPassword').val();
+        var ConfirmPassword = $("#ConfirmPassword").val();
+
+        var str = "";
+        if ($("#EmailAddress").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i>&nbsp;Email Address is Required. <br/>"; }
+        if ($("#OldPassword").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Old Password is Required. <br/>"; }
+        if ($("#NewPassword").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;New Password is Required. <br/>"; }
+        if ($("#ConfirmPassword").val() == "")
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Confirm Password is Required. <br/>"; }
+
+        var pswd = $("#NewPassword").val();
+        if (pswd.length < 8) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; New Password should contain at least 8 characters. <br/>";
+        }
+        //validate letter
+        if (!pswd.match(/[a-z]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; New Password should contain at least one letter. <br/>";
+        }
+
+        //validate capital letter
+        if (!pswd.match(/[A-Z]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; New Password should contain at least one capital letter. <br/>";
+        }
+
+        //validate number
+        if (!pswd.match(/\d/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; New Password should contain at least one number. <br/>";
+        }
+        //validate special Character
+        if (!pswd.match(/[^a-zA-Z0-9]/)) {
+            str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp; New Password should contain at least one Special Character. <br/>";
+        }
+        if (NewPassword != ConfirmPassword)
+        { str = str + "<i class='mdi mdi-bookmark vd_yellow'></i> &nbsp;Password Match Required. <br/>"; }
+
+        if (str != "") {
+            $.NotificationApp.send("Warning!", "Fields Required" + str + "", 'top-right', '#da8609', 'warning');
+        }
+        else {
+            var OpwdObj = document.getElementById('OldPassword');
+            var pwdObj = document.getElementById('NewPassword');
+            var CpwdObj = document.getElementById('ConfirmPassword');
+
+            var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+            hashObj.update(OpwdObj.value);
+
+            var OPhash = hashObj.getHash("HEX");
+            OpwdObj.value = OPhash;
+
+            hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+            hashObj.update(pwdObj.value);
+
+            var Phash = hashObj.getHash("HEX");
+            pwdObj.value = Phash;
+
+            hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+            hashObj.update(CpwdObj.value);
+
+            var CPhash = hashObj.getHash("HEX");
+            CpwdObj.value = CPhash;
+
+            var EmailAddress = $("#EmailAddress").val();
+            var OldPassword = $("#OldPassword").val();
+            var NewPassword = $("#NewPassword").val();
+            var ConfirmPassword = $("#ConfirmPassword").val();
+            //("#divLoader").show();
+            var Data = {
+                "EmailAddress": EmailAddress,
+                "OldPassword": OldPassword,
+                "NewPassword": NewPassword,
+                "ConfirmPassword": ConfirmPassword
+            }
+            Save(Data);
+        }
+    }
+    function Save(Data) {
+        //ShowLoader();
+        debugger;
+        $.ajax({
+            url: '../ChangePassWord/SaveNewPassword',
+            data: JSON.stringify(Data),
+            type: 'POST',
+            async: false,
+            class: "Close",
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data == "SUCCESS") {
+                    ShowLoader();
+                    //("#divLoader").hide();
+                    $.NotificationApp.send("Success!", "New Password Created Successfully !!", 'top-right', '#5ba035', 'success');
+                    Clear();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "ALREADY_EXISTS") {
+                    //("#divLoader").hide();
+                    $.NotificationApp.send("Warning!", "Already Exists.", 'top-right', '#da8609', 'warning');
+                    Clear();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+                }
+                else if (data == "Invalid Old Password") {
+                    //("#divLoader").hide();
+                    //fail();
+                    $.NotificationApp.send("Warning!", "Invalid Old Password !", 'top-right', '#da8609', 'warning');
+                    Clear();
+                    setTimeout(function () {
+                        HideLoader()
+                    }, 500);
+
+                }
+            }
+        });
+    }
+
+    function Clear() {
+       // $("#EmailAddress").val("");
+        $("#OldPassword").val("");
+        $("#NewPassword").val("");
+        $("#ConfirmPassword").val("");
+    }
+</script>

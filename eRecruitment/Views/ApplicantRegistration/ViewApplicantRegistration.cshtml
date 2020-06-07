@@ -1,0 +1,441 @@
+﻿@model Models.ApplicantRegistrationBO
+
+
+<div class="vd_content-section clearfix">
+    <div class="custom-modal-text">
+        <div id="profile-tab" class="tab-pane active">
+            <div class="pd-15">
+                <div class="row">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse1" style="width:400%;text-align:left"><i class="mdi mdi-account-multiple"></i> Applicant Information</button>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="text-center vd_info-parent">
+                                    <img src="@ViewBag.ImagePath" id="image" style="width:180px;height:190px" />
+                                </div>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-6">
+                       
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-6"><b>Title :</b></label>
+                                        <div class="col-sm-6 controls">
+                                            @Html.DisplayFor(model => model.Title)
+                                        </div>
+                                    </div>
+                            
+                
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-6"><b>First Name:</b></label>
+                                        <div class="col-sm-6 controls">
+                                            @Html.DisplayFor(model => model.FirstName)
+                                        </div>
+                                    </div>
+                     
+      
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-6"><b>Middle Name:</b></label>
+                                        <div class="col-sm-6 controls">
+                                            @Html.DisplayFor(model => model.MiddleName)
+                                        </div>
+                                    </div>
+              
+ 
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-6"><b>Last Name:</b></label>
+                                        <div class="col-sm-6 controls">
+                                            @Html.DisplayFor(model => model.LastName)
+                                        </div>
+                                    </div>
+                  
+                            
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-6"><b>DOB :</b></label>
+                                        <div class="col-sm-6 controls">
+                                            @Html.DisplayFor(model => model.DateOfBirth)
+                                        </div>
+                                    </div>
+
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Gender :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Gender)
+                                    </div>
+                                </div>
+                              
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Citizen Ship :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Citizenship)
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                                            
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Country :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Country)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Phone Number :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.PhoneNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Alternative PhoneNo :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.AlternativePhoneNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Email Address :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.EmailAddress)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Language Spoken :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.LanguageSpoken)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Nationality :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Nationality)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Appplication Letter:</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @if (Model != null)
+                                        {
+                                            if (Model.ResumSavedName != null && Model.ResumSavedName != "")
+                                            {
+                                                @Html.ActionLink(Model.ApplicationLetter, "DownloadAttachment1", new { fileSavedName = Model.ResumSavedName, fileActualName = Model.ApplicationLetter })
+                                            }
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Resume :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @if (Model != null)
+                                        {
+                                            if (Model.ApplicationLetterSavedName != null && Model.ApplicationLetterSavedName != "")
+                                            {
+                                                @Html.ActionLink(Model.Resume, "DownloadAttachment", new { fileSavedName = Model.ApplicationLetterSavedName, fileActualName = Model.Resume })
+                                            }
+                                       }
+                                        @*@Html.DisplayFor(model => model.Resume)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Address :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Address)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse2" style="width:590%;text-align:left"><i class="mdi mdi-account"></i> Qualification </button>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse ">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Bachelors :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @if (Model != null)
+                                        {
+                                            if (Model.DiplomaSavedName != null && Model.DiplomaSavedName != "")
+                                            {
+                                                @Html.ActionLink(Model.Bachelors, "DownloadAttachment2", new { fileSavedName = Model.DiplomaSavedName, fileActualName = Model.Bachelors })
+                                            }
+                                        }
+                                        @*@Html.DisplayFor(model => model.Bachelors)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Diploma :</b></label>
+                                    <div class="col-sm-6 controls">
+                                            @if (Model != null)
+                                            {
+                                                if (Model.MSCSavedName != null && Model.MSCSavedName != "")
+                                                {
+                                                    @Html.ActionLink(Model.Diploma, "DownloadAttachment3", new { fileSavedName = Model.MSCSavedName, fileActualName = Model.Diploma })
+                                                }
+                                            }
+                                        @*@Html.DisplayFor(model => model.Diploma)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>MSC :</b></label>
+                                    <div class="col-sm-6 controls">
+                                            @if (Model != null)
+                                            {
+                                                if (Model.PHD != null && Model.PHD != "")
+                                                {
+                                                    @Html.ActionLink(Model.MSC, "DownloadAttachment4", new { fileSavedName = Model.PHD, fileActualName = Model.MSC })
+                                                }
+                                            }
+                                        @*@Html.DisplayFor(model => model.MSC)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>PHD :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @if (Model != null)
+                                        {
+                                            if (Model.BachelorsSavedName != null && Model.BachelorsSavedName != "")
+                                            {
+                                                @Html.ActionLink(Model.PHD, "DownloadAttachment5", new { fileSavedName = Model.BachelorsSavedName, fileActualName = Model.PHD })
+                                            }
+                                        }
+                                        @*@Html.DisplayFor(model => model.PHD)*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Start Date :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.QuaStartDate)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>End Date :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.QuaEndDate)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Discipline :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Discipline)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>University :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.University)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Nationlity :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Nationality)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Degree :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Degree)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Class :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Class)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse3" style="width:420%;text-align:left"><i class="mdi mdi-account"></i> Employment History </button>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse ">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Employer Name :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.EmployerName)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Type Of Industry :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.TypeOfIndustry)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Telephone Number :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.PhoneNumber)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Title Of Supervisor :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.TitleOfSupervisor)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Job Title :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.JobTitle)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>City :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.City)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Start Date :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.EmpStartDate)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>End Date :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.EmpEndDate)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Responsibility :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.Responsibility)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Monthly Salary :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.MonthlySalary)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row mgbt-sm-0">
+                                    <label class="col-sm-6"><b>Notice Period :</b></label>
+                                    <div class="col-sm-6 controls">
+                                        @Html.DisplayFor(model => model.NoticePeriod)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#collapse4" style="width:490%;text-align:left"><i class="mdi mdi-account"></i> Motivation Skills</button>
+                        </h4>
+                    </div>
+                    <div id="collapse4" class="panel-collapse collapse ">
+                        <br/>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="col-sm-6">
+                                   
+                                </div>
+                                <div class="col-sm-6">
+                                </div>
+                            </div>
+                        </div>
+                  
+                 
+                            <div class="row" >
+                                <div class="col-sm-10">
+                                    <div class="row mgbt-sm-0">
+                                        <label class="col-sm-3"><b>Referer    :</b></label>
+                                        <div class="col-sm-7 controls">
+                                            @Html.DisplayFor(model => model.Referer)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- end wrapper -->
